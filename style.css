@@ -1,0 +1,79 @@
+html,body {
+	font-size:14px;
+	font-family: 'Raleway', sans-serif;
+	height: 100%; 
+	width:100%; 
+	margin: 0px; 
+	padding: 0px;
+  background: url(fond.jpg) no-repeat center fixed; 
+  -webkit-background-size: cover; /* pour anciens Chrome et Safari */
+  background-size: cover; /* version standardisée */
+	background-position:right;
+}
+
+.titles{
+	font-size:28px;
+	color:white;
+}
+
+#title {
+	position:absolute;
+	top:0px;
+	left:0px;
+	padding:15px 15px 15px 15px;
+	text-align:right;
+	color:white;
+}
+
+a{
+	color:#b8483a;
+}
+
+#play-control{
+	position:absolute;
+	bottom:0px;
+	left:0px;
+	color:white;
+	padding:10px 15px 10px 15px;
+}
+
+#show-infos{
+	position:absolute;
+	top:0px;
+	right:0px;
+	z-index:2;
+	padding:15px 15px 15px 15px;
+}
+
+#infos{
+	display:none;
+	background-color:white;
+	opacity:0.85;
+	position: absolute;
+	margin:20px 15px 15px 15px;
+	padding:0px 10px 0px 10px;
+	position:absolute;
+	bottom:0px;
+}
+
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 3; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: white; /* Fallback color */
+}
+
+.modal-content {
+		color : #4b4b4b;
+		text-align: center;
+    background-color: #fefefe;
+    margin: 20px auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%; /* Could be more or less, depending on screen size */
+}

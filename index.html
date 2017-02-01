@@ -1,0 +1,122 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN"
+   "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="fr">
+<head>
+	<link href='http://fonts.googleapis.com/css?family=Raleway' rel='stylesheet' type='text/css'>
+	<link rel="stylesheet" href="style.css" type="text/css" media="screen" title="no title" charset="utf-8">
+	<script type="text/javascript" src="https://code.jquery.com/jquery-2.1.3.min.js" charset="utf-8"></script>
+	<script>
+		var auth_server_url = "http://auth.nina.fm:8080";
+		var stream_url = "http://flux.nina.fm:8000/stream";
+	</script>
+	<script type="text/javascript" src="env.js" charset="utf-8"></script>
+	
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+	<title>nina.fm</title>
+</head>
+<body>
+	<div id="player">
+		<audio  src="" autoplay="autoplay" type="audio/mp3">
+			Votre navigateur est un vieux machin dépassé. Il ne supporte pas la musique, ce qui est con quand on veut écouter la radio.
+		</audio>
+	</div>
+	
+	<div id="title" class="titles">nina.fm</div>
+		
+	<div id="myModal" class="modal">
+	  <div class="modal-content">
+		<p>Bonjour</p>
+		<p>Veuillez entrer votre code</p>
+		<form id="code_form">
+			<input type="text" id="code"/> <input type="submit" value="valider" id="submit_code"/>
+		</form>
+		<p>Envoyez un mail à <a href="mailto:moncode@nina.fm?subject=Demande de code&body=À vous de jouer. Mettez-y du coeur.">moncode@nina.fm</a> pour demander un code de connexion</p>		
+	  </div>
+	</div>
+	
+	<a id="show-infos" class="titles">+</a>
+	
+	<div id="infos">
+		<h2>Radio en gestation</h2>
+		<p>Chers auditeurs et auditrices, merci de bien vouloir nous accorder un peu de votre patience… Les ingénieurs de nina travaillent d’arrache-pied pour finaliser la page web au plus vite et en particulier pour installer l’affichage des informations sur les morceaux à l’écoute.</p>
+		<p>D’ici là, si vous voulez connaitre les références d’un morceau en particulier, merci de nous écrire à <a href="mailto:infos@nina.fm?subject=Demande d'identification sonore&body=C'était quoi ce moreceaux trop cool diffusé le JJ/MM/AAAA à HH:MM:SS précise?">infos@nina.fm</a> en nous précisant son horaire de diffusion : nous nous efforcerons de vous répondre dans les meilleurs délais.</p>
+	</div>
+	<script type="text/javascript" charset="utf-8">
+	
+		function toggleSound(){
+			$('audio').prop('muted', !$('audio').prop('muted'));
+		}
+		
+		function getCookie(cname) {
+		    var name = cname + "=";
+		    var ca = document.cookie.split(';');
+		    for(var i = 0; i <ca.length; i++) {
+		        var c = ca[i];
+		        while (c.charAt(0)==' ') {
+		            c = c.substring(1);
+		        }
+		        if (c.indexOf(name) == 0) {
+		            return c.substring(name.length,c.length);
+		        }
+		    }
+		    return "";
+		}
+		
+		var modal = function(){
+			var el = document.getElementById('myModal');
+			
+			return {
+				show : function(){
+					el.style.display = 'block';
+				},
+				hide : function(){
+					el.style.display = 'none';
+				}
+			}
+		}();
+		
+		function checkCodeAndSetAudioSource(code){
+			$.post(auth_server_url, {code : code}).done(
+				function(){					
+					$('audio').attr('src', stream_url + '?code=' + code);
+					$('audio').load(function(){
+						$('audio').play();
+					});
+					modal.hide();
+					document.cookie = "code=" + code;
+				}
+			).error(
+				function(){
+					modal.show();
+				}
+			);
+		}
+	
+		$(document).ready(function(){
+			
+			$('#show-infos').click(function(){
+				$('#infos').toggle();
+			});
+			
+			var player = $('audio')[0];
+			$('html').click(function(){
+				player.play();
+			});
+			
+			$('#code_form').submit(function(){	
+				checkCodeAndSetAudioSource($('#code').val());				
+				return false;
+			});
+			
+			code = getCookie('code');
+			if(code) checkCodeAndSetAudioSource(code);
+			else modal.show();
+						
+			$(window).keydown(function(e){
+				if(e.keyCode == 32) toggleSound();
+			});
+		});
+	</script>
+</body>
+</html>
