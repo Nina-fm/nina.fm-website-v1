@@ -22,8 +22,11 @@
 		</audio>
 	</div>
 	
-	<div id="title" class="titles">nina.fm</div>
-		
+	<div id="top-left-box">
+		<div id="title" class="titles">nina.fm</div>
+		<div id="track-info">Recherche des infos...</div>
+	</div>
+				
 	<div id="myModal" class="modal">
 	  <div class="modal-content">
 		<p>Bonjour</p>
@@ -80,6 +83,12 @@
 			$.post(auth_server_url, {code : code}).done(
 				function(){					
 					$('audio').attr('src', stream_url + '?code=' + code);
+					
+					//Retrieve track info every 5 seconds
+					setInterval(function(){
+						getTrackInfo();
+					}, 5000);
+					
 					$('audio').load(function(){
 						$('audio').play();
 					});
@@ -91,6 +100,23 @@
 					modal.show();
 				}
 			);
+		}
+		
+		function getTrackInfo() {
+
+		    $.ajax({  type: 'GET',
+		          url: track_info_url,
+		          async: true,
+		          jsonpCallback: 'parseMusic',
+		          contentType: "application/json",
+		          dataType: 'jsonp',
+		          success: function (json) {
+					$('#track-info').html(json[mountpoint].title);
+		        },
+		          error: function (e) {    console.log(e.message);  
+		        }
+		    });
+
 		}
 	
 		$(document).ready(function(){
