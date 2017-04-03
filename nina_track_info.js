@@ -19,6 +19,7 @@ function getTrackInfo() {
 	          	error: 
 	          		function (e) {
 						$('#tracklist').html('');
+						$('#cover').html('');
 					}
 	    	});
 		}
