@@ -36,12 +36,10 @@ h1, h2{
 	padding : 0px;
 }
 
-#tracklist p{
-	margin: 35px 0px 25px 0px;
-}
-
 #top-left-box{
-	max-width: 100%;
+	max-width: 40%;
+	max-height: 100%;
+	overflow:scroll;
 	text-align:left;
 	position:absolute;
 	top:0px;
@@ -67,13 +65,18 @@ h1, h2{
 	color: black;
 }
 
+#tracklist p{
+	margin: 35px 0px 25px 0px;
+}
+
 #cover img{
 	margin:auto;
 	padding-top:35px;
-	width:400px;
+	width:100%;
 }
 
 #track-details{
+	height: 100%;
 	display:none;
 }
 
@@ -116,7 +119,9 @@ a{
 	}
 
 	#top-left-box, #tracklist, #track-details{
+		max-width: 100%;
 		width:100%;
+		max-height:100%;
 	}
 
 	#show-infos{

@@ -59,16 +59,16 @@
 			
 			$('#show-infos').click(function(){
 				$('#track-details').hide();
-				$('#infos').toggle();
+				$('#infos-container').toggle();
 			});
 			
 			$('#top-left-box').click(function(){
-				$('#infos').hide();
+				$('#infos-container').hide();
 				$('#track-details').toggle();
 			});
 			
-			$('#infos').click(function(){
-				$('#infos').hide();
+			$('#infos-container').click(function(){
+				$('#infos-container').hide();
 			});
 			
 			var player = $('audio')[0];
