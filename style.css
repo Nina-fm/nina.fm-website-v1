@@ -10,6 +10,7 @@
 #f1b2370.8 %Supernova(Yellow)
 #1826720.5 %Midnight Blue(Blue)*/
 
+
 *{
 	box-sizing: border-box;
 }
@@ -110,6 +111,14 @@ a{
 	width:100%;
 	overflow:scroll;
 	padding:20px 20px 20px 20px;
+}
+
+#logo{
+	position:absolute;
+	bottom:0px;
+	right:0px;
+	padding:20px 20px 20px 20px;
+	color:#CCC;
 }
 
 @media all and (max-device-width: 700px)
