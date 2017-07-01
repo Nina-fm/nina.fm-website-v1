@@ -26,10 +26,11 @@
 	<div id="top-left-box">
 		<div id="track-info-container">
 			<img class="equalizer" src="equalizer.gif"><h3 id="track-info">Recherche des infos...</h3>
+			<div id="track-type-infos"></div>
 		</div>
 		<div id="track-details">
 			<div id="cover"></div>
-			<div id="tracklist"></div>
+			<div id="track-details-text"></div>
 		</div>
 	</div>
 		
@@ -63,7 +64,7 @@
 				$('#infos-container').toggle();
 			});
 			
-			$('#top-left-box').click(function(){
+			$('#track-info-container').click(function(){
 				$('#infos-container').hide();
 				$('#track-details').toggle();
 			});
@@ -86,7 +87,6 @@
 			setInterval(function(){
 				getTrackInfo();
 			}, 5000);
-					
 		});
 	</script>
 </body>

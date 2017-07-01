@@ -60,13 +60,16 @@ h1, h2{
 	margin: 0px 0px 0px 28px;
 }
 
-#tracklist {
+#track-details-text {
 	overflow:scroll;
-    white-space: pre;
 	color: black;
 }
 
-#tracklist p{
+#track-details-text.mixtape{
+    white-space: pre;
+}
+
+#track-details-text p{
 	margin: 35px 0px 25px 0px;
 }
 
@@ -79,6 +82,10 @@ h1, h2{
 #track-details{
 	height: 100%;
 	display:none;
+}
+
+#track-type-infos{
+	padding-left : 28px;
 }
 
 a{
@@ -127,7 +134,7 @@ a{
 		width:100%;
 	}
 
-	#top-left-box, #tracklist, #track-details{
+	#top-left-box, #track-details-text, #track-details{
 		max-width: 100%;
 		width:100%;
 		max-height:100%;
