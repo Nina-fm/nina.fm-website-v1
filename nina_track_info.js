@@ -1,3 +1,5 @@
+var old_track_info;
+
 function getTrackInfo() {
 
 	function setTrackDetails(path, type){
@@ -30,9 +32,10 @@ function getTrackInfo() {
 
 		var infos = info.title.split(' - ');
 
-		if($('#track-info').html() == info.title) return;
+		if(old_track_info == info.title) return;
 
 		//New track, reset infos
+		old_track_info = info.title;
 		$('#track-info').html('');
 		$('#track-details-text').html('');
 		$('#track-type-infos').html('');
