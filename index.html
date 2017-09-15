@@ -62,6 +62,7 @@
 			$('#show-infos').click(function(){
 				$('#track-details').hide();
 				$('#infos-container').toggle();
+				$('#top-left-box').removeClass('fullscreen');
 			});
 			
 			$('#track-info-container').click(function(){
@@ -78,6 +79,9 @@
 				player.play();
 			});
 			
+			$('#track-details').click(function(){
+				$('#top-left-box').toggleClass('fullscreen');
+			});
 						
 			$(window).keydown(function(e){
 				if(e.keyCode == 32) toggleSound();

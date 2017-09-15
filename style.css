@@ -50,6 +50,10 @@ h1, h2{
 	background-color: rgba(255,255,255,0.85);
 }
 
+#top-left-box.fullscreen{
+	max-width: 100%;
+}
+
 .equalizer{
 	width:20px;
 	position:absolute;
