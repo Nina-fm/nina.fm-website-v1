@@ -1,32 +1,6 @@
 var old_track_info;
 
-function getTrackInfo() {
-
-	function setTrackDetails(path, type){
-		$.ajax({  type: 'GET',
-			url: path,
-          	async: true,
-          	contentType: "text/plain",
-          	success: function(html){
-          		$('#track-details-text').html('<p>' + html + '</p>');
-          		$('#track-details-text').removeClass().addClass(type);
-          		$('#track-type-infos').html(type == 'mixtape' ? 'une mixtape nina.fm' : 'une suggestion nina.fm')
-			}
-    	});
-	}
-
-	function setCover(path, type){
-		$.ajax({  type: 'GET',
-			url: path,
-          	async: true,
-          	success: function(html){
-          		var img = $(document.createElement('img'));
-				img.attr('src', path);
-				img.attr('onerror', 'this.style.display="none"');
-				$('#cover').html(img);
-			}
-    	});
-	}			
+function getTrackInfo() {		
 
 	function display(info){
 
@@ -46,14 +20,31 @@ function getTrackInfo() {
 		document.title = info.title + ' sur nina.fm';
 
 		//Look for meta data
-		
-		//Mixtape?
-		setTrackDetails(metadata_base_url + '/mixtapes/' + infos[0] + '/' + infos[1] + '/tracklist', 'mixtape');
-		setCover(metadata_base_url + '/mixtapes/' + infos[0] + '/' + infos[1] + '/cover');
+		$.ajax({  type: 'GET',
+			url: metadata_base_url,
+			data : {
+				artist : infos[0],
+				title : infos[1]
+			},
+          	async: true,
+          	contentType: "text/plain",
+          	success: function(data){
+          		data = JSON.parse(data)[0];
 
-		//Artist?
-		setTrackDetails(metadata_base_url + '/artists/' + infos[0] + '/infos', 'artist');
-		setCover(metadata_base_url + '/artists/' + infos[0] + '/cover', 'artist')
+ 				if(data == null) return;
+
+          		$('#track-details-text').html('<p>' + data.text_tracks + '</p>');
+          		$('#track-details-text').removeClass().addClass(data.type);
+          		$('#track-type-infos').html(data.type == 'mixtape' ? 'une mixtape nina.fm' : 'une suggestion nina.fm');
+
+          		if(data.cover){
+          			var img = $(document.createElement('img'));
+					img.attr('src', metadata_base_url + '/' + data.cover);
+					img.attr('onerror', 'this.style.display="none"');
+					$('#cover').html(img);
+          		}
+			}
+    	});
 	}
 
     $.ajax({  type: 'GET',
