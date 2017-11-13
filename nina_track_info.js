@@ -33,7 +33,14 @@ function getTrackInfo() {
 
  				if(data == null) return;
 
-          		$('#track-details-text').html('<p>' + data.text_tracks + '</p>');
+ 				var tracklist = data.text_tracks || '';
+ 				if(!data.text_tracks && data.tracks){
+ 					for (var i = 0; i < data.tracks.length; i++) {
+ 						tracklist = tracklist + data.tracks[i]['artist'] + ' : ' + data.tracks[i]['title'] + '\n';
+ 					};
+ 				}
+
+          		$('#track-details-text').html('<p>' + tracklist + '</p>');
           		$('#track-details-text').removeClass().addClass(data.type);
           		$('#track-type-infos').html(data.type == 'mixtape' ? 'une mixtape nina.fm' : 'une suggestion nina.fm');
 
