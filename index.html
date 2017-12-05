@@ -18,7 +18,7 @@
 </head>
 <body>
 	<div id="player">
-		<audio  src="http://flux.nina.fm:8000/nina.mp3" autoplay="autoplay" type="audio/mp3">
+		<audio  src="http://flux.nina.fm/nina.mp3" autoplay="autoplay" type="audio/mp3">
 			Votre navigateur est un vieux machin dépassé. Il ne supporte pas la musique, ce qui est con quand on veut écouter la radio.
 		</audio>
 	</div>
@@ -83,7 +83,29 @@
 			$('html').click(function(){
 				player.play();
 			});
-			
+
+
+			var time = player.currentTime;
+			var check_stream = setInterval(function(){
+				if(time >= player.currentTime && time > 0){
+					//Stream is not playing any more
+					checkConnection = function(){
+						$.ajax({
+							type : 'GET',
+							url : track_info_url, 
+							success : function(){
+								console.log("reloading");
+								location.reload();
+							},
+							error : checkConnection
+						});
+					};
+					checkConnection();
+					clearInterval(check_stream);
+				}
+				time = player.currentTime;
+			}, 1000);
+
 			$('#track-details').click(function(){
 				$('#top-left-box').toggleClass('fullscreen');
 			});
