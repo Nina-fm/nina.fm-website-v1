@@ -17,7 +17,6 @@ function getTrackInfo() {
 
 		//Set new title
 		$('#track-info').html(info.title);
-		document.title = info.title + ' sur nina.fm';
 
 		//Look for meta data
 		$.ajax({  type: 'GET',

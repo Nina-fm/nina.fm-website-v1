@@ -18,9 +18,9 @@
 html,body {
 	font-size:15px;
 	font-family: 'Raleway', sans-serif;
-  	background: url(fond.png) no-repeat center fixed; 
-  	-webkit-background-size: cover;
-  	background-size: cover;
+  	background: url(fond-marche.png) no-repeat right fixed red; 
+  	-webkit-background-size: contain;
+  	background-size: contain;
   	width:100%;
   	height:100%;
  	min-height:100%;
@@ -46,8 +46,8 @@ h1, h2{
 	top:0px;
 	left:0px;
 	padding:25px 15px 25px 15px;
-	color:black;
-	background-color: rgba(255,255,255,0.85);
+	color:#EEE;
+	background-color: #222;
 }
 
 #top-left-box.fullscreen{
@@ -66,7 +66,6 @@ h1, h2{
 
 #track-details-text {
 	overflow:scroll;
-	color: black;
 }
 
 #track-details-text.mixtape{
@@ -132,6 +131,14 @@ a{
 	color:#CCC;
 }
 
+#contact a{
+	position:absolute;
+	bottom:0px;
+	left:0px;
+	padding:20px 20px 20px 20px;
+	color:white;
+}
+
 @media all and (max-device-width: 700px)
 {
 	#cover img{
@@ -156,4 +163,8 @@ a{
 	#infos-container{
 		padding:60px 15px 15px 15px;
 	}
+}
+
+#logo, #show-infos, #infos{
+	display : none;
 }
