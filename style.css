@@ -18,7 +18,7 @@
 html,body {
 	font-size:15px;
 	font-family: 'Raleway', sans-serif;
-  	background: url(fond-marche.png) no-repeat right fixed red; 
+  	background: url(fond-marche.jpg) no-repeat right fixed #ff2129; 
   	-webkit-background-size: contain;
   	background-size: contain;
   	width:100%;
