@@ -30,9 +30,12 @@ html, body {
   min-height: 100%;
   padding: 0px;
   margin: 0px;
+  overflow: hidden;
+  pointer-events: none;
   background: url($image-bg) no-repeat center;
   -webkit-background-size: cover;
   background-size: cover;
+
 }
 
 body {
