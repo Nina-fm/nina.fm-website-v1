@@ -1,0 +1,142 @@
+// TRACK INFO
+
+#track-info {
+  z-index: 100;
+  overflow: scroll;
+  text-align: left;
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  height: 40px;
+  padding: 10px 80px 0 20px;
+  color: $color-main-text;
+  background-color: $color-main-bg;
+  @extend .noSelect;
+
+  @include respond-to(phone) {
+    max-width: 290px;
+  }
+
+  &.fullscreen {
+    max-width: 100%;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-weight: 400;
+  }
+
+  &:before {
+    content: '';
+    width: $equalizer-size;
+    height: $equalizer-size;
+    background-image: url($image-equalizer);
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+}
+
+#track-info-text {
+  margin: 0;
+  margin-left: 35px;
+  height: 40px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+#track-info-toggle {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+
+  i.close { display: none; }
+  i.open { display: block; }
+
+  body.show-track & {
+    i.close { display: block; }
+    i.open { display: none; }
+  }
+
+}
+
+// TRACK DETAILS
+
+#track-details {
+  z-index: 10;
+  transition: $animation;
+  width:50%;
+  height:100%;
+  overflow-y: scroll;
+  position:absolute;
+  top: 0;
+  bottom: 0;
+  left: -50%;
+  color: $color-info-text;
+  background-color:rgba($color-info-bg, $opacity-info-bg);
+
+  @include respond-to(tablet) {
+    width:100%;
+    left: -100%;
+  }
+
+  body.show-track & {
+    left: 0;
+  }
+}
+
+#track-details-type {
+  font-family: $font-condensed;
+  text-align: right;
+
+  span {
+    position: relative;
+    display: block;
+
+    &:not(:empty) {
+      margin-bottom: 1em;
+    }
+  }
+}
+
+#track-details-text {
+  overflow: scroll;
+  color: $color-info-text;
+
+  &.mixtape {
+    white-space: pre;
+  }
+
+  ol, ul {
+    margin:0;
+    padding:0 0 0 2em;
+    line-height: 1.5em;
+
+    li {
+      padding-left: 1em;
+    }
+  }
+
+  .artist {
+    font-weight: bold;
+  }
+
+  p {
+    margin: 35px 0px 25px 0px;
+  }
+}
+
+#track-details-cover {
+
+  img {
+    margin: auto;
+    margin-bottom: 1em;
+    width: 100%;
+  }
+}
+
+
