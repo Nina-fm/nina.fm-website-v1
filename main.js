@@ -49,9 +49,14 @@ jQuery(function ($) {
         time = player.currentTime;
     }, 1000);
 
-    // Add the ability to set the sound on/off with space key
+    // Add the ability to toggle the sound mute with space key
     $(window).keydown(function (e) {
         if (e.keyCode == 32) toggleSound();
+    });
+
+    // Add the ability to toggle the sound mute with equalizer
+    $('[data-toggle="mute"]').click(function(e){
+       toggleSound();
     });
 
 });

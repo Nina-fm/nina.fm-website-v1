@@ -23,22 +23,22 @@
   h1, h2, h3, h4, h5, h6 {
     font-weight: 400;
   }
+}
 
-  &:before {
-    content: '';
-    width: $equalizer-size;
-    height: $equalizer-size;
-    background-image: url($image-equalizer);
-    background-repeat: no-repeat;
-    background-size: contain;
-    background-position: center;
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
+#equalizer {
+  width: $equalizer-size;
+  height: $equalizer-size;
+  background-image: url($image-equalizer);
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor:pointer;
 
-    body.muted & {
-      opacity: 0.2;
-    }
+  body.muted & {
+    opacity: 0.2;
   }
 }
 
