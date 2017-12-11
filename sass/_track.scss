@@ -20,6 +20,7 @@
   background-color: $color-main-bg;
   @extend .noSelect;
   overflow: hidden;
+  font-size: 1.1em;
 
   @include respond-to(phone) {
     max-width: 290px;
