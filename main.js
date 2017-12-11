@@ -25,6 +25,7 @@ jQuery(function ($) {
         player.play();
     });
 
+    // Reloading when sound is down
     var time = player.currentTime;
     var check_stream = setInterval(function () {
         if (time >= player.currentTime && time > 0) {
@@ -46,6 +47,7 @@ jQuery(function ($) {
         time = player.currentTime;
     }, 1000);
 
+    // Add the ability to set the sound on/off with space key
     $(window).keydown(function (e) {
         if (e.keyCode == 32) toggleSound();
     });
