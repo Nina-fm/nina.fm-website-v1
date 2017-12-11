@@ -24,7 +24,12 @@
 
     <div id="track-info">
         <div id="equalizer" data-toggle="mute" title="Activer/désactiver le son, vous pouvez aussi utiliser la barre d'espace."></div>
-        <h3 id="track-info-text" data-append="trackinfo">Recherche des infos...</h3>
+        <div id="track-info-viewer">
+            <div class="slider">
+                <div id="track-info-text" data-append="trackinfo">Recherche des infos...</div>
+                <div id="track-info-type" data-append="tracktype"></div>
+            </div>
+        </div>
         <a id="track-info-toggle" class="btn" data-bodyclass="show-track" title="Afficher/masquer le détail de la mixtape.">
             <i class="material-icons open">keyboard_arrow_right</i>
             <i class="material-icons close">keyboard_arrow_left</i>
@@ -36,7 +41,7 @@
             <div class="block">
                 <div id="track-details-cover" data-append="trackcover"></div>
                 <div id="track-details-type">
-                    <span data-append="tracktype"></span>
+                    <span class="type" data-append="tracktype"></span><span class="author" data-append="trackauthor"></span>
                 </div>
                 <div id="track-details-text">
                     <div data-append="tracklist">Recherche des infos...</div>

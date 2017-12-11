@@ -1,5 +1,13 @@
 // TRACK INFO
 
+@keyframes playerLoop {
+  0% { top: 0; }
+  48% { top: 0; }
+  50% { top: -20px; }
+  99% { top: -20px }
+  100% { top: 0; }
+}
+
 #track-info {
   z-index: 100;
   text-align: left;
@@ -7,10 +15,11 @@
   top: 20px;
   left: 20px;
   height: 40px;
-  padding: 10px 80px 0 20px;
+  padding: 11px 80px 0 20px;
   color: $color-main-text;
   background-color: $color-main-bg;
   @extend .noSelect;
+  overflow: hidden;
 
   @include respond-to(phone) {
     max-width: 290px;
@@ -25,30 +34,39 @@
   }
 }
 
-#equalizer {
-  width: $equalizer-size;
-  height: $equalizer-size;
-  background-image: url($image-equalizer);
-  background-repeat: no-repeat;
-  background-size: contain;
-  background-position: center;
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  cursor:pointer;
+#track-info-viewer {
+  height: 20px;
+  overflow: hidden;
 
-  body.muted & {
-    opacity: 0.2;
+  .slider {
+    position: relative;
+    top: 0;
+  }
+
+  &.animated {
+    .slider {
+      -webkit-animation: playerLoop 10s infinite; /* Safari 4+ */
+      -moz-animation:    playerLoop 10s infinite; /* Fx 5+ */
+      -o-animation:      playerLoop 10s infinite; /* Opera 12+ */
+      animation:         playerLoop 10s infinite; /* IE 10+, Fx 29+ */
+    }
   }
 }
 
 #track-info-text {
   margin: 0;
+  min-width: 200px;
   margin-left: 35px;
-  height: 40px;
+  height: 20px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+}
+
+#track-info-type {
+  margin-left: 35px;
+  height: 20px;
+  white-space: nowrap;
 }
 
 #track-info-toggle {
@@ -70,6 +88,23 @@
     i.open { display: none; }
   }
 
+}
+
+#equalizer {
+  width: $equalizer-size;
+  height: $equalizer-size;
+  background-image: url($image-equalizer);
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor:pointer;
+
+  body.muted & {
+    opacity: 0.2;
+  }
 }
 
 // TRACK DETAILS
@@ -103,7 +138,11 @@
 
   span {
     position: relative;
-    display: block;
+    display: inline-block;
+
+    &.author {
+      margin-left: 0.2em;
+    }
 
     &:not(:empty) {
       margin-bottom: 1em;

@@ -50,9 +50,12 @@ function getTrackInfo() {
                     }
                     $('[data-append="tracklist"]').append(tracklist).removeClass().addClass(data.type);
 
-                    // Update the track type
-                    $('[data-append="tracktype"]').html('Une mixtape Nina.fm proposée par <strong>' + artist + '</strong>');
+                    // Update the track type and author
+                    $('[data-append="trackauthor"]').html('proposée par <strong>' + artist + '</strong>');
                 }
+
+                $('[data-append="tracktype"]').html(isMixtape ? 'Une mixtape Nina.fm' : 'Une suggestion Nina.fm');
+                $('#track-info-viewer').addClass('animated');
 
                 // Update the body class
                 $('body').toggleClass('mixtape', isMixtape);
