@@ -5,7 +5,9 @@ jQuery(function ($) {
 
     // Function for toggling sound
     function toggleSound() {
-        $('audio').prop('muted', !$('audio').prop('muted'));
+        var muted = !$('audio').prop('muted');
+        $('body').toggleClass('muted', muted);
+        $('audio').prop('muted', muted);
     }
 
     //Retrieve track info every 5 seconds

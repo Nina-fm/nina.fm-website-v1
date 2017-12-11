@@ -35,6 +35,10 @@
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
+
+    body.muted & {
+      opacity: 0.2;
+    }
   }
 }
 
