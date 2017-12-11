@@ -92,6 +92,7 @@
 }
 
 #equalizer {
+  z-index: 10;
   width: $equalizer-size;
   height: $equalizer-size;
   background-image: url($image-equalizer);
