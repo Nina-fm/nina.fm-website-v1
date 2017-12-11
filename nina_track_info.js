@@ -3,14 +3,16 @@ var old_track_info;
 function getTrackInfo() {
 
     function display(info) {
+        // Skip during the track play
+        if (old_track_info == info.title) return;
+
         // Get the track title
         var infos = info.title.split(' - ');
         var artist = infos[0];
         var title = infos[1];
 
-        if (old_track_info == info.title) return;
-
-        //New track, reset infos
+        // New track, reset track viewer
+        $('body').removeClass('mixtape');
         $('#track-info-viewer').removeClass('animated');
         old_track_info = info.title;
         $('[data-append="trackinfo"]').html('');
@@ -34,7 +36,6 @@ function getTrackInfo() {
             contentType: 'text/plain',
             success: function (data) {
                 data = JSON.parse(data)[0];
-                console.log(data);
                 if (data == null) return;
 
                 var isMixtape = data.type == 'mixtape';
@@ -54,21 +55,26 @@ function getTrackInfo() {
 
                     // Update the track type and author
                     $('[data-append="trackauthor"]').html('proposée par <strong>' + artist + '</strong>');
+
+                    // Update the track cover image
+                    if (data.cover) {
+                        var img = $(document.createElement('img'));
+                        img.attr('src', metadata_base_url + '/' + data.cover);
+                        img.attr('onerror', 'this.style.display="none"');
+                        $('[data-append="trackcover"]').html(img);
+                    }
+
+                    // Update the body class
+                    $('body').addClass('mixtape');
                 }
 
                 $('[data-append="tracktype"]').html(isMixtape ? 'Une mixtape Nina.fm' : 'Une suggestion Nina.fm');
                 $('#track-info-viewer').addClass('animated');
-
-                // Update the body class
-                $('body').toggleClass('mixtape', isMixtape);
-
-                // Update the track cover image
-                if (data.cover) {
-                    var img = $(document.createElement('img'));
-                    img.attr('src', metadata_base_url + '/' + data.cover);
-                    img.attr('onerror', 'this.style.display="none"');
-                    $('[data-append="trackcover"]').html(img);
-                }
+            },
+            error: function (e) {
+                // If no track info, it's a suggestion
+                $('[data-append="tracktype"]').html('Une suggestion Nina.fm');
+                $('#track-info-viewer').toggleClass('animated', true);
             }
         });
     }
