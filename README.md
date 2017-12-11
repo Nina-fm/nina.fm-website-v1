@@ -9,3 +9,15 @@ var stream_url = "http://my_stream_url";
 var track_info_url = "http://flux.nina.fm:8000/json.xsl";
 var mountpoint = '/stream';
 ```
+
+## Setup
+
+```
+npm install
+```
+
+## Build for prod
+
+```
+gulp sass
+```
