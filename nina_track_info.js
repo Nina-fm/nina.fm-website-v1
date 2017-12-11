@@ -39,6 +39,7 @@ function getTrackInfo() {
 
                 // Display the tracklist if is a mixtape
                 if (isMixtape) {
+                    console.log("is a mixtape");
                     var tracklist = data.text_tracks.replace(/\n/g, "<br>") || '';
 
                     // TODO: Add the preference for tracks array instead of tracks text
@@ -49,13 +50,13 @@ function getTrackInfo() {
                         }
                     }
                     $('[data-append="tracklist"]').append(tracklist).removeClass().addClass(data.type);
+
+                    // Update the track type
+                    $('[data-append="tracktype"]').html('Une mixtape Nina.fm proposée par <strong>' + artist + '</strong>');
                 }
 
                 // Update the body class
                 $('body').toggleClass('mixtape', isMixtape);
-
-                // Update the track type
-                $('[data-append="tracktype"]').html(data.type == 'mixtape' ? 'une mixtape nina.fm' : 'une suggestion nina.fm');
 
                 // Update the track cover image
                 if (data.cover) {
