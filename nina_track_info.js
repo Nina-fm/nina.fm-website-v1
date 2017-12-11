@@ -11,6 +11,7 @@ function getTrackInfo() {
         if (old_track_info == info.title) return;
 
         //New track, reset infos
+        $('#track-info-viewer').removeClass('animated');
         old_track_info = info.title;
         $('[data-append="trackinfo"]').html('');
         $('[data-append="tracklist"]').html('');
@@ -33,6 +34,7 @@ function getTrackInfo() {
             contentType: 'text/plain',
             success: function (data) {
                 data = JSON.parse(data)[0];
+                console.log(data);
                 if (data == null) return;
 
                 var isMixtape = data.type == 'mixtape';
