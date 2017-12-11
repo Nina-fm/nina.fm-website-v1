@@ -72,8 +72,7 @@ p:last-child {
   top:  $margin-global*5;
   left: $margin-global*2;
   right: $margin-global*2;
-  //bottom: $margin-global*2;
-  //overflow:scroll;
+  margin-bottom: $margin-global*2;
   color: $color-info-text;
 
   a {
@@ -90,4 +89,8 @@ p:last-child {
   -moz-border-radius: 4px;
   border-radius: 4px;
   font-weight: 100;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
 }

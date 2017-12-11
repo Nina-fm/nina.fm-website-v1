@@ -2,7 +2,6 @@
 
 #track-info {
   z-index: 100;
-  overflow: scroll;
   text-align: left;
   position: absolute;
   top: 20px;
@@ -53,6 +52,11 @@
   right: 10px;
   top: 50%;
   transform: translateY(-50%);
+  display: none;
+
+  body.mixtape & {
+    display: block;
+  }
 
   i.close { display: none; }
   i.open { display: block; }
