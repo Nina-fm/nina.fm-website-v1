@@ -39,7 +39,6 @@ function getTrackInfo() {
 
                 // Display the tracklist if is a mixtape
                 if (isMixtape) {
-                    console.log("is a mixtape");
                     var tracklist = data.text_tracks.replace(/\n/g, "<br>") || '';
 
                     // TODO: Add the preference for tracks array instead of tracks text
