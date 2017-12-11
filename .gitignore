@@ -2,3 +2,5 @@
 env.js
 playlists/*
 metadata/*
+.idea/
+node_modules/
