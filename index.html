@@ -1,98 +1,81 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN"
-   "http://www.w3.org/TR/html4/strict.dtd">
+        "http://www.w3.org/TR/html4/strict.dtd">
 <html lang="fr">
 <head>
-	<link rel="icon" href="favicon.png" type="image/gif" >
-	<link href='http://fonts.googleapis.com/css?family=Raleway' rel='stylesheet' type='text/css'>
-	<link rel="stylesheet" href="style.css" type="text/css" media="screen" title="no title" charset="utf-8">
-	<script type="text/javascript" src="https://code.jquery.com/jquery-2.1.3.min.js" charset="utf-8"></script>
-	
-	<script type="text/javascript" src="env.js" charset="utf-8"></script>
-	<script src="nina_track_info.js" type="text/javascript" charset="utf-8"></script>
-	
-	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-	<meta name="description" content="La radio Sallancharde à la portée interplanétaire. Faites une pause, écoutez!">
-	
-	<title>nina.fm</title>
+    <link rel="icon" href="favicon.png" type="image/gif">
+    <link href='http://fonts.googleapis.com/css?family=Material+Icons' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="style.css" type="text/css" media="screen" title="no title" charset="utf-8">
+
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <meta name="description" content="La radio Sallancharde à la portée interplanétaire. Faites une pause, écoutez!">
+
+    <title>Nina.fm - H24 Musical - 0 Pub</title>
 </head>
-<body>
-	<div id="player">
-		<audio  src="http://flux.nina.fm:8000/nina.mp3" autoplay="autoplay" type="audio/mp3">
-			Votre navigateur est un vieux machin dépassé. Il ne supporte pas la musique, ce qui est con quand on veut écouter la radio.
-		</audio>
-	</div>
-	
-	<div id="top-left-box">
-		<div id="track-info-container">
-			<img class="equalizer" src="equalizer.gif"><h3 id="track-info">Recherche des infos...</h3>
-			<div id="track-type-infos"></div>
-		</div>
-		<div id="track-details">
-			<div id="cover"></div>
-			<div id="track-details-text"></div>
-		</div>
-	</div>
-		
-				
-	<a id="show-infos" class="titles">+</a>
-	
-	<div id="infos-container">
-		<div id="infos">
-			<h2>Une nouvelle saison commence...</h2>
-			<h3>Nina fait peau neuve</h3>
-			<p>Après des mois de travail acharné, plus ou moins, Nina est prête à accueillir les oreilles de la galaxie. Faites chauffer les amplis, vibrer les baffles, envoyez sa voix aux confins du cosmos!</p>
-			<h3>On diffuse vos mixtapes</h3>
-			<p>Vous avez l'âme d'un Dj? Envoyez votre mixtape et si les oreilles de Nina frétillent elle la diffusera à l'antenne. Ecrivez-nous, nous vous donnerons les instructions <a href="mailto:contributions@nina.fm?Demande d'instructions pour envoi de son">infos@nina.fm</a></p>
-			<h3>Plus on est de fous...</h3>
-			<p>Nina a besoin de bras, de bouches et d'oreilles pour l'aider. Pour en savoir plus : <a href="mailto:infos@nina.fm?subject=Rejoindre l'asso en tant que bénévole">infos@nina.fm</a></p>
-			<i>Appuyez sur la barre espace pour couper le son, et cliquez sur le nom du contenu (en haut à gauche) pour obtenir des détails.</i>
-		</div>
-	</div>
-	<div id="logo">nina.fm</div>
-	
-	<script type="text/javascript" charset="utf-8">
-	
-		function toggleSound(){
-			$('audio').prop('muted', !$('audio').prop('muted'));
-		}
+<body class="">
 
-		//Retrieve track info every 5 seconds
-		setInterval(function(){
-			getTrackInfo();
-		}, 5000);
-		
-		$(document).ready(function(){
-			
-			$('#show-infos').click(function(){
-				$('#track-details').hide();
-				$('#infos-container').toggle();
-				$('#top-left-box').removeClass('fullscreen');
-			});
-			
-			$('#track-info-container').click(function(){
-				$('#infos-container').hide();
-				$('#track-details').toggle();
-			});
-			
-			$('#infos-container').click(function(){
-				$('#infos-container').hide();
-			});
-			
-			var player = $('audio')[0];
-			$('html').click(function(){
-				player.play();
-			});
-			
-			$('#track-details').click(function(){
-				$('#top-left-box').toggleClass('fullscreen');
-			});
-						
-			$(window).keydown(function(e){
-				if(e.keyCode == 32) toggleSound();
-			});
+    <div class="event-bg"></div>
 
-		});
-	</script>
+    <div id="player">
+        <audio src="http://flux.nina.fm/nina.mp3" autoplay="autoplay" type="audio/mp3">
+            Votre navigateur est un vieux machin dépassé. Il ne supporte pas la musique, ce qui est con quand on veut
+            écouter la radio.
+        </audio>
+    </div>
+
+    <div id="track-info">
+        <h3 id="track-info-text" data-append="trackinfo">Recherche des infos...</h3>
+        <a id="track-info-toggle" class="btn" data-bodyclass="show-track">
+            <i class="material-icons open">keyboard_arrow_right</i>
+            <i class="material-icons close">keyboard_arrow_left</i>
+        </a>
+    </div>
+
+    <div id="track-details">
+        <div class="container">
+            <div class="block">
+            <div id="track-details-cover" data-append="trackcover"></div>
+            <div id="track-details-type">
+                <span data-append="tracktype"></span>
+            </div>
+            <div id="track-details-text">
+                <div data-append="tracklist">Recherche des infos...</div>
+            </div>
+            </div>
+        </div>
+    </div>
+
+    <a id="posts-toggle" class="btn" data-bodyclass="show-posts">
+        <i class="material-icons open">reorder</i>
+        <i class="material-icons close">clear</i>
+    </a>
+
+    <div id="posts-box">
+        <div class="container">
+            <h2 class="heading">Une nouvelle saison commence...</h2>
+            <div class="posts">
+                <div class="block">
+                    <h3>Nina fait peau neuve</h3>
+                    <p>Après des mois de travail acharné, plus ou moins, Nina est prête à accueillir les oreilles de la galaxie. Faites chauffer les amplis, vibrer les baffles, envoyez sa voix aux confins du cosmos !</p>
+                </div>
+                <div class="block">
+                    <h3>On diffuse vos mixtapes</h3>
+                    <p>Vous avez l'âme d'un Dj ? Envoyez votre mixtape et si les oreilles de Nina frétillent elle la diffusera à l'antenne. Ecrivez-nous, nous vous donnerons les instructions <a href="mailto:contributions@nina.fm?subject=Demande d'instructions pour envoi de son">infos@nina.fm</a>
+                    </p>
+                </div>
+                <div class="block">
+                    <h3>Plus on est de fous...</h3>
+                    <p>Nina a besoin de bras, de bouches et d'oreilles pour l'aider. Pour en savoir plus : <a href="mailto:infos@nina.fm?subject=Rejoindre l'asso en tant que bénévole">infos@nina.fm</a></p>
+                </div>
+            </div>
+            <!--<div class="manual">Appuyez sur la barre espace pour couper ou réactiver le son.</div>-->
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-2.1.3.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="main.js" type="text/javascript" charset="utf-8"></script>
+    <script src="env.js" type="text/javascript" charset="utf-8"></script>
+    <script src="nina_track_info.js" type="text/javascript" charset="utf-8"></script>
+
 </body>
 </html>

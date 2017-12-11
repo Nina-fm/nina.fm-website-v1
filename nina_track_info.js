@@ -1,67 +1,75 @@
-var old_track_info;
+var old_track_info
 
-function getTrackInfo() {		
+function getTrackInfo () {
 
-	function display(info){
+  function display (info) {
 
-		var infos = info.title.split(' - ');
+    // info.title = "Hagi - Les bons Tuyaux";
 
-		if(old_track_info == info.title) return;
+    var infos = info.title.split(' - ')
+    var artist = infos[0]
+    var title = infos[1]
 
-		//New track, reset infos
-		old_track_info = info.title;
-		$('#track-info').html('');
-		$('#track-details-text').html('');
-		$('#track-type-infos').html('');
-		$('#cover').html('');
+    if (old_track_info == info.title) return
 
-		//Set new title
-		$('#track-info').html(info.title);
-		document.title = info.title + ' sur nina.fm';
+    //New track, reset infos
+    old_track_info = info.title
+    $('[data-append="trackinfo"]').html('')
+    $('[data-append="tracklist"]').html('')
+    $('[data-append="tracktype"]').html('')
+    $('[data-append="trackcover"]').html('')
 
-		//Look for meta data
-		$.ajax({  type: 'GET',
-			url: metadata_base_url,
-			data : {
-				artist : infos[0],
-				title : infos[1]
-			},
-          	async: true,
-          	contentType: "text/plain",
-          	success: function(data){
-          		data = JSON.parse(data)[0];
+    //Set new title
+    $('[data-append="trackinfo"]').html('<strong>'+artist+'</strong> – '+title)
+    document.title = info.title + ' sur nina.fm'
 
- 				if(data == null) return;
+    //Look for meta data
+    $.ajax({
+      type: 'GET',
+      url: metadata_base_url,
+      data: {
+        artist: artist,
+        title: title
+      },
+      async: true,
+      contentType: 'text/plain',
+      success: function (data) {
+        data = JSON.parse(data)[0]
 
- 				var tracklist = data.text_tracks || '';
- 				if(!data.text_tracks && data.tracks){
- 					for (var i = 0; i < data.tracks.length; i++) {
- 						tracklist = tracklist + data.tracks[i]['artist'] + ' : ' + data.tracks[i]['title'] + '\n';
- 					};
- 				}
+        if (data == null) return
 
-          		$('#track-details-text').html('<p>' + tracklist + '</p>');
-          		$('#track-details-text').removeClass().addClass(data.type);
-          		$('#track-type-infos').html(data.type == 'mixtape' ? 'une mixtape nina.fm' : 'une suggestion nina.fm');
+        var tracklist = data.text_tracks.replace(/\n/g,"<br>") || '';
 
-          		if(data.cover){
-          			var img = $(document.createElement('img'));
-					img.attr('src', metadata_base_url + '/' + data.cover);
-					img.attr('onerror', 'this.style.display="none"');
-					$('#cover').html(img);
-          		}
-			}
-    	});
-	}
-
-    $.ajax({  type: 'GET',
-          url: track_info_url,
-          async: true,
-          jsonpCallback: 'parseMusic',
-          contentType: "application/json",
-          dataType: 'jsonp',
-          success: function(data){display(data[mountpoint]);},
-          error: function (e) {console.log(e.message);  
+        if(!data.text_tracks && data.tracks){
+          tracklist = $('<ol class="tracklist"></ol>');
+          for (var i = 0; i < data.tracks.length-1; i++) {
+            tracklist.append($('<li><span class="artist">'+data.tracks[i]['artist'] + '</span> – <span class="title">' + data.tracks[i]['title']+'</span></li>'))
+          }
         }
-    });
+
+        $('[data-append="tracklist"]').append(tracklist).removeClass().addClass(data.type)
+        $('[data-append="tracktype"]').html(data.type == 'mixtape' ? 'une mixtape nina.fm' : 'une suggestion nina.fm')
+
+        if (data.cover) {
+          var img = $(document.createElement('img'))
+          img.attr('src', metadata_base_url + '/' + data.cover)
+          img.attr('onerror', 'this.style.display="none"')
+          $('[data-append="trackcover"]').html(img)
+        }
+      }
+    })
+  }
+
+  $.ajax({
+    type: 'GET',
+    url: track_info_url,
+    async: true,
+    jsonpCallback: 'parseMusic',
+    contentType: 'application/json',
+    dataType: 'jsonp',
+    success: function (data) {display(data[mountpoint])},
+    error: function (e) {
+      console.log(e.message)
+    }
+  })
 }
