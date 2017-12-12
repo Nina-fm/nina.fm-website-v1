@@ -68,13 +68,13 @@ function getTrackInfo() {
                     $('body').addClass('mixtape');
                 }
 
-                $('[data-append="tracktype"]').html(isMixtape ? 'Une mixtape Nina.fm' : 'Une suggestion Nina.fm');
+                $('[data-append="tracktype"]').html(isMixtape ? 'Une mixtape Nina.fm' : '');
                 $('#track-info-viewer').addClass('animated');
             },
             error: function (e) {
                 // If no track info, it's a suggestion
-                $('[data-append="tracktype"]').html('Une suggestion Nina.fm');
-                $('#track-info-viewer').toggleClass('animated', true);
+                // $('[data-append="tracktype"]').html('Une suggestion Nina.fm');
+                // $('#track-info-viewer').toggleClass('animated', true);
             }
         });
     }
