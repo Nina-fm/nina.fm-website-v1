@@ -68,7 +68,7 @@ function getTrackInfo() {
                     $('body').addClass('mixtape');
                 }
 
-                $('[data-append="tracktype"]').html(isMixtape ? 'Une mixtape Nina.fm' : '');
+                $('[data-append="tracktype"]').html(isMixtape ? 'Une mixtape Nina.fm' : 'Une suggestion Nina.fm');
                 $('#track-info-viewer').addClass('animated');
             },
             error: function (e) {
