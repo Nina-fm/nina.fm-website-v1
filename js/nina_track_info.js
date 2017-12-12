@@ -18,6 +18,7 @@ function getTrackInfo() {
         $('[data-append="trackinfo"]').html('');
         $('[data-append="tracklist"]').html('');
         $('[data-append="tracktype"]').html('');
+        $('[data-append="trackauthor"]').html('');
         $('[data-append="trackcover"]').html('');
 
         // Set new page title
@@ -45,12 +46,12 @@ function getTrackInfo() {
                     var tracklist = data.text_tracks.replace(/\n/g, "<br>") || '';
 
                     // TODO: Add the preference for tracks array instead of tracks text
-                    if (!data.text_tracks && data.tracks) {
-                        tracklist = $('<ol class="tracklist"></ol>');
-                        for (var i = 0; i < data.tracks.length - 1; i++) {
-                            tracklist.append($('<li><span class="artist">' + data.tracks[i]['artist'] + '</span> – <span class="title">' + data.tracks[i]['title'] + '</span></li>'));
-                        }
-                    }
+                    // if (!data.text_tracks && data.tracks) {
+                    //     tracklist = $('<ol class="tracklist"></ol>');
+                    //     for (var i = 0; i < data.tracks.length - 1; i++) {
+                    //         tracklist.append($('<li><span class="artist">' + data.tracks[i]['artist'] + '</span> – <span class="title">' + data.tracks[i]['title'] + '</span></li>'));
+                    //     }
+                    // }
                     $('[data-append="tracklist"]').append(tracklist).removeClass().addClass(data.type);
 
                     // Update the track type and author
