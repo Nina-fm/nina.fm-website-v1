@@ -23,7 +23,6 @@ function getTrackInfo() {
 
         // Set new page title
         $('[data-append="trackinfo"]').html('<strong>' + artist + '</strong> – ' + title);
-        document.title = info.title + ' sur Nina.fm';
 
         // Look for current track meta data
         $.ajax({
