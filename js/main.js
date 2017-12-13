@@ -35,7 +35,7 @@ jQuery(function ($) {
             checkConnection = function () {
                 $.ajax({
                     type: 'GET',
-                    url: track_info_url,
+                    url: metadata_base_url,
                     success: function () {
                         console.log('reloading');
                         location.reload();
