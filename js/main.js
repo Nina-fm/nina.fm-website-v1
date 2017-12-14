@@ -10,6 +10,11 @@ jQuery(function ($) {
         $('audio').prop('muted', muted);
     }
 
+    // Load the audio player dynamically
+    $('#audioplayer').attr('src', stream_url).on('canplaythrough', function(e){
+        $('body').removeClass('loading');
+    });
+
     //Retrieve track info every 5 seconds
     setInterval(function () {
         getTrackInfo();
