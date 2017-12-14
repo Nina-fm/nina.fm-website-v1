@@ -4,3 +4,4 @@ playlists/*
 metadata/*
 .idea/
 node_modules/
+google*.html
