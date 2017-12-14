@@ -1,0 +1,107 @@
+@font-face {
+  font-family: 'nina-icons';
+  src:  url('fonts/nina-icons.eot?sgxx1b');
+  src:  url('fonts/nina-icons.eot?sgxx1b#iefix') format('embedded-opentype'),
+  url('fonts/nina-icons.ttf?sgxx1b') format('truetype'),
+  url('fonts/nina-icons.woff?sgxx1b') format('woff'),
+  url('fonts/nina-icons.svg?sgxx1b#nina-icons') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
+[class^="nina-icon-"], [class*=" nina-icon-"] {
+  /* use !important to prevent issues with browser extensions that change fonts */
+  font-family: 'nina-icons' !important;
+  speak: none;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+
+  /* Better Font Rendering =========== */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.nina-icon-add_circle:before {
+  content: "\e147";
+}
+.nina-icon-add_circle_outline:before {
+  content: "\e3ba";
+}
+.nina-icon-cancel:before {
+  content: "\e5c9";
+}
+.nina-icon-navigate_before:before {
+  content: "\e408";
+}
+.nina-icon-navigate_next:before {
+  content: "\e409";
+}
+.nina-icon-close:before {
+  content: "\e5cd";
+}
+.nina-icon-remove_circle:before {
+  content: "\e15c";
+}
+.nina-icon-expand_less:before {
+  content: "\e5ce";
+}
+.nina-icon-expand_more:before {
+  content: "\e5cf";
+}
+.nina-icon-format_align_justify:before {
+  content: "\e235";
+}
+.nina-icon-highlight_off:before {
+  content: "\e888";
+}
+.nina-icon-menu:before {
+  content: "\e5d2";
+}
+.nina-icon-pause_circle_filled:before {
+  content: "\e035";
+}
+.nina-icon-pause_circle_outline:before {
+  content: "\e036";
+}
+.nina-icon-play_circle_filled:before {
+  content: "\e038";
+}
+.nina-icon-play_circle_outline:before {
+  content: "\e039";
+}
+.nina-icon-playlist_add:before {
+  content: "\e03b";
+}
+.nina-icon-playlist_add_check:before {
+  content: "\e065";
+}
+.nina-icon-playlist_play:before {
+  content: "\e05f";
+}
+.nina-icon-queue_music:before {
+  content: "\e03d";
+}
+.nina-icon-remove_circle_outline:before {
+  content: "\e15d";
+}
+.nina-icon-reorder:before {
+  content: "\e8fe";
+}
+.nina-icon-view_headline:before {
+  content: "\e8ee";
+}
+.nina-icon-volume_down:before {
+  content: "\e04d";
+}
+.nina-icon-volume_mute:before {
+  content: "\e04e";
+}
+.nina-icon-volume_off:before {
+  content: "\e04f";
+}
+.nina-icon-volume_up:before {
+  content: "\e050";
+}
