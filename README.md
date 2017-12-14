@@ -13,12 +13,19 @@ var mountpoint = '/stream';
 
 ## Development
 #### Setup
+If you want to change the scss stylesheets sources you need to init the dev environment.
 ```
 npm install
 ```
 
-#### Build for prod
+#### Usage
 
+To build the project assets simply use :
 ```
-gulp
+gulp build
+```
+---
+You can automate the project build for more comfortable development. 
+```
+gulp watch
 ```
