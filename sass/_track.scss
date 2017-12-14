@@ -12,10 +12,10 @@
   z-index: 100;
   text-align: left;
   position: absolute;
-  top: 20px;
-  left: 20px;
+  top: $margin-global;
+  left: $margin-global;
   height: 40px;
-  padding: 11px 80px 0 20px;
+  padding: 11px 40px 0 20px;
   color: $color-main-text;
   background-color: $color-main-bg;
   @extend .noSelect;
@@ -23,7 +23,7 @@
   font-size: 1.1em;
 
   @include respond-to(phone) {
-    max-width: 290px;
+    max-width: calc(100% - #{$margin-global*5});
   }
 
   &.fullscreen {
@@ -56,7 +56,7 @@
 
 #track-info-text {
   margin: 0;
-  min-width: 200px;
+  width: auto;
   margin-left: 35px;
   height: 20px;
   white-space: nowrap;
@@ -78,6 +78,10 @@
   font-size: 1.4em;
   margin-top: -0.05em;
   display: none;
+
+  @include respond-to(tablet) {
+    margin-top: 0;
+  }
 
   body.mixtape & {
     display: block;
@@ -108,6 +112,10 @@
 
   body.muted & {
     opacity: 0.2;
+  }
+
+  body.loading & {
+    opacity: 0;
   }
 }
 
