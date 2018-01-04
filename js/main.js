@@ -15,10 +15,7 @@ jQuery(function ($) {
         $('body').removeClass('loading');
     });
 
-    //Retrieve track info every 5 seconds
-    setInterval(function () {
-        getTrackInfo();
-    }, 5000);
+    getTrackInfo();
 
     // Auto toggle body classes for screen parts
     $('[data-bodyclass]').click(function (e) {

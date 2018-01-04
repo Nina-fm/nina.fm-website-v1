@@ -42,15 +42,18 @@ function getTrackInfo() {
 
                 // Display the tracklist if is a mixtape
                 if (isMixtape) {
-                    var tracklist = data.text_tracks.replace(/\n/g, "<br>") || '';
+
+                    var tracklist;
 
                     // TODO: Add the preference for tracks array instead of tracks text
-                    // if (!data.text_tracks && data.tracks) {
-                    //     tracklist = $('<ol class="tracklist"></ol>');
-                    //     for (var i = 0; i < data.tracks.length - 1; i++) {
-                    //         tracklist.append($('<li><span class="artist">' + data.tracks[i]['artist'] + '</span> – <span class="title">' + data.tracks[i]['title'] + '</span></li>'));
-                    //     }
-                    // }
+                    if (!data.text_tracks && data.tracks) {
+                        tracklist = $('<ol class="tracklist"></ol>');
+                        for (var i = 0; i < data.tracks.length - 1; i++) {
+                            tracklist.append($('<li><span class="artist">' + data.tracks[i]['artist'] + '</span> – <span class="title">' + data.tracks[i]['title'] + '</span></li>'));
+                        }
+                    } else {
+                        tracklist = data.text_tracks.replace(/\n/g, "<br>") || '';
+                    }
                     $('[data-append="tracklist"]').append(tracklist).removeClass().addClass(data.type);
 
                     // Update the track type and author
@@ -89,9 +92,12 @@ function getTrackInfo() {
         dataType: 'jsonp',
         success: function (data) {
             display(data[mountpoint]);
+            setTimeout(function(){getTrackInfo()}, 5000);
+
         },
         error: function (e) {
             console.log(e.message);
+            setTimeout(function(){getTrackInfo()}, 5000);
         }
     });
 }
