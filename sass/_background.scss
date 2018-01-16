@@ -24,6 +24,10 @@ body {
   text-align: center;
   transition: $animation;
 
+  @include respond-to(small-height) {
+    opacity:0;
+  }
+
   body.show-posts & {
     width: 50% !important;
 

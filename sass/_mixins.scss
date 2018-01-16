@@ -26,6 +26,10 @@
  * used to generate a max-width media query.
  */
 @mixin respond-to($media) {
+  @if $media == small-height {
+    @media (max-height: 400px) { @content; }
+  }
+
   /* Landscape phones and down */
   @if $media == phone {
     @media (max-width: 480px) { @content; }

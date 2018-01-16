@@ -7,7 +7,12 @@
   height: 40px;
   width: 40px;
   color:white;
+  transition: $animation;
   //background: rgba(255,255,255, 1);
+
+  @include respond-to(small-height) {
+    opacity:0;
+  }
 
   @include respond-to(tablet) {
     z-index: 10;
