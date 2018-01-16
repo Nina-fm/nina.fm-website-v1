@@ -29,6 +29,12 @@ jQuery(function ($) {
         player.play();
     });
 
+    var checkPlayer = setInterval(function(){
+        if (!player.paused) {
+            $('body').removeClass('loading');
+        }
+    }, 1000);
+
     // Reloading when sound is down
     var time = player.currentTime;
     var check_stream = setInterval(function () {
