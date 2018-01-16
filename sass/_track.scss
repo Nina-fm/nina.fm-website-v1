@@ -17,13 +17,13 @@
   height: 40px;
   padding: 11px 40px 0 20px;
   color: $color-main-text;
-  background-color: $color-main-bg;
+  background-color: rgba($color-main-bg, 0);
   @extend .noSelect;
   overflow: hidden;
   font-size: 1.1em;
 
   @include respond-to(phone) {
-    max-width: calc(100% - #{$margin-global*5});
+    max-width: calc(100% - #{$margin-global*4});
   }
 
   &.fullscreen {
@@ -137,6 +137,10 @@
   @include respond-to(tablet) {
     width:100%;
     left: -100%;
+  }
+
+  .container {
+    padding-top: $margin-global;
   }
 
   body.show-track & {
