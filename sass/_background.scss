@@ -1,13 +1,14 @@
 body {
   position: relative;
+
   &:before,
   &:after {
     content: '';
     position: absolute;
-    left: $margin-global;
-    top: $margin-global;
-    right: $margin-global;
-    bottom: $margin-global;
+    left: $body-margin;
+    top: $body-margin;
+    right: $body-margin;
+    bottom: $body-margin;
   }
   &:before {
     z-index: 0;
@@ -17,13 +18,11 @@ body {
   }
   &:after {
     z-index: 1;
-    left: $margin-global - 1;
-    top: $margin-global - 1;
-    right: $margin-global - 1;
-    bottom: $margin-global - 1;
+    left: $body-margin - 1;
+    top: $body-margin - 1;
+    right: $body-margin - 1;
+    bottom: $body-margin - 1;
     background: url($image-mask) no-repeat left bottom;
-    //-webkit-background-size: contain;
-    //background-size: contain;
   }
 }
 

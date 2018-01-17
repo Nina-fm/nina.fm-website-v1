@@ -1,11 +1,11 @@
 #posts-toggle{
   z-index: 10;
   position:absolute;
-  top: $margin-global;
-  right: $margin-global;
+  top: #{$margin-global * 2 - 6};
+  right: #{$margin-global * 2 - 3};
   z-index:3;
-  height: 40px;
-  width: 40px;
+  height: 15px;
+  width: 20px;
   color:$color-info-text;
   transition: $animation;
   //background: rgba(255,255,255, 1);
@@ -33,7 +33,7 @@
     left:50%;
     top:50%;
     transform: translate(-50%, -50%);
-    font-size: 1.8em;
+    font-size: 1.7em;
 
     &.close { display: none; }
     &.open { display: block; }
@@ -45,9 +45,13 @@
   }
 }
 
-body.show-posts .container {
-  @include respond-to(tablet) {
-    top: 0px !important;
+#posts-box {
+
+  .container {
+
+    @include respond-to(tablet) {
+      top: 0px !important;
+    }
   }
 }
 
@@ -125,9 +129,9 @@ body.show-posts .container {
   color:$color-info-text;
   padding: $margin-global;
   margin-bottom: $margin-global/2;
-  -webkit-border-radius: 4px;
-  -moz-border-radius: 4px;
-  border-radius: 4px;
+  -webkit-border-radius: 3px;
+     -moz-border-radius: 3px;
+          border-radius: 3px;
   font-weight: 100;
 
   &:last-child {

@@ -15,7 +15,7 @@
   top: $margin-global;
   left: $margin-global;
   height: 40px;
-  padding: 13px 40px 0 20px;
+  padding: 15px 40px 0 20px;
   color: $color-main-text;
   background-color: rgba($color-main-bg, 0);
   @extend .noSelect;
@@ -33,7 +33,7 @@
   }
 
   @include respond-to(phone) {
-    max-width: calc(100% - #{$margin-global*4});
+    max-width: calc(100% - #{$margin-global*3});
   }
 
   &.fullscreen {
@@ -118,6 +118,7 @@
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
+  margin-top: 0.05em;
   cursor:pointer;
 
   body.muted & {
@@ -125,7 +126,7 @@
   }
 
   body.loading & {
-    opacity: 0;
+    background-image: url($image-loader);
   }
 }
 

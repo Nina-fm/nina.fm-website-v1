@@ -1,10 +1,12 @@
 $image-bg:          'img/background-01-2018.jpg' !default;
 $image-mask:        'img/woman.png' !default;
 $image-equalizer:   'img/equalizer.gif' !default;
+$image-loader:      'img/loader.gif' !default;
 
 $font-family:       'Avenir Next', 'Helvetica', sans-serif !default;
 $font-condensed:    'Avenir Next Condensed', 'Helvetica', sans-serif !default;
 $font-size:         14px !default;
+$line-height:       1.4em !default;
 
 $color-main-bg:     #FFF !default;
 $color-main-text:   #444 !default;
@@ -17,5 +19,6 @@ $opacity-info-bg:   1 !default;
 $animation:         all 0.3s ease-in-out !default;
 
 $margin-global:     20px !default;
+$body-margin:       20px !default;
 
-$equalizer-size:    15px !default;
+$equalizer-size:    17px !default;

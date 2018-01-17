@@ -24,6 +24,7 @@ html {
 html, body {
   font-size: $font-size;
   font-family: $font-family;
+  line-height: $line-height;
   color: $color-main-text;
   width: 100%;
   height: 100%;
@@ -44,7 +45,8 @@ body {
 
 h1, h2, h3, h4, h5, h6 {
   font-weight: 600;
-  margin: 0;
+  margin: 0 0 0.4em 0;
+  line-height: 1em;
 }
 
 .heading {
@@ -62,6 +64,12 @@ h1, h2, h3, h4, h5, h6 {
   display: inline;
   width:0;
   margin: 0 0 0 #{$margin-global - 5};
+}
+
+.spacer-half {
+  display: inline;
+  width:0;
+  margin: 0 0 0 1em;
 }
 
 p {
