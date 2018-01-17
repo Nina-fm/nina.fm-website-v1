@@ -2,8 +2,8 @@
 
 @keyframes playerLoop {
   0% { top: 0; }
-  48% { top: 0; }
-  50% { top: -20px; }
+  78% { top: 0; }
+  80% { top: -20px; }
   99% { top: -20px }
   100% { top: 0; }
 }
@@ -56,10 +56,10 @@
 
   &.animated {
     .slider {
-      -webkit-animation: playerLoop 10s infinite; /* Safari 4+ */
-      -moz-animation:    playerLoop 10s infinite; /* Fx 5+ */
-      -o-animation:      playerLoop 10s infinite; /* Opera 12+ */
-      animation:         playerLoop 10s infinite; /* IE 10+, Fx 29+ */
+      -webkit-animation: playerLoop 15s infinite; /* Safari 4+ */
+      -moz-animation:    playerLoop 15s infinite; /* Fx 5+ */
+      -o-animation:      playerLoop 15s infinite; /* Opera 12+ */
+      animation:         playerLoop 15s infinite; /* IE 10+, Fx 29+ */
     }
   }
 }
