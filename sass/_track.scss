@@ -21,6 +21,11 @@
   @extend .noSelect;
   overflow: hidden;
   font-size: 1.1em;
+  font-family: $font-condensed;
+
+  strong {
+    text-transform: uppercase;
+  }
 
   i {
     position: relative;
@@ -62,7 +67,7 @@
 #track-info-text {
   margin: 0;
   width: auto;
-  margin-left: 35px;
+  margin-left: #{$margin-global + 15 - 2};
   height: 20px;
   white-space: nowrap;
   overflow: hidden;
@@ -80,8 +85,8 @@
   right: 10px;
   top: 50%;
   transform: translateY(-50%);
-  font-size: 1.4em;
-  margin-top: 0;
+  font-size: 1.2em;
+  margin-top: 0.04em;
   display: none;
 
   @include respond-to(tablet) {
