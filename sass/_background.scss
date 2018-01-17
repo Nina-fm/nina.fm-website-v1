@@ -1,16 +1,29 @@
 body {
   position: relative;
-  &:before {
+  &:before,
+  &:after {
     content: '';
-    z-index: 0;
     position: absolute;
     left: $margin-global;
     top: $margin-global;
     right: $margin-global;
     bottom: $margin-global;
+  }
+  &:before {
+    z-index: 0;
     background: url($image-bg) no-repeat left center;
     -webkit-background-size: cover;
     background-size: cover;
+  }
+  &:after {
+    z-index: 1;
+    left: $margin-global - 1;
+    top: $margin-global - 1;
+    right: $margin-global - 1;
+    bottom: $margin-global - 1;
+    background: url($image-mask) no-repeat left bottom;
+    //-webkit-background-size: contain;
+    //background-size: contain;
   }
 }
 
