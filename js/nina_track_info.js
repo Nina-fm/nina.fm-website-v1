@@ -3,11 +3,12 @@ var old_track_info;
 function getTrackInfo() {
 
     function display(info) {
+        //info.title = '120 & Le Chapelier - Kheops'; // For debug mixtapes
+
         // Skip during the track play
         if (old_track_info == info.title) return;
 
         // Get the track title
-        // info.title = '120 & Le Chapelier - Kheops'; // For debug mixtapes
         var infos = info.title.split(' - ');
         var artist = infos[0];
         var title = infos[1];
@@ -25,7 +26,7 @@ function getTrackInfo() {
         // Set new page title
         $('[data-append="trackinfo"]').html(
             '<strong>' + artist + '</strong> '+
-            '<i class="nina-icon-navigate_next"></i> ' +
+            '<span class="spacer"> </span>' +
             title
         );
 
