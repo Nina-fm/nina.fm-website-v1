@@ -33,7 +33,7 @@ jQuery(function ($) {
         if (!player.paused) {
             $('body').removeClass('loading');
         }
-    }, 1000);
+    }, 200);
 
     // Reloading when sound is down
     var time = player.currentTime;
