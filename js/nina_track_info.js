@@ -7,6 +7,7 @@ function getTrackInfo() {
         if (old_track_info == info.title) return;
 
         // Get the track title
+        // info.title = '120 & Le Chapelier - Kheops'; // For debug mixtapes
         var infos = info.title.split(' - ');
         var artist = infos[0];
         var title = infos[1];
