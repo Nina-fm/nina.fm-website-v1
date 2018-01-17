@@ -1,6 +1,6 @@
 jQuery(function ($) {
 
-    var WPAPI = 'https://public-api.wordpress.com/rest/v1.1/sites/nina725466975.wordpress.com';
+    var WPAPI = 'http://ninadmin.fugu.fr/wp-json/wp/v2';
 
     // Fix the go to anchors on tab key press
     $('a').attr('tabindex', '-1');
@@ -71,37 +71,50 @@ jQuery(function ($) {
 
 
 
-    // Get posts from WP.COM
+    // Get posts from the Ninadmin Wordpress
 
     var $container = $('#posts-box .posts');
     const postTemplate = $.parseHTML($('#post-template').html());
     const categoryTemplate = $.parseHTML($('#category-template').html());
     var currentCategory = null;
 
+    // Get post list
     $.ajax( {
         url: WPAPI+'/posts/',
-        success: function ( data ) {
-            if ($(data.posts).length) {
+        success: function ( posts ) {
+
+            if (posts.length) {
+                // Init the container
                 $container.html('');
-                $(data.posts).each(function(){
-                    // Check category
-                    var category = Object.values(this.categories)[0];
-                    if (category.ID !== currentCategory || currentCategory === null) {
-                        currentCategory = category.ID;
-                        var catHTML = $(categoryTemplate).clone();
-                        var catID = 'category-'+category.ID;
-                        catHTML.attr('id', catID);
-                        $container.append(catHTML);
-                        $('#'+catID).find('.name').html(category.name);
-                        $('#'+catID).find('.description').html(category.description);
+
+                $(posts).each(function(){
+                    var post = this;
+
+                    // Display the first post category
+                    if (currentCategory === null) {
+                        currentCategory = post.categories[0];
+
+                        $.ajax({
+                            url: WPAPI+'/categories/'+currentCategory,
+                            success: function( category ) {
+                                console.log(category);
+                                var catHTML = $(categoryTemplate).clone();
+                                var catID = 'category-'+category.id;
+                                catHTML.attr('id', catID);
+                                $container.prepend(catHTML);
+                                $('#'+catID).find('.name').html(category.name);
+                                $('#'+catID).find('.description').html(category.description);
+                            }
+                        });
                     }
-                    // Add post
+
+                    // Add the post
                     var postHTML = $(postTemplate).clone();
-                    var postID = 'post-'+this.ID;
+                    var postID = 'post-'+post.id;
                     postHTML.attr('id', postID);
                     $container.append(postHTML);
-                    $('#'+postID).find('.title').html(this.title);
-                    $('#'+postID).find('.content').html(this.content);
+                    $('#'+postID).find('.title').html(post.title.rendered);
+                    $('#'+postID).find('.content').html(post.content.rendered);
                 });
             }
         },
