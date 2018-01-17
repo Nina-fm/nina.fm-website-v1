@@ -1,5 +1,10 @@
 var old_track_info;
 
+// Put a message for miniplayer animation
+// or set to null for default infos
+var track_message = 'Bonne année sur Nina.fm !';
+
+
 function getTrackInfo() {
 
     function display(info) {
@@ -82,8 +87,9 @@ function getTrackInfo() {
             },
             error: function (e) {
                 // If no track info, it's a suggestion
+                $('[data-append="tracktype"]').html(track_message || 'À l\'écoute sur Nina.fm');
                 // $('[data-append="tracktype"]').html('Une suggestion Nina.fm');
-                // $('#track-info-viewer').toggleClass('animated', true);
+                $('#track-info-viewer').toggleClass('animated', true);
             }
         });
     }
