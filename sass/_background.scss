@@ -73,6 +73,14 @@ body {
   line-height: 1em;
   padding:0;
   color: $color-main-text;
+  transition: $animation;
   //transform-origin: 0 100%;
   //transform: translateX(100%) rotate(-90deg);
+
+  @include respond-to(tablet) {
+    body.show-posts &,
+    body.show-track &{
+      opacity: 0;
+    }
+  }
 }

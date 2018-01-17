@@ -15,7 +15,7 @@
   top: $margin-global;
   left: $margin-global;
   height: 40px;
-  padding: 11px 40px 0 20px;
+  padding: 13px 40px 0 20px;
   color: $color-main-text;
   background-color: rgba($color-main-bg, 0);
   @extend .noSelect;
@@ -81,7 +81,7 @@
   top: 50%;
   transform: translateY(-50%);
   font-size: 1.4em;
-  margin-top: -0.05em;
+  margin-top: 0;
   display: none;
 
   @include respond-to(tablet) {
