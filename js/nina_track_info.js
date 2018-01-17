@@ -22,7 +22,11 @@ function getTrackInfo() {
         $('[data-append="trackcover"]').html('');
 
         // Set new page title
-        $('[data-append="trackinfo"]').html('<strong>' + artist + '</strong> – ' + title);
+        $('[data-append="trackinfo"]').html(
+            '<strong>' + artist + '</strong> '+
+            '<i class="nina-icon-navigate_next"></i> ' +
+            title
+        );
 
         // Look for current track meta data
         $.ajax({
