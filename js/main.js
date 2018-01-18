@@ -93,38 +93,22 @@ jQuery(function ($) {
 
         var $container = $('#posts-box .posts');
         const postTemplate = $.parseHTML($('#post-template').html());
-        const categoryTemplate = $.parseHTML($('#category-template').html());
-        var currentCategory = null;
 
         // Get post list
         $.ajax( {
             url: WPAPI+'/posts/',
             success: function ( posts ) {
 
-                if (posts.length) {
-                    // Init the container
-                    $container.html('');
+                // Init the container
+                $container.html('');
 
+                // Set the posts main title
+                var postsHeading = $frontpage.acf.postsHeading;
+                $container.append(postsHeading);
+
+                if (posts.length) {
                     $(posts).each(function(){
                         var post = this;
-
-                        // Display the first post category
-                        if (currentCategory === null) {
-                            currentCategory = post.categories[0];
-
-                            $.ajax({
-                                url: WPAPI+'/categories/'+currentCategory,
-                                success: function( category ) {
-                                    var catHTML = $(categoryTemplate).clone();
-                                    var catID = 'category-'+category.id;
-                                    catHTML.attr('id', catID);
-                                    $container.prepend(catHTML);
-                                    $('#'+catID).find('.name').html(category.name);
-                                    $('#'+catID).find('.description').html(category.description);
-                                }
-                            });
-                        }
-
                         // Add the post
                         var postHTML = $(postTemplate).clone();
                         var postID = 'post-'+post.id;
