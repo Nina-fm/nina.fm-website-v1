@@ -1,9 +1,5 @@
 var old_track_info;
-
-// Put a message for miniplayer animation
-// or set to null for default infos
-var track_message = 'Bonne année sur Nina.fm !';
-
+var refreshInterval = 5000;
 
 function getTrackInfo() {
 
@@ -82,12 +78,20 @@ function getTrackInfo() {
                     $('body').addClass('mixtape');
                 }
 
-                $('[data-append="tracktype"]').html(isMixtape ? 'Une mixtape Nina.fm' : 'Une suggestion Nina.fm');
+                var message = isMixtape ? 'Une mixtape Nina.fm' : 'Une suggestion Nina.fm';
+                if ($frontpage && $frontpage.acf.playerMessage) {
+                    message = $frontpage.acf.playerMessage;
+                }
+                $('[data-append="tracktype"]').html(message);
                 $('#track-info-viewer').addClass('animated');
             },
             error: function (e) {
                 // If no track info, it's a suggestion
-                $('[data-append="tracktype"]').html(track_message || 'À l\'écoute sur Nina.fm');
+                var message = 'À l\'écoute sur Nina.fm';
+                if ($frontpage && $frontpage.acf.playerMessage) {
+                    message = $frontpage.acf.playerMessage;
+                }
+                $('[data-append="tracktype"]').html(message);
                 // $('[data-append="tracktype"]').html('Une suggestion Nina.fm');
                 $('#track-info-viewer').toggleClass('animated', true);
             }
@@ -104,12 +108,12 @@ function getTrackInfo() {
         dataType: 'jsonp',
         success: function (data) {
             display(data[mountpoint]);
-            setTimeout(function(){getTrackInfo()}, 5000);
+            setTimeout(getTrackInfo, refreshInterval);
 
         },
         error: function (e) {
             console.log(e.message);
-            setTimeout(function(){getTrackInfo()}, 5000);
+            setTimeout(getTrackInfo, refreshInterval);
         }
     });
 }

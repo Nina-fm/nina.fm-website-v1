@@ -1,27 +1,23 @@
-body {
-  position: relative;
+#background {
+  position: absolute;
+  left: $body-margin;
+  top: $body-margin;
+  right: $body-margin;
+  bottom: $body-margin;
+  background-color: $color-main-bg;
+  background-image: url($image-bg);
+  background-repeat: no-repeat;
+  background-position: left center;
+  -webkit-background-size: cover;
+  background-size: cover;
 
-  &:before,
-  &:after {
-    content: '';
-    position: absolute;
-    left: $body-margin;
-    top: $body-margin;
-    right: $body-margin;
-    bottom: $body-margin;
-  }
-  &:before {
-    z-index: 0;
-    background: url($image-bg) no-repeat left center;
-    -webkit-background-size: cover;
-    background-size: cover;
-  }
-  &:after {
+  #mask {
     z-index: 1;
-    left: $body-margin - 1;
-    top: $body-margin - 1;
-    right: $body-margin - 1;
-    bottom: $body-margin - 1;
+    position: absolute;
+    left: -1px;
+    top: -1px;
+    right: -1px;
+    bottom: -1px;
     background: url($image-mask) no-repeat left bottom;
   }
 }
