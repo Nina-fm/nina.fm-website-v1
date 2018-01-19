@@ -1,25 +1,34 @@
-var WPAPI = 'http://ninadmin.fugu.fr/wp-json/wp/v2';
+// var WPAPI = 'http://ninadmin.fugu.fr/wp-json/wp/v2';
+var cockpitAPI = 'http://ninacockpit.fugu.fr/';
+var cockpitToken = '66294d50dc455e33b8f6fb5a9ef4d6';
+
+function cockpit(route, tokenize) {
+    var url = cockpitAPI + route;
+    if (tokenize) {
+        url +=  '?token=' + cockpitToken;
+    }
+    return url;
+}
 
 jQuery(function ($) {
 
     // Load the frontpage data before loading
     $.ajax({
-        url: WPAPI+'/frontpage/',
+        url: cockpit('api/regions/data/display', true),
         success: function(page){
             $frontpage = page;
-
-            // Set the background image
-            $('#background').css('background-image', 'url('+$frontpage.acf.background+')');
-
-            // Set the credits
-            $('#credits').html($frontpage.acf.credits);
-
-            // Run the main script
             init();
         }
     });
 
     function init() {
+
+        // Set the background image
+        $('#background').css('background-image', 'url('+cockpit($frontpage.background.path)+')');
+
+        // Set the credits
+        $('#credits').html($frontpage.credits);
+
         // Fix the go to anchors on tab key press
         $('a').attr('tabindex', '-1');
 
@@ -96,31 +105,67 @@ jQuery(function ($) {
 
         // Get post list
         $.ajax( {
-            url: WPAPI+'/posts/',
-            success: function ( posts ) {
+            url: cockpit('api/collections/get/posts', true),
+            method: 'POST',
+            data: {
+                filter: {published:true},
+                sort: {_created:-1}
+            },
+            success: function ( response ) {
+                var posts = response.entries;
 
                 // Init the container
                 $container.html('');
 
                 // Set the posts main title
-                var postsHeading = $frontpage.acf.postsHeading;
+                var postsHeading = $frontpage.edito;
                 $container.append(postsHeading);
 
                 if (posts.length) {
                     $(posts).each(function(){
                         var post = this;
                         // Add the post
-                        var postHTML = $(postTemplate).clone();
-                        var postID = 'post-'+post.id;
-                        postHTML.attr('id', postID);
-                        $container.append(postHTML);
-                        $('#'+postID).find('.title').html(post.title.rendered);
-                        $('#'+postID).find('.content').html(post.content.rendered);
+                        if (post.published) {
+                            var postHTML = $(postTemplate).clone();
+                            var postID = 'post-' + post._id;
+                            postHTML.attr('id', postID);
+                            $container.append(postHTML);
+                            $('#' + postID).find('.title').html(post.title);
+                            $('#' + postID).find('.content').html(post.content);
+                        }
                     });
                 }
             },
             cache: false
         } );
+
+        // Get post list
+        // $.ajax( {
+        //     url: WPAPI+'/posts/',
+        //     success: function ( posts ) {
+        //
+        //         // Init the container
+        //         $container.html('');
+        //
+        //         // Set the posts main title
+        //         var postsHeading = $frontpage.edito;
+        //         $container.append(postsHeading);
+        //
+        //         if (posts.length) {
+        //             $(posts).each(function(){
+        //                 var post = this;
+        //                 // Add the post
+        //                 var postHTML = $(postTemplate).clone();
+        //                 var postID = 'post-'+post.id;
+        //                 postHTML.attr('id', postID);
+        //                 $container.append(postHTML);
+        //                 $('#'+postID).find('.title').html(post.title.rendered);
+        //                 $('#'+postID).find('.content').html(post.content.rendered);
+        //             });
+        //         }
+        //     },
+        //     cache: false
+        // } );
     }
 
 });

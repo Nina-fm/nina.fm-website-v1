@@ -79,8 +79,8 @@ function getTrackInfo() {
                 }
 
                 var message = isMixtape ? 'Une mixtape Nina.fm' : 'Une suggestion Nina.fm';
-                if ($frontpage && $frontpage.acf.playerMessage) {
-                    message = $frontpage.acf.playerMessage;
+                if ($frontpage && $frontpage.message) {
+                    message = $frontpage.message;
                 }
                 $('[data-append="tracktype"]').html(message);
                 $('#track-info-viewer').addClass('animated');
@@ -88,8 +88,8 @@ function getTrackInfo() {
             error: function (e) {
                 // If no track info, it's a suggestion
                 var message = 'À l\'écoute sur Nina.fm';
-                if ($frontpage && $frontpage.acf.playerMessage) {
-                    message = $frontpage.acf.playerMessage;
+                if ($frontpage && $frontpage.message) {
+                    message = $frontpage.message;
                 }
                 $('[data-append="tracktype"]').html(message);
                 // $('[data-append="tracktype"]').html('Une suggestion Nina.fm');
