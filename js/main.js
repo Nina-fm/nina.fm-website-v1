@@ -138,34 +138,6 @@ jQuery(function ($) {
             },
             cache: false
         } );
-
-        // Get post list
-        // $.ajax( {
-        //     url: WPAPI+'/posts/',
-        //     success: function ( posts ) {
-        //
-        //         // Init the container
-        //         $container.html('');
-        //
-        //         // Set the posts main title
-        //         var postsHeading = $frontpage.edito;
-        //         $container.append(postsHeading);
-        //
-        //         if (posts.length) {
-        //             $(posts).each(function(){
-        //                 var post = this;
-        //                 // Add the post
-        //                 var postHTML = $(postTemplate).clone();
-        //                 var postID = 'post-'+post.id;
-        //                 postHTML.attr('id', postID);
-        //                 $container.append(postHTML);
-        //                 $('#'+postID).find('.title').html(post.title.rendered);
-        //                 $('#'+postID).find('.content').html(post.content.rendered);
-        //             });
-        //         }
-        //     },
-        //     cache: false
-        // } );
     }
 
 });
