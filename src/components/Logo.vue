@@ -10,7 +10,7 @@ export default {
   props: ['color', 'alt'],
   computed: {
     logo () {
-      return require('../assets/logo' + (this.color ? '-' + this.color : '') + '.svg')
+      return require('../assets/logo' + (this.color ? '-' + this.color : '-white') + '.svg')
     }
   }
 }

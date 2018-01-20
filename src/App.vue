@@ -19,9 +19,11 @@ export default {
       cockpitToken: '66294d50dc455e33b8f6fb5a9ef4d6',
       interval: null,
       settings: {
+        message: '',
+        edito: '',
         background: { path: '' },
         credits: '',
-        logoColor: 'white',
+        logoColor: ''
       }
     }
   },
@@ -32,7 +34,7 @@ export default {
     credits () {
       return this.settings.credits
     },
-    logoColor() {
+    logoColor () {
       return this.settings.logoColor
     },
     background () {
