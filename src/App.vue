@@ -31,14 +31,14 @@ export default {
     edito () { return this.settings.edito },
     credits () { return this.settings.credits },
     logoColor () { return this.settings.logoColor },
-    background () { return config.cockpit.get(this.settings.background.path) },
+    background () { return config.cockpit.fileURL(this.settings.background) },
     playerStatus () {
       return this.status.indexOf('show-posts') !== -1
     }
   },
   methods: {
     fetchSettings: function () {
-      axios.get(config.cockpit.get('api/regions/data/display', true)).then((response) => {
+      axios.get(config.cockpit.apiURL('/regions/data/display')).then((response) => {
         this.settings = response.data
       }, (error) => {
         console.log(error)

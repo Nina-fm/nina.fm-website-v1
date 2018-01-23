@@ -37,16 +37,15 @@ export default {
       this.$emit('toggle', this.open, this.statusClass)
     },
     loadPosts: function () {
-      axios.get(config.cockpit.get('api/collections/get/posts', true), {
+      axios({
+        url: config.cockpit.apiURL('/collections/get/posts'),
         method: 'post',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          filter: { published: true },
-          limit: 10,
-          skip: 5,
-          sort: { _created: -1 },
-          populate: 1 // resolve linked collection items
-        })
+        data: {
+          filter: {published: true},
+          sort: {_created: -1},
+          populate: 1
+        }
       }).then((response) => {
         this.posts = response.data.entries
       }, (error) => {
@@ -56,7 +55,6 @@ export default {
   },
   mounted: function () {
     this.loadPosts()
-    this.togglePosts()
     this.interval = setInterval(function () {
       this.loadPosts()
     }.bind(this), config.cockpit.refreshTime)

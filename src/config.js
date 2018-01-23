@@ -7,13 +7,14 @@ var config = {
     logoColor: ''
   },
   cockpit: {
-    apiUrl: 'http://ninacockpit.fugu.fr/',
+    url: 'http://ninacockpit.fugu.fr/',
     token: '66294d50dc455e33b8f6fb5a9ef4d6',
     refreshTime: 10000, // ms
-    get: function (route, tokenize) {
-      let url = route ? this.apiUrl + route : ''
-      url += route && tokenize ? '?token=' + this.token : ''
-      return url
+    fileURL: function (file) {
+      return file ? this.url + file.path : ''
+    },
+    apiURL: function (route) {
+      return this.url + 'api' + route + '?token=' + this.token
     }
   },
   audio: {
