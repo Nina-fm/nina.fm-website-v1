@@ -68,12 +68,20 @@ export default {
 <style lang="scss" scoped>
 @import '~$scss/base.scss';
 
+#posts {
+  position: absolute;
+  left: $margin-global;
+  right: $margin-global;
+  top: $margin-global;
+  bottom: $margin-global;
+  overflow: hidden;
+}
+
 #posts-toggle{
   z-index: 10;
   position:absolute;
-  top: #{$margin-global * 2 - 6};
-  right: #{$margin-global * 2 - 3};
-  z-index:3;
+  top: #{$margin-global - 6};
+  right: #{$margin-global - 3};
   height: 15px;
   width: 20px;
   color:$color-info-text;
@@ -119,8 +127,8 @@ export default {
   width:50%;
   z-index: 5;
   position:absolute;
-  top: $margin-global;
-  bottom: $margin-global;
+  top: 0;
+  bottom: 0;
   left: 100%;
   overflow-y: scroll;
 

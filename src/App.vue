@@ -53,7 +53,20 @@ export default {
       } else {
         this.status = exists ? this.status : [...this.status, classname]
       }
+    },
+    disableTabindex: function () {
+      let links = document.querySelectorAll('a, [id]')
+      console.log('disableTabindex', links)
+      for (let i = 0, j = links.length; i < j; i++) {
+        links[i].setAttribute('tabindex', -1)
+      }
     }
+  },
+  created: function () {
+    this.disableTabindex()
+  },
+  updated: function () {
+    this.disableTabindex()
   },
   mounted: function () {
     this.fetchSettings()
