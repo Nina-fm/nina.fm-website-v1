@@ -1,0 +1,25 @@
+$fonts-path:        '$fonts' !default;
+
+$font-family:       'Avenir Next', 'Helvetica', sans-serif !default;
+$font-condensed:    'Avenir Next Condensed', 'Helvetica', sans-serif !default;
+$font-size:         14px !default;
+$line-height:       1.4em !default;
+
+$color-main-bg:     #FFF !default;
+$color-main-text:   #444 !default;
+
+$color-info-bg:     rgba($color-main-bg, 0.9) !default;
+$color-info-text:   $color-main-text !default;
+
+$opacity-info-bg:   1 !default;
+
+$animation:         all 0.3s ease-in-out !default;
+
+$margin-global:     20px !default;
+$body-margin:       20px !default;
+
+$equalizer-size:    17px !default;
+
+
+@import "fonts";
+@import "mixins";
