@@ -1,4 +1,5 @@
 var config = {
+
   defaultSettings: {
     message: '',
     edito: '',
@@ -6,10 +7,11 @@ var config = {
     credits: '',
     logoColor: ''
   },
+
   cockpit: {
     url: 'http://ninacockpit.fugu.fr/',
     token: '66294d50dc455e33b8f6fb5a9ef4d6',
-    refreshTime: 10000, // ms
+    refreshTime: 600000, // ms
     fileURL: function (file) {
       return file ? this.url + file.path : ''
     },
@@ -17,6 +19,7 @@ var config = {
       return this.url + 'api' + route + '?token=' + this.token
     }
   },
+
   audio: {
     streamUrl: 'http://flux.nina.fm/nina.mp3',
     trackInfoUrl: 'http://flux.nina.fm/json.xsl',

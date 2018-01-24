@@ -2,6 +2,9 @@
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 import Vue from 'vue'
 import App from './App'
+import VueJsonp from 'vue-jsonp'
+
+Vue.use(VueJsonp)
 
 Vue.config.productionTip = false
 

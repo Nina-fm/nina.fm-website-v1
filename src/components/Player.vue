@@ -7,7 +7,12 @@
       <div id="equalizer" :title="controlsMsg" @click="toggleMute"></div>
       <div id="track-viewer">
         <div class="slider">
-          <div id="track-text" data-append="trackinfo">{{text}}</div>
+          <div id="track-text" data-append="trackinfo">
+            <span v-if="artist && title">
+              <strong v-if="artist">{{artist}}</strong> {{title}}
+            </span>
+            <span v-else>{{defaultText}}</span>
+          </div>
           <div id="track-type" data-append="tracktype">{{type}}</div>
         </div>
       </div>
@@ -21,14 +26,19 @@
 </template>
 
 <script>
+import config from '../config.js'
+
 export default {
   name: 'Player',
   props: ['url'],
   data () {
     return {
       interval: null,
-      text: 'Recherche des infos...',
+      defaultText: 'Recherche des infos...',
+      artist: '',
+      title: '',
       type: '',
+      tracks: {},
       controlsMsg: 'Activer/désactiver le son, vous pouvez aussi utiliser la barre d\'espace.',
       showTrackMsg: 'Afficher/masquer le détail de la mixtape.',
       legacyMsg: 'Votre navigateur est un vieux machin dépassé. Il ne supporte pas la musique, ce qui est un peu con quand on veut écouter la radio.'
@@ -46,14 +56,41 @@ export default {
     },
     updateStatus: function () {
       this.$emit('stream', !this.audio.played, 'loading')
+    },
+    checkStream: function () {
+      if (!this.audio.played) {
+        this.audio.load()
+        this.audio.play()
+      }
+    },
+    setTitle: function (title) {
+      if (this.title === title) return
+      let infos = title.split(' - ')
+      this.artist = infos[0]
+      this.title = infos[1]
+    },
+    getAudioInfos: function () {
+      this.$jsonp(config.audio.trackInfoUrl, {
+        callbackName: 'parseMusic'
+      }).then(json => {
+        let data = json[config.audio.mountPoint]
+        this.setTitle(data.title)
+      }, (error) => {
+        console.log(error)
+      })
     }
+  },
+  created () {
+    this.getAudioInfos()
   },
   mounted () {
     window.addEventListener('keyup', event => {
-      if (event.keyCode === 32) {
-        this.toggleMute()
-      }
+      if (event.keyCode === 32) this.toggleMute()
     })
+    this.interval = setInterval(() => {
+      this.checkStream()
+      this.getAudioInfos()
+    }, config.audio.refreshTime)
   }
 }
 </script>
@@ -83,10 +120,6 @@ export default {
     overflow: hidden;
     font-size: 1.1em;
     font-family: $font-condensed;
-
-    strong {
-      text-transform: uppercase;
-    }
 
     i {
       position: relative;
@@ -118,9 +151,9 @@ export default {
     &.animated {
       .slider {
         -webkit-animation: playerLoop 15s infinite; /* Safari 4+ */
-        -moz-animation: playerLoop 15s infinite; /* Fx 5+ */
-        -o-animation: playerLoop 15s infinite; /* Opera 12+ */
-        animation: playerLoop 15s infinite; /* IE 10+, Fx 29+ */
+           -moz-animation: playerLoop 15s infinite; /* Fx 5+ */
+             -o-animation: playerLoop 15s infinite; /* Opera 12+ */
+                animation: playerLoop 15s infinite; /* IE 10+, Fx 29+ */
       }
     }
   }
@@ -128,11 +161,16 @@ export default {
   #track-text {
     margin: 0;
     width: auto;
-    margin-left: #{$margin-global + 13};
+    margin-left: #{$margin-global + 15};
     height: 20px;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+
+    strong {
+      text-transform: uppercase;
+      margin-right: #{$margin-global - 10};
+    }
   }
 
   #track-type {

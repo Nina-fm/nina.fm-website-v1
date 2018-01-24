@@ -56,7 +56,6 @@ export default {
     },
     disableTabindex: function () {
       let links = document.querySelectorAll('a, [id]')
-      console.log('disableTabindex', links)
       for (let i = 0, j = links.length; i < j; i++) {
         links[i].setAttribute('tabindex', -1)
       }
@@ -70,9 +69,9 @@ export default {
   },
   mounted: function () {
     this.fetchSettings()
-    this.interval = setInterval(function () {
+    this.interval = setInterval(() => {
       this.fetchSettings()
-    }.bind(this), config.cockpit.refreshTime)
+    }, config.cockpit.refreshTime)
   },
   beforeDestroy: function () {
     clearInterval(this.interval)
