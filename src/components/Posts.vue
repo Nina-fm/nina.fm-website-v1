@@ -58,6 +58,9 @@ export default {
     this.interval = setInterval(function () {
       this.loadPosts()
     }.bind(this), config.cockpit.refreshTime)
+    window.addEventListener('keyup', event => {
+      if (event.keyCode === 27 && this.open) this.togglePosts()
+    })
   },
   beforeDestroy: function () {
     clearInterval(this.interval)
