@@ -1,8 +1,7 @@
 <template>
   <div id="posts">
     <a id="posts-toggle" class="btn" :title="showPostsMsg" @click="togglePosts">
-      <i class="nina-icon-reorder open"></i>
-      <i class="nina-icon-close close"></i>
+      <i :class="{'nina-icon-reorder' : !open, 'nina-icon-close': open}"></i>
     </a>
     <div id="posts-box">
       <div class="container">
@@ -31,23 +30,20 @@ export default {
       posts: []
     }
   },
+  computed: {
+    api () { return config[config.api] }
+  },
   methods: {
     togglePosts: function () {
       this.open = !this.open
       this.$emit('toggle', this.open, this.statusClass)
     },
     loadPosts: function () {
-      axios({
-        url: config.cockpit.apiURL('/collections/get/posts'),
-        method: 'post',
-        headers: { 'Content-Type': 'application/json' },
-        data: {
-          filter: {published: true},
-          sort: {_created: -1},
-          populate: 1
-        }
+      axios(this.api.apiURL('/tables/posts/rows?order[created]=DESC'), {
+        method: 'get',
+        headers: { 'Content-Type': 'application/json' }
       }).then((response) => {
-        this.posts = response.data.entries
+        this.posts = response.data.data
       }, (error) => {
         console.log(error)
       })
@@ -88,7 +84,7 @@ export default {
   height: 15px;
   width: 20px;
   color:$color-info-text;
-  transition: $animation;
+  @include prefix(transition, $animation);
 
   @include respond-to(small-height) {
     opacity:0;
@@ -112,21 +108,13 @@ export default {
     position: absolute;
     left:50%;
     top:50%;
-    transform: translate(-50%, -50%);
+    @include prefix(transform, translate(-50%, -50%));
     font-size: 1.7em;
-
-    &.close { display: none; }
-    &.open { display: block; }
-
-    #app.show-posts & {
-      &.close { display: block; }
-      &.open { display: none; }
-    }
   }
 }
 
 #posts-box {
-  transition: $animation;
+  @include prefix(transition, $animation);
   width:50%;
   z-index: 5;
   position:absolute;
@@ -165,9 +153,7 @@ export default {
       color:$color-info-text;
       padding: $margin-global;
       margin-bottom: $margin-global/2;
-      -webkit-border-radius: 3px;
-      -moz-border-radius: 3px;
-      border-radius: 3px;
+      @include prefix(border-radius, 3px);
 
       &:last-child {
         margin-bottom: 0;

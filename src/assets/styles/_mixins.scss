@@ -7,6 +7,13 @@
   user-select: none;
 }
 
+@mixin prefix($property, $value) {
+  -webkit-#{$property}: $value; /* Safari 4+ */
+     -moz-#{$property}: $value; /* Fx 5+ */
+       -o-#{$property}: $value; /* Opera 12+ */
+          #{$property}: $value; /* IE 10+, Fx 29+ */
+}
+
 /**
  * Responsive mixin. The media breakpoints are as defined
  * in the twitter bootstrap framework:

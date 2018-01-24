@@ -14,7 +14,6 @@ export default {
 
 <style lang="scss" scoped>
   @import "~$scss/base.scss";
-
   #background {
     position: absolute;
     left: $body-margin;
@@ -26,7 +25,6 @@ export default {
     background-position: left center;
     -webkit-background-size: cover;
     background-size: cover;
-
     #mask {
       z-index: 1;
       position: absolute;
@@ -34,7 +32,6 @@ export default {
       top: -1px;
       right: -1px;
       bottom: -1px;
-
       img {
         position: absolute;
         bottom:0;
@@ -42,7 +39,6 @@ export default {
       }
     }
   }
-
   #credits {
     z-index: 10;
     position: absolute;
@@ -55,11 +51,9 @@ export default {
     line-height: 1em;
     padding:0;
     color: $color-main-text;
-    transition: $animation;
-
+    @include prefix(transition, $animation);
     @include respond-to(tablet) {
       font-size: 0.3em;
-
       #app.show-posts &,
       #app.show-track &{
         opacity: 0;

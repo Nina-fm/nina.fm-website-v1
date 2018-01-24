@@ -1,9 +1,10 @@
 <template>
   <div id="app" :class="status">
-    <Background :url="background" :mask="mask" :credits="credits"/>
-    <Logo :color="logoColor" :alt="credits"/>
-    <Player :url="streamURL" :status="playerStatus" @stream="toggleStatusClass" @toggle="toggleStatusClass"/>
-    <Posts @toggle="toggleStatusClass" status-class="show-posts" :edito="edito"/>
+    <Background :url="settings.background" :mask="mask" :credits="settings.credits"/>
+    <Logo :color="settings.logoColor" :alt="settings.credits"/>
+    <Player :url="streamURL" :status="playerStatus" :message="settings.playerMessage" @statusChange="toggleStatusClass" @toggle="toggleStatusClass"/>
+    <Tracklist/>
+    <Posts @toggle="toggleStatusClass" status-class="show-posts" :edito="settings.edito"/>
   </div>
 </template>
 
@@ -13,11 +14,12 @@ import config from './config.js'
 import Logo from './components/Logo'
 import Background from './components/Background'
 import Player from './components/Player'
+import Tracklist from './components/Tracklist'
 import Posts from './components/Posts'
 
 export default {
   name: 'App',
-  components: { Logo, Background, Player, Posts },
+  components: { Logo, Background, Player, Tracklist, Posts },
   data () {
     return {
       status: ['loading'],
@@ -26,20 +28,18 @@ export default {
     }
   },
   computed: {
+    api () { return config[config.api] },
     streamURL () { return config.audio.streamUrl },
     mask () { return require('./assets/images/mask.png') },
-    edito () { return this.settings.edito },
-    credits () { return this.settings.credits },
-    logoColor () { return this.settings.logoColor },
-    background () { return config.cockpit.fileURL(this.settings.background) },
     playerStatus () {
       return this.status.indexOf('show-posts') !== -1
     }
   },
   methods: {
     fetchSettings: function () {
-      axios.get(config.cockpit.apiURL('/regions/data/display')).then((response) => {
-        this.settings = response.data
+      axios.get(this.api.apiURL('/tables/settings/rows')).then((response) => {
+        let data = response.data.data
+        data.map(item => { this.settings[item.key] = item.value })
       }, (error) => {
         console.log(error)
       })
@@ -47,9 +47,7 @@ export default {
     toggleStatusClass: function (status, classname) {
       let exists = this.status.indexOf(classname) !== -1
       if (!status) {
-        this.status = this.status.filter(function (item) {
-          return classname !== item
-        })
+        this.status = this.status.filter(item => { return classname !== item })
       } else {
         this.status = exists ? this.status : [...this.status, classname]
       }
@@ -69,9 +67,7 @@ export default {
   },
   mounted: function () {
     this.fetchSettings()
-    this.interval = setInterval(() => {
-      this.fetchSettings()
-    }, config.cockpit.refreshTime)
+    this.interval = setInterval(() => { this.fetchSettings() }, config.cockpit.refreshTime)
   },
   beforeDestroy: function () {
     clearInterval(this.interval)
@@ -81,15 +77,12 @@ export default {
 
 <style lang="scss">
   @import "~$scss/base.scss";
-
   * {
     box-sizing: border-box;
   }
-
   :focus {
     outline: none !important;
   }
-
   html {
     /* Adjust font size */
     font-size: 100%;
@@ -104,7 +97,6 @@ export default {
     -webkit-font-smoothing: antialiased;
     text-shadow: rgba(0, 0, 0, .01) 0 0 1px;
   }
-
   html, body {
     font-size: $font-size;
     font-family: $font-family;
@@ -117,7 +109,6 @@ export default {
     margin: 0px;
     overflow: hidden;
   }
-
   body {
     position: absolute;
     left:0;
@@ -126,49 +117,40 @@ export default {
     bottom:0;
     overflow: hidden;
   }
-
   h1, h2, h3, h4, h5, h6 {
     font-weight: 600;
     margin: 0 0 0.4em 0;
     line-height: 1em;
   }
-
   .heading {
     font-family: $font-condensed;
     font-weight: 300;
     margin-bottom: 2em;
     text-align: center;
   }
-
   .centered {
     text-align: center;
   }
-
   .spacer {
     display: inline;
     width:0;
     margin: 0 0 0 #{$margin-global - 6};
   }
-
   .spacer-half {
     display: inline;
     width:0;
     margin: 0 0 0 1em;
   }
-
   p {
     margin: 0 0 1em 0;
   }
-
   p:last-child {
     margin: 0;
   }
-
   .btn {
     cursor:pointer;
     text-decoration: none;
   }
-
   .container{
     position: absolute;
     top:  $margin-global*3;
@@ -176,7 +158,6 @@ export default {
     right: $margin-global*2;
     margin-bottom: $margin-global*2;
     color: $color-info-text;
-
     a {
       color: $color-info-text;
     }

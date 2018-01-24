@@ -8,6 +8,16 @@ var config = {
     logoColor: ''
   },
 
+  api: 'directus',
+
+  directus: {
+    url: 'http://localhost/nina/nina-directus/',
+    refreshTime: 600000, // ms
+    apiURL: function (route) {
+      return this.url + 'api/1.1' + route
+    }
+  },
+
   cockpit: {
     url: 'http://ninacockpit.fugu.fr/',
     token: '66294d50dc455e33b8f6fb5a9ef4d6',
