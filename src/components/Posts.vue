@@ -46,19 +46,14 @@ export default {
       }, (error) => {
         console.log(error)
       })
+      setTimeout(this.loadPosts, this.api.refreshTime)
     }
   },
   mounted: function () {
     this.loadPosts()
-    this.interval = setInterval(function () {
-      this.loadPosts()
-    }.bind(this), this.api.refreshTime)
     window.addEventListener('keyup', event => {
       if (event.keyCode === 27 && this.open) this.togglePosts()
     })
-  },
-  beforeDestroy: function () {
-    clearInterval(this.interval)
   }
 }
 </script>

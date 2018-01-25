@@ -20,7 +20,6 @@ export default {
   data () {
     return {
       status: ['loading'],
-      interval: null,
       settings: config.defaultSettings
     }
   },
@@ -40,6 +39,7 @@ export default {
       }, (error) => {
         console.log(error)
       })
+      setTimeout(this.fetchSettings, this.api.refreshTime)
     },
     toggleStatusClass: function (status, classname) {
       let exists = this.status.indexOf(classname) !== -1
@@ -64,10 +64,6 @@ export default {
   },
   mounted: function () {
     this.fetchSettings()
-    this.interval = setInterval(() => { this.fetchSettings() }, this.api.refreshTime)
-  },
-  beforeDestroy: function () {
-    clearInterval(this.interval)
   }
 }
 </script>
