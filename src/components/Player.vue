@@ -7,7 +7,7 @@
       <div id="player-track">
         <div id="equalizer" :title="controlsMsg" @click="toggleMute"></div>
         <div id="track-viewer">
-          <div class="slider" :class="{animated: typeText}">
+          <div class="slider" :class="{animated: typeText, btn: hasDetails}" @click="toggleDetails">
             <div id="track-text" data-append="trackinfo">
               <span v-if="trackArtist && trackTitle">
                 <strong v-if="trackArtist">{{trackArtist}}</strong> {{trackTitle}}
@@ -17,7 +17,7 @@
             <div id="track-type" data-append="tracktype">{{typeText}}</div>
           </div>
         </div>
-        <a id="player-toggle" class="btn" :title="showTrackMsg" @click="toggleDetails" v-if="type === 'mixtape'">
+        <a id="player-toggle" class="btn" :title="showTrackMsg" @click="toggleDetails" v-if="hasDetails">
           <i :class="{'nina-icon-add_circle_outline' : !open, 'nina-icon-remove_circle_outline': open}"></i>
         </a>
       </div>
@@ -44,13 +44,16 @@ export default {
       details: {},
       open: false,
       statusClass: 'show-details',
-      defaultText: 'Recherche des infos...',
+      defaultText: '',
       controlsMsg: 'Activer/désactiver le son, vous pouvez aussi utiliser la barre d\'espace.',
       showTrackMsg: 'Afficher/masquer le détail de la mixtape.',
       legacyMsg: 'Votre navigateur est un vieux machin dépassé. Il ne supporte pas la musique, ce qui est un peu con quand on veut écouter la radio.'
     }
   },
   computed: {
+    hasDetails () {
+      return this.type === 'mixtape'
+    },
     audio () {
       return this.$refs.audio
     },
@@ -60,8 +63,10 @@ export default {
   },
   methods: {
     toggleDetails: function () {
-      this.open = !this.open
-      this.$emit('toggle', this.open, this.statusClass)
+      if (this.hasDetails) {
+        this.open = !this.open
+        this.$emit('toggle', this.open, this.statusClass)
+      }
     },
     toggleMute: function () {
       this.audio.muted = !this.audio.muted
@@ -95,7 +100,7 @@ export default {
       })
     },
     getTrackDetails: function () {
-      if (this.updatable) {
+      if (this.updatable && this.title) {
         this.$http({
           type: 'get',
           url: config.audio.metadataBaseUrl,
@@ -115,7 +120,10 @@ export default {
   },
   mounted () {
     window.addEventListener('keyup', event => {
-      if (event.keyCode === 32) this.toggleMute()
+      switch (event.keyCode) {
+        case 32: this.toggleMute(); break
+        default: console.log(event.keyCode); break
+      }
     })
     this.interval = setInterval(() => {
       this.checkStream()
@@ -209,7 +217,7 @@ export default {
     top: 50%;
     @include prefix(transform, translateY(-50%));
     font-size: 1.2em;
-    margin-top: 0.04em;
+    margin-top: 0.1em;
     @include respond-to(tablet) {
       margin-top: 0;
     }
