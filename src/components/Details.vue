@@ -10,7 +10,7 @@
         </div>
         <div id="track-details-text">
           <div data-append="tracklist">
-            <div v-if="data.tracks.length">
+            <div v-if="data.tracks">
               <ol class="tracklist">
                 <li v-for="track in data.tracks" :key="track.id">
                   <span class="artist">{{track.artist}}</span> – <span class="title">{{track.title}}</span>

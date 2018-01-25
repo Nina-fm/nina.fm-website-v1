@@ -64,7 +64,7 @@ export default {
   },
   mounted: function () {
     this.fetchSettings()
-    this.interval = setInterval(() => { this.fetchSettings() }, config.cockpit.refreshTime)
+    this.interval = setInterval(() => { this.fetchSettings() }, this.api.refreshTime)
   },
   beforeDestroy: function () {
     clearInterval(this.interval)

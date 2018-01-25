@@ -11,9 +11,9 @@ var config = {
   api: 'directus',
 
   directus: {
-    url: 'http://localhost/nina/nina-directus/',
+    url: 'http://ninadirectus.fugu.fr/',
     token: 'oYOYJ0AK6VMxqv5U1EknhrlFTMW2c2pi',
-    refreshTime: 100000, // ms
+    refreshTime: 30000, // ms
     apiURL: function (route, params) {
       return this.url + 'api/1.1' + route + '?access_token=' + this.token + '&' + params
     }

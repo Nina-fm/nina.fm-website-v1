@@ -52,7 +52,7 @@ export default {
     this.loadPosts()
     this.interval = setInterval(function () {
       this.loadPosts()
-    }.bind(this), config.cockpit.refreshTime)
+    }.bind(this), this.api.refreshTime)
     window.addEventListener('keyup', event => {
       if (event.keyCode === 27 && this.open) this.togglePosts()
     })
