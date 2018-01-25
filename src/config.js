@@ -12,9 +12,10 @@ var config = {
 
   directus: {
     url: 'http://localhost/nina/nina-directus/',
-    refreshTime: 600000, // ms
-    apiURL: function (route) {
-      return this.url + 'api/1.1' + route
+    token: 'oYOYJ0AK6VMxqv5U1EknhrlFTMW2c2pi',
+    refreshTime: 100000, // ms
+    apiURL: function (route, params) {
+      return this.url + 'api/1.1' + route + '?access_token=' + this.token + '&' + params
     }
   },
 

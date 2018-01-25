@@ -1,42 +1,47 @@
 <template>
-  <div id="player">
-    <audio id="audioplayer" ref="audio" :src="url" @canplaythrough="updateStatus" autoplay="autoplay" type="audio/mpeg">
-      {{legacyMsg}}
-    </audio>
-    <div id="player-track">
-      <div id="equalizer" :title="controlsMsg" @click="toggleMute"></div>
-      <div id="track-viewer">
-        <div class="slider" :class="{animated: typeText}">
-          <div id="track-text" data-append="trackinfo">
-            <span v-if="artist && title">
-              <strong v-if="artist">{{artist}}</strong> {{title}}
-            </span>
-            <span v-else>{{defaultText}}</span>
+  <div id="audio">
+    <div id="player">
+      <audio id="audioplayer" ref="audio" :src="url" @canplaythrough="updateStatus" autoplay="autoplay" type="audio/mpeg">
+        {{legacyMsg}}
+      </audio>
+      <div id="player-track">
+        <div id="equalizer" :title="controlsMsg" @click="toggleMute"></div>
+        <div id="track-viewer">
+          <div class="slider" :class="{animated: typeText}">
+            <div id="track-text" data-append="trackinfo">
+              <span v-if="artist && title">
+                <strong v-if="artist">{{artist}}</strong> {{title}}
+              </span>
+              <span v-else>{{defaultText}}</span>
+            </div>
+            <div id="track-type" data-append="tracktype">{{typeText}}</div>
           </div>
-          <div id="track-type" data-append="tracktype">{{typeText}}</div>
         </div>
+        <a id="player-toggle" class="btn" :title="showTrackMsg" @click="toggleDetails" v-if="type === 'mixtape'">
+          <i :class="{'nina-icon-add_circle_outline' : !open, 'nina-icon-remove_circle_outline': open}"></i>
+        </a>
       </div>
-      <a id="player-toggle" class="btn" :title="showTrackMsg">
-        <i :class="{'nina-icon-add_circle_outline' : !open, 'nina-icon-remove_circle_outline': open}"></i>
-      </a>
     </div>
+    <Details :data="details" :defaultText="defaultText"/>
   </div>
 </template>
 
 <script>
 import config from '../config.js'
+import Details from './Details'
 export default {
   name: 'Player',
   props: ['url', 'message'],
+  components: { Details },
   data () {
     return {
       interval: null,
       artist: '',
       title: '',
       type: '',
-      tracks: {},
+      details: {},
       open: false,
-      statusClass: 'show-track',
+      statusClass: 'show-details',
       defaultText: 'Recherche des infos...',
       controlsMsg: 'Activer/désactiver le son, vous pouvez aussi utiliser la barre d\'espace.',
       showTrackMsg: 'Afficher/masquer le détail de la mixtape.',
@@ -52,6 +57,10 @@ export default {
     }
   },
   methods: {
+    toggleDetails: function () {
+      this.open = !this.open
+      this.$emit('toggle', this.open, this.statusClass)
+    },
     toggleMute: function () {
       this.audio.muted = !this.audio.muted
       this.$emit('toggle', this.audio.muted, 'muted')
@@ -73,11 +82,25 @@ export default {
       this.title = infos[1]
     },
     getAudioInfos: function () {
-      this.$jsonp(config.audio.trackInfoUrl, {
-        callbackName: 'parseMusic'
-      }).then(json => {
+      this.$jsonp(config.audio.trackInfoUrl, { callbackName: 'parseMusic' }).then(json => {
         let data = json[config.audio.mountPoint]
         this.setTitle(data.title)
+      }, (error) => {
+        console.log(error)
+      })
+    },
+    getTrackDetails: function () {
+      this.$http({
+        type: 'get',
+        url: config.audio.metadataBaseUrl,
+        data: {
+          artist: this.artist,
+          title: this.title
+        }
+      }).then((response) => {
+        this.details = response.data[0]
+        this.type = this.details.type
+        this.details.cover = config.audio.metadataBaseUrl + '/' + this.details.cover
       }, (error) => {
         console.log(error)
       })
@@ -90,6 +113,7 @@ export default {
     this.interval = setInterval(() => {
       this.checkStream()
       this.updateStatus()
+      this.getTrackDetails()
     }, config.audio.refreshTime)
   },
   beforeDestroy: function () {
@@ -107,12 +131,20 @@ export default {
     99% { top: -20px }
     100% { top: 0; }
   }
+  #audio {
+    position: absolute;
+    left: $margin-global;
+    right: $margin-global;
+    top: $margin-global;
+    bottom: $margin-global;
+    overflow: hidden;
+  }
   #player-track {
     z-index: 100;
     text-align: left;
     position: absolute;
-    top: $margin-global;
-    left: $margin-global;
+    top: 0;
+    left: 0;
     height: 40px;
     padding: 15px 40px 0 20px;
     color: $color-main-text;
@@ -171,12 +203,8 @@ export default {
     @include prefix(transform, translateY(-50%));
     font-size: 1.2em;
     margin-top: 0.04em;
-    display: none;
     @include respond-to(tablet) {
       margin-top: 0;
-    }
-    #app.mixtape & {
-      display: block;
     }
   }
   #equalizer {

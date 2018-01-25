@@ -15,7 +15,7 @@
     width:100%;
   }
 
-  body.show-track & {
+  body.show-details & {
     left: 50%;
 
     @include respond-to(tablet) {

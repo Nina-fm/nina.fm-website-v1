@@ -37,7 +37,7 @@ export default {
         width: 100% !important;
       }
     }
-    #app.show-track & {
+    #app.show-details & {
       width: 50% !important;
       left: 50% !important;
     }

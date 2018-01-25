@@ -55,7 +55,7 @@ export default {
     @include respond-to(tablet) {
       font-size: 0.3em;
       #app.show-posts &,
-      #app.show-track &{
+      #app.show-details &{
         opacity: 0;
       }
     }

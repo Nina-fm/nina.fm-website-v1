@@ -3,23 +3,20 @@
     <Background :url="settings.background" :mask="mask" :credits="settings.credits"/>
     <Logo :color="settings.logoColor" :alt="settings.credits"/>
     <Player :url="streamURL" :status="playerStatus" :message="settings.playerMessage" @statusChange="toggleStatusClass" @toggle="toggleStatusClass"/>
-    <Tracklist/>
     <Posts @toggle="toggleStatusClass" status-class="show-posts" :edito="settings.edito"/>
   </div>
 </template>
 
 <script>
-import axios from 'axios'
 import config from './config.js'
 import Logo from './components/Logo'
 import Background from './components/Background'
 import Player from './components/Player'
-import Tracklist from './components/Tracklist'
 import Posts from './components/Posts'
 
 export default {
   name: 'App',
-  components: { Logo, Background, Player, Tracklist, Posts },
+  components: { Logo, Background, Player, Posts },
   data () {
     return {
       status: ['loading'],
@@ -37,7 +34,7 @@ export default {
   },
   methods: {
     fetchSettings: function () {
-      axios.get(this.api.apiURL('/tables/settings/rows')).then((response) => {
+      this.$http.get(this.api.apiURL('/tables/settings/rows')).then((response) => {
         let data = response.data.data
         data.map(item => { this.settings[item.key] = item.value })
       }, (error) => {

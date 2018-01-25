@@ -24,7 +24,7 @@
     color: $color-info-text;
   }
 
-  body.show-track & {
+  body.show-details & {
     display: none !important;
   }
 
@@ -104,7 +104,7 @@
     }
   }
 
-  body.show-track & {
+  body.show-details & {
     left: 100%;
 
     @include respond-to(tablet) {

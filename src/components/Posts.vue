@@ -16,7 +16,6 @@
 </template>
 
 <script>
-import axios from 'axios'
 import config from '../config.js'
 
 export default {
@@ -39,7 +38,7 @@ export default {
       this.$emit('toggle', this.open, this.statusClass)
     },
     loadPosts: function () {
-      axios(this.api.apiURL('/tables/posts/rows?order[created]=DESC'), {
+      this.$http(this.api.apiURL('/tables/posts/rows', 'order[created]=DESC'), {
         method: 'get',
         headers: { 'Content-Type': 'application/json' }
       }).then((response) => {
@@ -100,7 +99,7 @@ export default {
     color: $color-info-text;
   }
 
-  #app.show-track & {
+  #app.show-details & {
     display: none !important;
   }
 
@@ -139,7 +138,7 @@ export default {
       left: 0 !important;
     }
   }
-  #app.show-track & {
+  #app.show-details & {
     left: 100%;
 
     @include respond-to(tablet) {
