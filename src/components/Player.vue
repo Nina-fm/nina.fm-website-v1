@@ -36,6 +36,7 @@ export default {
   data () {
     return {
       interval: null,
+      updatable: true,
       artist: '',
       title: '',
       type: '',
@@ -76,7 +77,9 @@ export default {
       }
     },
     setTitle: function (title) {
-      if (this.title === title) return
+      let changed = this.title === title
+      if (changed) return
+      this.updatable = changed
       let infos = title.split(' - ')
       this.artist = infos[0]
       this.title = infos[1]
@@ -93,7 +96,7 @@ export default {
       this.$http({
         type: 'get',
         url: config.audio.metadataBaseUrl,
-        data: {
+        params: {
           artist: this.artist,
           title: this.title
         }

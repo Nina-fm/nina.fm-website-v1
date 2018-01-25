@@ -13,7 +13,7 @@ var config = {
   directus: {
     url: 'http://ninadirectus.fugu.fr/',
     token: 'oYOYJ0AK6VMxqv5U1EknhrlFTMW2c2pi',
-    refreshTime: 30000, // ms
+    refreshTime: 60000, // ms
     apiURL: function (route, params) {
       return this.url + 'api/1.1' + route + '?access_token=' + this.token + '&' + params
     }
@@ -36,7 +36,7 @@ var config = {
     trackInfoUrl: 'http://flux.nina.fm/json.xsl',
     mountPoint: '/nina.mp3',
     metadataBaseUrl: 'http://www.nina.fm/metadata',
-    refreshTime: 1000 // ms
+    refreshTime: 5000 // ms
   }
 }
 
