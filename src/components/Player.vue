@@ -9,8 +9,8 @@
         <div id="track-viewer">
           <div class="slider" :class="{animated: typeText}">
             <div id="track-text" data-append="trackinfo">
-              <span v-if="artist && title">
-                <strong v-if="artist">{{artist}}</strong> {{title}}
+              <span v-if="trackArtist && trackTitle">
+                <strong v-if="trackArtist">{{trackArtist}}</strong> {{trackTitle}}
               </span>
               <span v-else>{{defaultText}}</span>
             </div>
@@ -37,8 +37,9 @@ export default {
     return {
       interval: null,
       updatable: true,
-      artist: '',
       title: '',
+      trackArtist: '',
+      trackTitle: '',
       type: '',
       details: {},
       open: false,
@@ -78,11 +79,12 @@ export default {
     },
     setTitle: function (title) {
       let changed = this.title !== title
-      if (!changed) return
       this.updatable = changed
+      if (!changed) return
       let infos = title.split(' - ')
-      this.artist = infos[0]
-      this.title = infos[1]
+      this.title = title
+      this.trackArtist = infos[0]
+      this.trackTitle = infos[1]
     },
     getAudioInfos: function () {
       this.$jsonp(config.audio.trackInfoUrl, { callbackName: 'parseMusic' }).then(json => {
@@ -98,8 +100,8 @@ export default {
           type: 'get',
           url: config.audio.metadataBaseUrl,
           params: {
-            artist: this.artist,
-            title: this.title
+            artist: this.trackArtist,
+            title: this.trackTitle
           }
         }).then((response) => {
           this.details = response.data[0]
