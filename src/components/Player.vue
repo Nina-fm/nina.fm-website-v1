@@ -77,8 +77,8 @@ export default {
       }
     },
     setTitle: function (title) {
-      let changed = this.title === title
-      if (changed) return
+      let changed = this.title !== title
+      if (!changed) return
       this.updatable = changed
       let infos = title.split(' - ')
       this.artist = infos[0]
@@ -93,20 +93,22 @@ export default {
       })
     },
     getTrackDetails: function () {
-      this.$http({
-        type: 'get',
-        url: config.audio.metadataBaseUrl,
-        params: {
-          artist: this.artist,
-          title: this.title
-        }
-      }).then((response) => {
-        this.details = response.data[0]
-        this.type = this.details.type
-        this.details.cover = config.audio.metadataBaseUrl + '/' + this.details.cover
-      }, (error) => {
-        console.log(error)
-      })
+      if (this.updatable) {
+        this.$http({
+          type: 'get',
+          url: config.audio.metadataBaseUrl,
+          params: {
+            artist: this.artist,
+            title: this.title
+          }
+        }).then((response) => {
+          this.details = response.data[0]
+          this.type = this.details.type
+          this.details.cover = config.audio.metadataBaseUrl + '/' + this.details.cover
+        }, (error) => {
+          console.log(error)
+        })
+      }
     }
   },
   mounted () {
