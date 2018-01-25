@@ -54,7 +54,7 @@ export default {
       return this.$refs.audio
     },
     typeText () {
-      return this.message || this.type
+      return this.message || ('Une ' + this.type + ' Nina.fm')
     }
   },
   methods: {
