@@ -61,14 +61,14 @@ export default {
     }
   },
   methods: {
-    toggleDetails: function () {
+    toggleDetails: function (action) {
       if (this.hasDetails) {
-        this.open = !this.open
+        this.open = typeof action === 'boolean' ? action : !this.open
         this.$emit('toggle', this.open, this.statusClass)
       }
     },
     toggleMute: function (action) {
-      this.audio.muted = action !== void 0 ? action : !this.audio.muted
+      this.audio.muted = typeof action === 'boolean' ? action : !this.audio.muted
       this.$emit('toggle', this.audio.muted, 'muted')
     },
     updateStatus: function () {
