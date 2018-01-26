@@ -8,7 +8,6 @@
 </template>
 
 <script>
-import config from './config.js'
 import Logo from './components/Logo'
 import Background from './components/Background'
 import Player from './components/Player'
@@ -20,26 +19,23 @@ export default {
   data () {
     return {
       status: ['loading'],
-      settings: config.defaultSettings
+      settings: this.$config.defaultSettings
     }
   },
   computed: {
-    api () { return config[config.api] },
-    streamURL () { return config.audio.streamUrl },
+    streamURL () { return this.$config.streamUrl },
     mask () { return require('./assets/images/mask.png') },
-    playerStatus () {
-      return this.status.indexOf('show-posts') !== -1
-    }
+    playerStatus () { return this.status.indexOf('show-posts') !== -1 }
   },
   methods: {
     fetchSettings: function () {
-      this.$http.get(this.api.apiURL('/tables/settings/rows')).then((response) => {
+      this.$http.get(this.$API.getURL('/tables/settings/rows')).then((response) => {
         let data = response.data.data
         data.map(item => { this.settings[item.key] = item.value })
       }, (error) => {
         console.log(error)
       })
-      setTimeout(this.fetchSettings, this.api.refreshTime)
+      setTimeout(this.fetchSettings, this.$API.refreshTime)
     },
     toggleStatusClass: function (status, classname) {
       let exists = this.status.indexOf(classname) !== -1

@@ -16,8 +16,6 @@
 </template>
 
 <script>
-import config from '../config.js'
-
 export default {
   name: 'Posts',
   props: ['edito'],
@@ -29,16 +27,13 @@ export default {
       posts: []
     }
   },
-  computed: {
-    api () { return config[config.api] }
-  },
   methods: {
-    togglePosts: function () {
-      this.open = !this.open
+    togglePosts: function (action) {
+      this.open = action !== void 0 ? action : !this.open
       this.$emit('toggle', this.open, this.statusClass)
     },
-    loadPosts: function () {
-      this.$http(this.api.apiURL('/tables/posts/rows', 'order[created]=DESC'), {
+    getPosts: function () {
+      this.$http(this.$API.getURL('/tables/posts/rows', 'order[created]=DESC'), {
         method: 'get',
         headers: { 'Content-Type': 'application/json' }
       }).then((response) => {
@@ -46,13 +41,15 @@ export default {
       }, (error) => {
         console.log(error)
       })
-      setTimeout(this.loadPosts, this.api.refreshTime)
+      setTimeout(this.getPosts, this.$API.refreshTime)
     }
   },
   mounted: function () {
-    this.loadPosts()
+    this.getPosts()
     window.addEventListener('keyup', event => {
-      if (event.keyCode === 27 && this.open) this.togglePosts()
+      switch (event.code) {
+        case 'Escape': this.togglePosts(false); break
+      }
     })
   }
 }

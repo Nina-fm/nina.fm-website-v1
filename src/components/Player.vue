@@ -27,7 +27,6 @@
 </template>
 
 <script>
-import config from '../config.js'
 import Details from './Details'
 export default {
   name: 'Player',
@@ -44,7 +43,7 @@ export default {
       details: {},
       open: false,
       statusClass: 'show-details',
-      defaultText: '',
+      defaultText: 'Recherche des infos...',
       controlsMsg: 'Activer/désactiver le son, vous pouvez aussi utiliser la barre d\'espace.',
       showTrackMsg: 'Afficher/masquer le détail de la mixtape.',
       legacyMsg: 'Votre navigateur est un vieux machin dépassé. Il ne supporte pas la musique, ce qui est un peu con quand on veut écouter la radio.'
@@ -58,7 +57,7 @@ export default {
       return this.$refs.audio
     },
     typeText () {
-      return this.message || ('Une ' + this.type + ' Nina.fm')
+      return this.message || (this.type ? 'Une ' + this.type + ' Nina.fm' : '')
     }
   },
   methods: {
@@ -68,13 +67,13 @@ export default {
         this.$emit('toggle', this.open, this.statusClass)
       }
     },
-    toggleMute: function () {
-      this.audio.muted = !this.audio.muted
+    toggleMute: function (action) {
+      this.audio.muted = action !== void 0 ? action : !this.audio.muted
       this.$emit('toggle', this.audio.muted, 'muted')
     },
     updateStatus: function () {
       this.$emit('statusChange', !this.audio.played, 'loading')
-      if (this.audio.played) this.getAudioInfos()
+      if (this.audio.played) this.getCurrentTrack()
     },
     checkStream: function () {
       if (!this.audio.played) {
@@ -82,19 +81,18 @@ export default {
         this.audio.play()
       }
     },
-    setTitle: function (title) {
-      let changed = this.title !== title
-      this.updatable = changed
-      if (!changed) return
+    setTrack: function (title) {
+      this.updatable = this.title !== title
+      if (!this.updatable) return
       let infos = title.split(' - ')
       this.title = title
       this.trackArtist = infos[0]
       this.trackTitle = infos[1]
     },
-    getAudioInfos: function () {
-      this.$jsonp(config.audio.trackInfoUrl, { callbackName: 'parseMusic' }).then(json => {
-        let data = json[config.audio.mountPoint]
-        this.setTitle(data.title)
+    getCurrentTrack: function () {
+      this.$jsonp(this.$config.trackInfoUrl, { callbackName: 'parseMusic' }).then(json => {
+        let data = json[this.$config.mountPoint]
+        this.setTrack(data.title)
       }, (error) => {
         console.log(error)
       })
@@ -103,7 +101,7 @@ export default {
       if (this.updatable && this.title) {
         this.$http({
           type: 'get',
-          url: config.audio.metadataBaseUrl,
+          url: this.$config.metadataBaseUrl,
           params: {
             artist: this.trackArtist,
             title: this.trackTitle
@@ -111,7 +109,7 @@ export default {
         }).then((response) => {
           this.details = response.data[0]
           this.type = this.details.type
-          this.details.cover = config.audio.metadataBaseUrl + '/' + this.details.cover
+          this.details.cover = this.$config.metadataBaseUrl + '/' + this.details.cover
         }, (error) => {
           console.log(error)
         })
@@ -120,16 +118,16 @@ export default {
   },
   mounted () {
     window.addEventListener('keyup', event => {
-      switch (event.keyCode) {
-        case 32: this.toggleMute(); break
-        default: console.log(event.keyCode); break
+      switch (event.code) {
+        case 'Space': this.toggleMute(); break
+        case 'Escape': this.toggleDetails(false); break
       }
     })
     this.interval = setInterval(() => {
       this.checkStream()
       this.updateStatus()
       this.getTrackDetails()
-    }, config.audio.refreshTime)
+    }, this.$config.refreshTime)
   },
   beforeDestroy: function () {
     clearInterval(this.interval)
