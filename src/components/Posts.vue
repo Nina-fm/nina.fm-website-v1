@@ -29,7 +29,7 @@ export default {
   },
   methods: {
     togglePosts: function (action) {
-      this.open = action !== void 0 ? action : !this.open
+      this.open = typeof action === 'boolean' ? action : !this.open
       this.$emit('toggle', this.open, this.statusClass)
     },
     getPosts: function () {
