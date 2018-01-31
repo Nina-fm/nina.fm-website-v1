@@ -109,7 +109,7 @@ export default {
         }).then((response) => {
           this.details = response.data[0]
           this.type = this.details.type
-          this.details.cover = this.$config.metadataBaseUrl + '/' + this.details.cover
+          this.details.cover = this.$config.metadataBaseUrl + this.details.cover
         }, (error) => {
           console.log(error)
         })

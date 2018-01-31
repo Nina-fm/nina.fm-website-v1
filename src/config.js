@@ -6,14 +6,14 @@ var config = new Vue({
       streamUrl: 'http://flux.nina.fm/nina.mp3',
       trackInfoUrl: 'http://flux.nina.fm/json.xsl',
       mountPoint: '/nina.mp3',
-      metadataBaseUrl: 'http://www.nina.fm/metadata',
+      metadataBaseUrl: 'http://www.nina.fm/metadata/',
       refreshTime: 5000, // ms
       apiSettings: {
         use: 'directus',
         directus: {
           base: 'http://ninadirectus.fugu.fr/',
           token: 'oYOYJ0AK6VMxqv5U1EknhrlFTMW2c2pi',
-          refreshTime: 60000, // ms
+          refreshTime: 900000, // ms
           getURL: function (route, params) {
             return this.base + 'api/1.1' + route + '?access_token=' + this.token + (params ? '&' + params : '')
           }
@@ -21,7 +21,7 @@ var config = new Vue({
         cockpit: {
           base: 'http://ninacockpit.fugu.fr/',
           token: '66294d50dc455e33b8f6fb5a9ef4d6',
-          refreshTime: 600000, // ms
+          refreshTime: 900000, // ms
           fileURL: function (file) {
             return file ? this.base + file.path : ''
           },
