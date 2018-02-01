@@ -6,8 +6,7 @@ function getTrackInfo() {
         // Skip during the track play
         if (old_track_info == info.title) return;
 
-        // Get the track title
-        var infos = info.title.split(' - ');
+        var infos = info.title.split(/ - (.+)/);
         var artist = infos[0];
         var title = infos[1];
 
