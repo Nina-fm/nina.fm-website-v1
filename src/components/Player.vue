@@ -89,13 +89,27 @@ export default {
       this.trackArtist = infos[0]
       this.trackTitle = infos[1]
     },
-    getCurrentTrack: function () {
-      this.$jsonp(this.$config.trackInfoUrl, { callbackName: 'parseMusic' }).then(json => {
+    oldGetCurrentTrack: function(){
+      this.$jsonp(this.$config.oldTrackInfoUrl, { callbackName: 'parseMusic' }).then(json => {
         let data = json[this.$config.mountPoint]
         this.setTrack(data.title)
       }, (error) => {
         console.log(error)
       })
+    },
+    getCurrentTrack: function () {
+      this.$http({
+          type: 'get',
+          url: this.$config.trackInfoUrl
+        }).then((response) => {
+          if(response.data.current){
+            this.setTrack(response.data.current.name)
+          } else {
+            this.oldGetCurrentTrack();
+          }
+        }, (error) => {
+          this.oldGetCurrentTrack();
+        })
     },
     getTrackDetails: function () {
       if (this.updatable && this.title) {
