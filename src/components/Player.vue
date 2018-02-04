@@ -22,7 +22,7 @@
         </a>
       </div>
     </div>
-    <Details :data="details" :defaultText="defaultText"/>
+    <Details :data="details" :defaultText="defaultText" :trackProgress="trackProgress"/>
   </div>
 </template>
 
@@ -40,6 +40,7 @@ export default {
       trackArtist: '',
       trackTitle: '',
       type: '',
+      trackProgress: null,
       details: {},
       open: false,
       statusClass: 'show-details',
@@ -102,8 +103,16 @@ export default {
           type: 'get',
           url: this.$config.trackInfoUrl
         }).then((response) => {
+
           if(response.data.current){
             this.setTrack(response.data.current.name)
+
+            //Scheduler time is one hour ahead of start en end times, probably due to encoding diffences
+            var trackElapsed = (new Date(response.data.schedulerTime) - new Date(response.data.current.starts) - 3600000);
+            var trackLength = (new Date(response.data.current.ends) - new Date(response.data.current.starts));
+
+            this.trackProgress = trackElapsed / trackLength * 100
+
           } else {
             this.oldGetCurrentTrack();
           }
