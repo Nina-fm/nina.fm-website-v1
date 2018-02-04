@@ -2,6 +2,7 @@
   <div id="details">
     <div id="track-details">
       <div class="container">
+        <progress :value="trackProgress" max="100" v-if="trackProgress"></progress>
         <div id="track-details-cover" v-if="data.cover">
           <img :src="data.cover" :alt="data.artist+' - '+data.title">
         </div>
@@ -28,7 +29,7 @@
 <script>
 export default {
   name: 'Details',
-  props: ['data', 'defaultText'],
+  props: ['data', 'defaultText', 'trackProgress'],
   computed: {
     artist () {
       return this.data.artist
@@ -116,5 +117,8 @@ export default {
       margin-bottom: 1em;
       width: 100%;
     }
+  }
+  progress{
+    width: 100%
   }
 </style>
