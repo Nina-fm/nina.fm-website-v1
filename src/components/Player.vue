@@ -84,7 +84,7 @@ export default {
     setTrack: function (title) {
       this.updatable = this.title !== title
       if (!this.updatable) return
-      let infos = title.split(' - ')
+      let infos = title.split(/ - (.+)/)
       this.title = title
       this.trackArtist = infos[0]
       this.trackTitle = infos[1]
