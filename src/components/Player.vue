@@ -106,7 +106,7 @@ export default {
         if (response.data.current) {
           this.setTrack(response.data.current.name)
 
-          // Scheduler time is one hour ahead of start en end times, probably due to encoding diffences
+          // Scheduler time is one hour ahead of start and end times, probably due to encoding diffences
           var trackElapsed = (new Date(response.data.schedulerTime) - new Date(response.data.current.starts) - 3600000)
           var trackLength = (new Date(response.data.current.ends) - new Date(response.data.current.starts))
 
