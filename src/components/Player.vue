@@ -90,7 +90,7 @@ export default {
       this.trackArtist = infos[0]
       this.trackTitle = infos[1]
     },
-    oldGetCurrentTrack: function(){
+    oldGetCurrentTrack: function () {
       this.$jsonp(this.$config.oldTrackInfoUrl, { callbackName: 'parseMusic' }).then(json => {
         let data = json[this.$config.mountPoint]
         this.setTrack(data.title)
@@ -100,25 +100,24 @@ export default {
     },
     getCurrentTrack: function () {
       this.$http({
-          type: 'get',
-          url: this.$config.trackInfoUrl
-        }).then((response) => {
+        type: 'get',
+        url: this.$config.trackInfoUrl
+      }).then((response) => {
+        if (response.data.current) {
+          this.setTrack(response.data.current.name)
 
-          if(response.data.current){
-            this.setTrack(response.data.current.name)
+          // Scheduler time is one hour ahead of start en end times, probably due to encoding diffences
+          var trackElapsed = (new Date(response.data.schedulerTime) - new Date(response.data.current.starts) - 3600000)
+          var trackLength = (new Date(response.data.current.ends) - new Date(response.data.current.starts))
 
-            //Scheduler time is one hour ahead of start en end times, probably due to encoding diffences
-            var trackElapsed = (new Date(response.data.schedulerTime) - new Date(response.data.current.starts) - 3600000);
-            var trackLength = (new Date(response.data.current.ends) - new Date(response.data.current.starts));
-
-            this.trackProgress = trackElapsed / trackLength * 100
-
-          } else {
-            this.oldGetCurrentTrack();
-          }
-        }, (error) => {
-          this.oldGetCurrentTrack();
-        })
+          this.trackProgress = trackElapsed / trackLength * 100
+        } else {
+          this.oldGetCurrentTrack()
+        }
+      }, (error) => {
+        console.error(error)
+        this.oldGetCurrentTrack()
+      })
     },
     getTrackDetails: function () {
       if (this.updatable && this.title) {
