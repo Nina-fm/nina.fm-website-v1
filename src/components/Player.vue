@@ -35,7 +35,6 @@ export default {
   data () {
     return {
       interval: null,
-      updatable: true,
       title: '',
       trackArtist: '',
       trackTitle: '',
@@ -83,12 +82,12 @@ export default {
       }
     },
     setTrack: function (title) {
-      this.updatable = this.title !== title
-      if (!this.updatable) return
+      if (title === this.title) return
       let infos = title.split(/ - (.+)/)
       this.title = title
       this.trackArtist = infos[0]
       this.trackTitle = infos[1]
+      this.getTrackDetails()
     },
     oldGetCurrentTrack: function () {
       this.$jsonp(this.$config.oldTrackInfoUrl, { callbackName: 'parseMusic' }).then(json => {
@@ -99,16 +98,13 @@ export default {
       })
     },
     getCurrentTrack: function () {
-      this.$http({
-        type: 'get',
-        url: this.$config.trackInfoUrl
-      }).then((response) => {
-        if (response.data.current) {
-          this.setTrack(response.data.current.name)
+      this.$jsonp(this.$config.trackInfoUrl).then(response => {
+        if (response.current) {
+          this.setTrack(response.current.name)
 
           // Scheduler time is one hour ahead of start and end times, probably due to encoding diffences
-          var trackElapsed = (new Date(response.data.schedulerTime) - new Date(response.data.current.starts) - 3600000)
-          var trackLength = (new Date(response.data.current.ends) - new Date(response.data.current.starts))
+          var trackElapsed = (new Date(response.schedulerTime) - new Date(response.current.starts) - 3600000)
+          var trackLength = (new Date(response.current.ends) - new Date(response.current.starts))
 
           this.trackProgress = trackElapsed / trackLength * 100
         } else {
@@ -120,22 +116,20 @@ export default {
       })
     },
     getTrackDetails: function () {
-      if (this.updatable && this.title) {
-        this.$http({
-          type: 'get',
-          url: this.$config.metadataBaseUrl,
-          params: {
-            artist: this.trackArtist,
-            title: this.trackTitle
-          }
-        }).then((response) => {
-          this.details = response.data[0]
-          this.type = this.details.type
-          this.details.cover = this.$config.metadataBaseUrl + this.details.cover
-        }, (error) => {
-          console.log(error)
-        })
-      }
+      this.$http({
+        type: 'get',
+        url: this.$config.metadataBaseUrl,
+        params: {
+          artist: this.trackArtist,
+          title: this.trackTitle
+        }
+      }).then((response) => {
+        this.details = response.data[0]
+        this.type = this.details.type
+        this.details.cover = this.$config.metadataBaseUrl + this.details.cover
+      }, (error) => {
+        console.log(error)
+      })
     }
   },
   mounted () {
@@ -148,7 +142,6 @@ export default {
     this.interval = setInterval(() => {
       this.checkStream()
       this.updateStatus()
-      this.getTrackDetails()
     }, this.$config.refreshTime)
   },
   beforeDestroy: function () {
