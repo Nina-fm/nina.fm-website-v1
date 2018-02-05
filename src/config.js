@@ -4,7 +4,8 @@ var config = new Vue({
   data () {
     return {
       streamUrl: 'http://flux.nina.fm/nina.mp3',
-      trackInfoUrl: 'http://flux.nina.fm/json.xsl',
+      oldTrackInfoUrl: 'http://flux.nina.fm/json.xsl',
+      trackInfoUrl: 'https://prog.nina.fm/api/live-info',
       mountPoint: '/nina.mp3',
       metadataBaseUrl: 'http://www.nina.fm/metadata/',
       refreshTime: 5000, // ms
