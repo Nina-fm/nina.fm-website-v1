@@ -1,8 +1,8 @@
 <template>
   <div id="app" :class="status">
-    <Screen :url="settings.background" :mask="settings.mask" :credits="settings.credits"/>
-    <Logo :color="settings.logoColor" :alt="settings.credits"/>
-    <Player :url="streamURL" :status="playerStatus" :message="settings.playerMessage" @statusChange="toggleStatusClass" @toggle="toggleStatusClass"/>
+    <Screen :url="screen.background" :mask="screen.mask" :credits="screen.credits"/>
+    <Logo :color="screen.logoColor" :alt="screen.credits"/>
+    <Player :url="streamUrl" :status="playerStatus" :message="screen.playerMessage" @statusChange="toggleStatusClass" @toggle="toggleStatusClass"/>
     <Posts @toggle="toggleStatusClass" status-class="show-posts" :content="posts"/>
   </div>
 </template>
@@ -19,11 +19,17 @@ export default {
   data () {
     return {
       status: ['loading'],
-      settings: this.$config.screenSettings
+      screen: {
+        playerMessage: '',
+        logoColor: 'white',
+        background: require('@/assets/images/background.jpg'),
+        mask: require('@/assets/images/mask.png'),
+        credits: '© Photo:Bobin - Montage:120'
+      }
     }
   },
   computed: {
-    streamURL () { return this.$config.streamUrl },
+    streamUrl () { return process.env.STREAM_URL },
     playerStatus () { return this.status.indexOf('show-posts') !== -1 },
     posts () { return require(`@/contents/posts.html`) }
   },

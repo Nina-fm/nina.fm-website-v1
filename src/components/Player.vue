@@ -90,15 +90,15 @@ export default {
       this.getTrackDetails()
     },
     oldGetCurrentTrack: function () {
-      this.$jsonp(this.$config.oldTrackInfoUrl, { callbackName: 'parseMusic' }).then(json => {
-        let data = json[this.$config.mountPoint]
+      this.$jsonp(process.env.STREAM_API_OLD_URL, { callbackName: 'parseMusic' }).then(json => {
+        let data = json[process.env.STREAM_MOUNT_POINT]
         this.setTrack(data.title)
       }, (error) => {
         console.log(error)
       })
     },
     getCurrentTrack: function () {
-      this.$jsonp(this.$config.trackInfoUrl).then(response => {
+      this.$jsonp(process.env.STREAM_API_URL).then(response => {
         if (response.current) {
           this.setTrack(response.current.name)
 
@@ -118,7 +118,7 @@ export default {
     getTrackDetails: function () {
       this.$http({
         type: 'get',
-        url: this.$config.metadataBaseUrl,
+        url: process.env.STREAM_METADATA_URL,
         params: {
           artist: this.trackArtist,
           title: this.trackTitle
@@ -126,7 +126,7 @@ export default {
       }).then((response) => {
         this.details = response.data[0]
         this.type = this.details.type
-        this.details.cover = this.$config.metadataBaseUrl + this.details.cover
+        this.details.cover = process.env.STREAM_METADATA_URL + this.details.cover
       }, (error) => {
         console.log(error)
       })
@@ -142,7 +142,7 @@ export default {
     this.interval = setInterval(() => {
       this.checkStream()
       this.updateStatus()
-    }, this.$config.refreshTime)
+    }, process.env.STREAM_REFRESH_TIME)
   },
   beforeDestroy: function () {
     clearInterval(this.interval)

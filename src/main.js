@@ -4,12 +4,12 @@ import Vue from 'vue'
 import App from './App'
 import VueJsonp from 'vue-jsonp'
 import axios from 'axios'
-import config from './config.js'
+import VueProgress from 'vue-progress-path'
 
 Vue.prototype.$http = axios
-Vue.prototype.$config = config
+Vue.use(VueProgress)
 Vue.use(VueJsonp)
-Vue.config.productionTip = false
+Vue.config.productionTip = process.env.NODE_ENV === 'production'
 
 /* eslint-disable no-new */
 new Vue({
