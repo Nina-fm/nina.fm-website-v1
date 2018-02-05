@@ -2,11 +2,11 @@
   <div id="details">
     <div id="track-details">
       <div class="container">
-        <progress :value="trackProgress" max="100" v-if="trackProgress"></progress>
         <div id="track-details-cover" v-if="data.cover">
           <img :src="data.cover" :alt="data.artist+' - '+data.title">
         </div>
         <div id="track-details-type">
+          <ProgressBar :progress="progress" />
           <span class="type">{{type}}</span> proposée par <span class="artist">{{artist}}</span>
         </div>
         <div id="track-details-text">
@@ -27,19 +27,16 @@
 </template>
 
 <script>
+import ProgressBar from './ProgressBar'
 export default {
   name: 'Details',
   props: ['data', 'defaultText', 'trackProgress'],
+  components: { ProgressBar },
   computed: {
-    artist () {
-      return this.data.artist
-    },
-    type () {
-      return this.data.type ? 'Une ' + this.data.type + ' Nina.fm' : 'À l\'écoute sur Nina.fm'
-    },
-    tracksText () {
-      return this.data.tracksText || this.defaultText
-    }
+    progress () { return this.trackProgress },
+    artist () { return this.data.artist },
+    type () { return this.data.type ? 'Une ' + this.data.type + ' Nina.fm' : 'À l\'écoute sur Nina.fm' },
+    tracksText () { return this.data.tracksText || this.defaultText }
   }
 }
 </script>
@@ -118,7 +115,15 @@ export default {
       width: 100%;
     }
   }
-  progress{
-    width: 100%
+  .vue-progress-path path {
+    stroke-width: 12;
+  }
+
+  .vue-progress-path .progress {
+    stroke: red;
+  }
+
+  .vue-progress-path .background {
+    stroke: #edd;
   }
 </style>
