@@ -1,5 +1,5 @@
 <template>
-  <div id="background" :style="{ backgroundImage: 'url('+url+')' }">
+  <div id="screen" :style="{ backgroundImage: 'url('+url+')' }">
     <div id="mask"><img v-if="mask" :src="mask"></div>
     <div id="credits">{{credits}}</div>
   </div>
@@ -7,14 +7,14 @@
 
 <script>
 export default {
-  name: 'Background',
+  name: 'Screen',
   props: ['url', 'mask', 'credits']
 }
 </script>
 
 <style lang="scss" scoped>
   @import "~$scss/base.scss";
-  #background {
+  #screen {
     position: absolute;
     left: $body-margin;
     top: $body-margin;

@@ -1,42 +1,33 @@
 <template>
   <div id="app" :class="status">
-    <Background :url="settings.background" :mask="mask" :credits="settings.credits"/>
+    <Screen :url="settings.background" :mask="settings.mask" :credits="settings.credits"/>
     <Logo :color="settings.logoColor" :alt="settings.credits"/>
     <Player :url="streamURL" :status="playerStatus" :message="settings.playerMessage" @statusChange="toggleStatusClass" @toggle="toggleStatusClass"/>
-    <Posts @toggle="toggleStatusClass" status-class="show-posts" :edito="settings.edito"/>
+    <Posts @toggle="toggleStatusClass" status-class="show-posts" :content="posts"/>
   </div>
 </template>
 
 <script>
 import Logo from './components/Logo'
-import Background from './components/Background'
+import Screen from './components/Screen'
 import Player from './components/Player'
 import Posts from './components/Posts'
 
 export default {
   name: 'App',
-  components: { Logo, Background, Player, Posts },
+  components: { Logo, Screen, Player, Posts },
   data () {
     return {
       status: ['loading'],
-      settings: this.$config.defaultSettings
+      settings: this.$config.screenSettings
     }
   },
   computed: {
     streamURL () { return this.$config.streamUrl },
-    mask () { return require('./assets/images/mask.png') },
-    playerStatus () { return this.status.indexOf('show-posts') !== -1 }
+    playerStatus () { return this.status.indexOf('show-posts') !== -1 },
+    posts () { return require(`@/contents/posts.html`) }
   },
   methods: {
-    fetchSettings: function () {
-      this.$http.get(this.$API.getURL('/tables/settings/rows')).then((response) => {
-        let data = response.data.data
-        data.map(item => { this.settings[item.key] = item.value })
-      }, (error) => {
-        console.log(error)
-      })
-      setTimeout(this.fetchSettings, this.$API.refreshTime)
-    },
     toggleStatusClass: function (status, classname) {
       let exists = this.status.indexOf(classname) !== -1
       if (!status) {
@@ -57,9 +48,6 @@ export default {
   },
   updated: function () {
     this.disableTabindex()
-  },
-  mounted: function () {
-    this.fetchSettings()
   }
 }
 </script>

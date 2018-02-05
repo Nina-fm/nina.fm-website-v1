@@ -8,7 +8,6 @@ import config from './config.js'
 
 Vue.prototype.$http = axios
 Vue.prototype.$config = config
-Vue.prototype.$API = config.API
 Vue.use(VueJsonp)
 Vue.config.productionTip = false
 

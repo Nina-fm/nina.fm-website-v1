@@ -3,49 +3,29 @@
     <a id="posts-toggle" class="btn" :title="showPostsMsg" @click="togglePosts">
       <i :class="{'nina-icon-reorder' : !open, 'nina-icon-close': open}"></i>
     </a>
-    <div id="posts-box">
-      <div class="container">
-        <div id="edito" v-html="edito"></div>
-        <div class="block" v-for="post in posts" :key="post.id">
-          <h3 class="title">{{post.title}}</h3>
-          <p class="content" v-html="post.content"></p>
-        </div>
-      </div>
-    </div>
+    <div id="posts-box" v-html="content"></div>
   </div>
 </template>
 
 <script>
 export default {
   name: 'Posts',
-  props: ['edito'],
+  props: ['content'],
   data () {
     return {
       open: false,
       statusClass: 'show-posts',
-      showPostsMsg: 'Afficher/masquer les actualités.',
-      posts: []
+      showPostsMsg: 'Afficher/masquer les actualités.'
     }
   },
   methods: {
     togglePosts: function (action) {
       this.open = typeof action === 'boolean' ? action : !this.open
       this.$emit('toggle', this.open, this.statusClass)
-    },
-    getPosts: function () {
-      this.$http(this.$API.getURL('/tables/posts/rows', 'order[created]=DESC'), {
-        method: 'get',
-        headers: { 'Content-Type': 'application/json' }
-      }).then((response) => {
-        this.posts = response.data.data
-      }, (error) => {
-        console.log(error)
-      })
-      setTimeout(this.getPosts, this.$API.refreshTime)
     }
   },
   mounted: function () {
-    this.getPosts()
+    // this.getPosts()
     window.addEventListener('keyup', event => {
       switch (event.code) {
         case 'Escape': this.togglePosts(false); break
@@ -154,35 +134,32 @@ export default {
       color:$color-main-text;
       font-weight: 700;
     }
-  }
-}
-
-#edito {
-  background: transparent;
-  color:$color-info-text;
-  padding: $margin-global;
-  margin-bottom: $margin-global/2;
-
-  &:first-child {
-    padding-top:0 !important;
-  }
-
-  /deep/ {
-    h1, h2, h3, h4, h5, h6 {
+    #edito {
+      background: transparent;
       color:$color-info-text;
-      font-family: $font-condensed;
-      font-size: 1.6em;
-      font-weight: 300;
-      line-height: 1.2em;
-      text-align: center;
-    }
-    small {
-      text-transform: uppercase;
-      font-size: 0.5em;
-      border-bottom: 1px solid $color-main-text;
-    }
-    strong {
-      letter-spacing: 0;
+      padding: $margin-global;
+      margin-bottom: $margin-global/2;
+
+      &:first-child {
+        padding-top:0 !important;
+      }
+
+      h1, h2, h3, h4, h5, h6 {
+        color:$color-info-text;
+        font-family: $font-condensed;
+        font-size: 1.6em;
+        font-weight: 300;
+        line-height: 1.2em;
+        text-align: center;
+      }
+      small {
+        text-transform: uppercase;
+        font-size: 0.5em;
+        border-bottom: 1px solid $color-main-text;
+      }
+      strong {
+        letter-spacing: 0;
+      }
     }
   }
 }
