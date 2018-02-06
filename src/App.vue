@@ -141,6 +141,12 @@ export default {
     right: $margin-global*2;
     margin-bottom: $margin-global*2;
     color: $color-info-text;
+    @include respond-to(phone) {
+      top:  $margin-global-sm*3;
+      left: $margin-global-sm*2;
+      right: $margin-global-sm*2;
+      margin-bottom: $margin-global-sm*2;
+    }
     a {
       color: $color-info-text;
     }

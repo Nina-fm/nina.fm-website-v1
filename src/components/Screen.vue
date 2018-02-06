@@ -1,6 +1,6 @@
 <template>
   <div id="screen" :style="{ backgroundImage: 'url('+url+')' }">
-    <div id="mask"><img v-if="mask" :src="mask"></div>
+    <div id="mask" v-if="mask"><img :src="mask"></div>
     <div id="credits">{{credits}}</div>
   </div>
 </template>
@@ -25,6 +25,12 @@ export default {
     background-position: left center;
     -webkit-background-size: cover;
     background-size: cover;
+    @include respond-to(phone) {
+      left: $body-margin-sm;
+      top: $body-margin-sm;
+      right: $body-margin-sm;
+      bottom: $body-margin-sm;
+    }
     #mask {
       z-index: 1;
       position: absolute;
@@ -32,6 +38,7 @@ export default {
       top: -1px;
       right: -1px;
       bottom: -1px;
+      overflow: hidden;
       img {
         position: absolute;
         bottom:0;

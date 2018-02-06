@@ -166,6 +166,12 @@ export default {
     top: $margin-global;
     bottom: $margin-global;
     overflow: hidden;
+    @include respond-to(phone) {
+      left: $margin-global-sm;
+      top: $margin-global-sm;
+      right: $margin-global-sm;
+      bottom: $margin-global-sm;
+    }
   }
   #player-track {
     z-index: 100;
