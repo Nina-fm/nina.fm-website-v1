@@ -33,7 +33,7 @@ export default {
       background-color: $color-progress-bar;
       text-align: center;
       box-sizing: border-box;
-      @include prefix(transition, all 0.8s ease-in);
+      @include prefix(transition, all 5s linear);
     }
   }
 </style>
