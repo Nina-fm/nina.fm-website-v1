@@ -62,6 +62,7 @@ export default {
       top: 0;
       overflow: hidden;
       left: $margin-global;
+      margin-bottom: $margin-global;
     }
     #app.show-details & {
       left: 0;
