@@ -26,11 +26,14 @@ export default {
     box-sizing: border-box;
 
     &__bar {
-      height: inherit;
+      position: absolute;
+      top: 50%;
+      @include prefix(transform, translateY(-50%));
+      height: $progress-width;
       background-color: $color-progress-bar;
       text-align: center;
       box-sizing: border-box;
-      @include prefix(transition, $animation);
+      @include prefix(transition, all 0.8s ease-in);
     }
   }
 </style>

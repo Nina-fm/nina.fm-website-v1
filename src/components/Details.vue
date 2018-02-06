@@ -98,10 +98,12 @@ export default {
     color: $color-info-text;
     ol, ul {
       margin:0;
-      padding:0 0 0 2em;
+      padding:0 0 0 0;
       line-height: 1.5em;
       li {
-        padding-left: 1em;
+        margin-left: 1.5em;
+        padding-left: 0.6em;
+        white-space: nowrap;
       }
     }
     p {
