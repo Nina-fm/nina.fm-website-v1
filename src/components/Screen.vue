@@ -43,6 +43,8 @@ export default {
         position: absolute;
         bottom:0;
         left:0;
+        max-width: 100%;
+        max-height: 100%;
       }
     }
   }
