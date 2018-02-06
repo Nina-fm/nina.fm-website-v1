@@ -83,6 +83,7 @@ export default {
     },
     setTrack: function (title) {
       if (title === this.title) return
+      // title = '120 & Le Chapelier - Kheops'
       let infos = title.split(/ - (.+)/)
       this.title = title
       this.trackArtist = infos[0]
@@ -193,6 +194,9 @@ export default {
     }
     @include respond-to(phone) {
       max-width: calc(100% - #{$margin-global*3});
+      i {
+        top: 0.2em;
+      }
     }
     &.fullscreen {
       max-width: 100%;
