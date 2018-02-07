@@ -65,33 +65,17 @@ export default {
 
 <style lang="scss" scoped>
   @import "~$scss/base.scss";
-
-  $small: 0 0 5em 0.3em $color-audience;
-  $big: 0 0 1.1em 0.2em $color-audience;
-
-  @at-root {
-    @include keyframes(sparkle) {
-      0% { @include prefix(box-shadow, $small); }
-      20% { @include prefix(box-shadow, $big); }
-      40% { @include prefix(box-shadow, $small); }
-      70% { @include prefix(box-shadow, $small); }
-      80% { @include prefix(box-shadow, $big); }
-      90% { @include prefix(box-shadow, $small); }
-      100% { @include prefix(box-shadow, $small); }
-    }
-  }
+  $brightness: 0 0 5em 0.3em $color-audience;
   .auditor {
     position: absolute;
     left: 0;
     top: 0;
     width: 0;
     height: 0;
+    opacity: 0;
     background: $color-audience;
-    @include prefix(box-shadow, $small);
+    @include prefix(box-shadow, $brightness);
     @include prefix(border-radius, 50%);
     @include prefix(transition, $animation);
-  }
-  .sparkle {
-    @include prefix(animation, sparkle 3s infinite)
   }
 </style>
