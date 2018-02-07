@@ -20,20 +20,21 @@ export default {
   },
   watch: {
     count: function (newVal, oldVal) {
-      if (newVal !== oldVal) this.updateListeners(newVal, oldVal)
+      if (newVal !== oldVal) this.updateListeners()
     }
   },
   methods: {
-    updateListeners: function (newVal, oldVal) {
-      const diff = newVal - oldVal
-      // Remove or add listener objects
-      if (diff < 0) {
-        this.listeners.splice(this.listeners.length - diff, diff)
-      } else {
-        let audience = this.listeners.length || 0
-        let newListeners = Array.from(Array(this.count - audience), (_, x) => this.getRandomStyles(x))
-        this.listeners = [...this.listeners, ...newListeners]
-      }
+    updateListeners: function () {
+      // Update listener objects
+      let newListeners = Array.from(Array(this.count), (_, x) => {
+        // Re-use if existent
+        if (this.listeners[x]) {
+          return this.listeners[x]
+        }
+        // Else create new
+        return this.getRandomStyles(x)
+      })
+      this.listeners = newListeners
     },
     getRandomStyles: function () {
       let size = this.getRandom(this.sizes.min, this.sizes.max)
