@@ -10,7 +10,7 @@
           <div class="slider" :class="{animated: typeText, btn: hasDetails}" @click="toggleDetails">
             <div id="track-text" data-append="trackinfo">
               <span v-if="trackArtist && trackTitle">
-                <strong v-if="trackArtist">{{trackArtist}}</strong> {{trackTitle}}
+                <strong v-if="trackArtist" v-html="trackArtist"></strong> <span v-html="trackTitle"></span>
               </span>
               <span v-else>{{defaultText}}</span>
             </div>
@@ -153,7 +153,7 @@ export default {
 
 <style lang="scss" scoped>
   @import "~$scss/base.scss";
-  @keyframes playerLoop {
+  @include keyframes(playerLoop) {
     0% { top: 0; }
     78% { top: 0; }
     80% { top: -20px; }
@@ -161,6 +161,7 @@ export default {
     100% { top: 0; }
   }
   #audio {
+    pointer-events: none;
     position: absolute;
     left: $margin-global;
     right: $margin-global;
@@ -172,6 +173,9 @@ export default {
       top: $margin-global-sm;
       right: $margin-global-sm;
       bottom: $margin-global-sm;
+    }
+    * {
+      pointer-events: all;
     }
   }
   #player-track {
