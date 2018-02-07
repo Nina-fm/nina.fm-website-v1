@@ -10,7 +10,7 @@ export default {
   props: ['count'],
   data () {
     return {
-      sizes: { min: 4, max: 7 },
+      sizes: { min: 3, max: 6 },
       positions: {
         left: { min: 10, max: 90 },
         top: { min: 10, max: 25 }
@@ -26,7 +26,7 @@ export default {
   methods: {
     updateListeners: function () {
       // Update listener objects
-      let newListeners = Array.from(Array(this.count), (_, x) => {
+      this.listeners = Array.from(Array(this.count), (_, x) => {
         // Re-use if existent
         if (this.listeners[x]) {
           return this.listeners[x]
@@ -34,7 +34,6 @@ export default {
         // Else create new
         return this.getRandomStyles(x)
       })
-      this.listeners = newListeners
     },
     getRandomStyles: function () {
       let size = this.getRandom(this.sizes.min, this.sizes.max)
