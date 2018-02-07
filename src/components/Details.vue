@@ -11,14 +11,17 @@
         </div>
         <div id="track-details-text">
           <div data-append="tracklist">
-            <div v-if="data.tracks">
+            <div v-if="data.tags">
+              <div v-if="data.tags.includes('use_text_tracks')" class="text_tracks">{{tracksText}}</div>
+            </div>
+            
+            <div v-else>
               <ol class="tracklist">
                 <li v-for="track in data.tracks" :key="track.id">
                   <span class="artist">{{track.artist}}</span> – <span class="title">{{track.title}}</span>
                 </li>
               </ol>
             </div>
-            <div v-else>{{tracksText}}</div>
           </div>
         </div>
       </div>
@@ -36,7 +39,7 @@ export default {
     progress () { return this.trackProgress },
     artist () { return this.data.artist },
     type () { return this.data.type ? 'Une ' + this.data.type + ' Nina.fm' : 'À l\'écoute sur Nina.fm' },
-    tracksText () { return this.data.tracksText || this.defaultText }
+    tracksText () { return this.data.text_tracks || this.defaultText }
   }
 }
 </script>
@@ -128,5 +131,9 @@ export default {
 
   .vue-progress-path .background {
     stroke: #edd;
+  }
+
+  .text_tracks{
+    white-space: pre;
   }
 </style>
