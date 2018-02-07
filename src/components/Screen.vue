@@ -1,14 +1,27 @@
 <template>
-  <div id="screen" :style="{ backgroundImage: 'url('+url+')' }">
+  <div id="screen" :style="{ backgroundImage: 'url('+background+')' }">
+    <Audience :count="listeners" />
+    <Logo :src="logo" />
     <div id="mask" v-if="mask"><img :src="mask"></div>
     <div id="credits">{{credits}}</div>
   </div>
 </template>
 
 <script>
+import Logo from './Logo'
+import Audience from './Audience'
 export default {
   name: 'Screen',
-  props: ['url', 'mask', 'credits']
+  props: ['listeners'],
+  components: { Logo, Audience },
+  data () {
+    return {
+      background: require('@/assets/images/background.jpg'),
+      mask: require('@/assets/images/mask.png'),
+      logo: require('@/assets/images/logo-white.svg'),
+      credits: '© Photo:Bobin - Montage:120'
+    }
+  }
 }
 </script>
 
@@ -32,6 +45,7 @@ export default {
       bottom: $body-margin-sm;
     }
     #mask {
+      pointer-events: none;
       z-index: 1;
       position: absolute;
       left: -1px;

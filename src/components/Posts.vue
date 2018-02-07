@@ -39,6 +39,7 @@ export default {
 @import '~$scss/base.scss';
 
 #posts {
+  pointer-events: none;
   position: absolute;
   left: $margin-global;
   right: $margin-global;
@@ -50,6 +51,9 @@ export default {
     top: $margin-global-sm;
     right: $margin-global-sm;
     bottom: $margin-global-sm;
+  }
+  * {
+    pointer-events: all;
   }
 }
 

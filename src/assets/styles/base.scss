@@ -7,10 +7,9 @@ $line-height:           1.4em !default;
 
 $color-main-bg:         #FFF !default;
 $color-main-text:       #444 !default;
-
 $color-progress-bar :   #444 !default;
 $color-progress-track:  #EEE !default;
-
+$color-audience:        #FFF !default;
 $color-info-bg:         rgba($color-main-bg, 0.9) !default;
 $color-info-text:       $color-main-text !default;
 
@@ -24,9 +23,7 @@ $margin-global-sm:      10px !default;
 $body-margin-sm:        10px !default;
 
 $equalizer-size:        17px !default;
-
 $progress-width:        2px !default;
-
 
 @import "fonts";
 @import "mixins";

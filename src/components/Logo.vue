@@ -1,24 +1,36 @@
 <template>
   <div id="logo">
-    <img :src="logo" class="logo" :alt="alt">
+    <img :src="src" />
   </div>
 </template>
 
 <script>
+// let cache = new Map()
 export default {
   name: 'Logo',
-  props: ['color', 'alt'],
-  computed: {
-    logo () {
-      return require('../assets/images/logo' + (this.color ? '-' + this.color : '-white') + '.svg')
-    }
+  props: {
+    src: {type: String, required: true},
+    listeners: {type: Number}
   }
+  // async mounted () {
+  //   if (!cache.has(this.src)) {
+  //     try {
+  //       cache.set(this.src, fetch(this.src).then(r => r.text()))
+  //     } catch (e) {
+  //       cache.delete(this.src)
+  //     }
+  //   }
+  //   if (cache.has(this.src)) {
+  //     this.$el.innerHTML = await cache.get(this.src)
+  //   }
+  // }
 }
 </script>
 
 <style lang="scss" scoped>
   @import "~$scss/base.scss";
   #logo {
+    padding-top: none;
     z-index: 1;
     position: absolute;
     top: 30%;
@@ -28,7 +40,14 @@ export default {
     @include prefix(transform, translateY(-50%));
     @include prefix(transition, $animation);
     @include respond-to(small-height) {
-      opacity:0;
+      opacity: 0;
+    }
+    /deep/ {
+      img,
+      svg {
+        pointer-events: auto;
+        width: 200px;
+      }
     }
     #app.show-posts & {
       width: 50% !important;

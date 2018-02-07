@@ -1,31 +1,23 @@
 <template>
   <div id="app" :class="status">
-    <Screen :url="screen.background" :mask="screen.mask" :credits="screen.credits"/>
-    <Logo :color="screen.logoColor" :alt="screen.credits"/>
-    <Player :url="streamUrl" :status="playerStatus" :message="screen.playerMessage" @statusChange="toggleStatusClass" @toggle="toggleStatusClass"/>
+    <Screen :listeners="listeners" />
+    <Player :url="streamUrl" :status="playerStatus" :message="playerMessage" @statusChange="toggleStatusClass" @toggle="toggleStatusClass"/>
     <Posts @toggle="toggleStatusClass" status-class="show-posts" :content="posts"/>
   </div>
 </template>
 
 <script>
-import Logo from './components/Logo'
 import Screen from './components/Screen'
 import Player from './components/Player'
 import Posts from './components/Posts'
-
 export default {
   name: 'App',
-  components: { Logo, Screen, Player, Posts },
+  components: { Screen, Player, Posts },
   data () {
     return {
       status: ['loading'],
-      screen: {
-        playerMessage: '',
-        logoColor: 'white',
-        background: require('@/assets/images/background.jpg'),
-        mask: require('@/assets/images/mask.png'),
-        credits: '© Photo:Bobin - Montage:120'
-      }
+      listeners: null,
+      playerMessage: ''
     }
   },
   computed: {
@@ -34,6 +26,14 @@ export default {
     posts () { return require(`@/contents/posts.html`) }
   },
   methods: {
+    getListeners: function () {
+      this.$jsonp(process.env.STREAM_API_OLD_URL, { callbackName: 'parseMusic' }).then(json => {
+        let data = json[process.env.STREAM_MOUNT_POINT]
+        this.listeners = parseInt(data.listeners)
+      }, (error) => {
+        console.log(error)
+      })
+    },
     toggleStatusClass: function (status, classname) {
       let exists = this.status.indexOf(classname) !== -1
       if (!status) {
@@ -51,9 +51,11 @@ export default {
   },
   created: function () {
     this.disableTabindex()
+    this.getListeners()
   },
   updated: function () {
     this.disableTabindex()
+    this.getListeners()
   }
 }
 </script>

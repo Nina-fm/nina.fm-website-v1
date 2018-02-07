@@ -37,8 +37,8 @@ export default {
     artist () { return this.data.artist },
     type () { return this.data.type ? 'Une ' + this.data.type + ' Nina.fm' : 'À l\'écoute sur Nina.fm' },
     tracksText () { return this.data.text_tracks || this.defaultText },
-    tags () { return this.data.tags || []}
-  } 
+    tags () { return this.data.tags || [] }
+  }
 }
 </script>
 
