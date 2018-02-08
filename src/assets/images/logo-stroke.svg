@@ -2,16 +2,16 @@
   <defs>
     <style>
       .a,.b,.c,.d,.e{fill:none;stroke:#FFF;}.a,.b,.c,.d{stroke-linecap:round;}.a,.c,.e{stroke-linejoin:round;}.a,.e{stroke-width:6.32px;}.b,.d{stroke-miterlimit:10;}.b{stroke-width:8px;}.c{stroke-width:2.83px;}.d{stroke-width:3.78px;}
-      .letter-n { animation: dash 3s linear forwards; }
-      .letter-i { animation: dash 2.8s 0.6s linear forwards; }
-      .letter-i-dot { animation: dash 2.6s 0.8s linear forwards; }
-      .letter-n2 { animation: dash 2.4s 1.2s linear forwards; }
-      .letter-a { animation: dash 2.2s 1.8s linear forwards; }
-      .letter-a-bar { animation: dash 2s 2.4s linear forwards; }
-      .dot-fm { animation: dash 1.8s 2.6s linear forwards; }
-      .letter-f { animation: dash 1.6s 2.8s linear forwards; }
-      .letter-f-bar { animation: dash 1.4s 2.9s linear forwards; }
-      .letter-m { animation: dash 1.4s 3s linear forwards; }
+      .letter-n { animation: dash 1.8s 1s linear forwards; }
+      .letter-i { animation: dash 2.2s 1.4s linear forwards; }
+      .letter-i-dot { animation: dash 1s 1.6s linear forwards; }
+      .letter-n2 { animation: dash 1.8s 1.8s linear forwards; }
+      .letter-a { animation: dash 1.8s 2.2s linear forwards; }
+      .letter-a-bar { animation: dash 1.5s 2.4s linear forwards; }
+      .dot-fm { animation: dash 1.8s 3s linear forwards; }
+      .letter-f { animation: dash 1.2s 3.1s linear forwards; }
+      .letter-f-bar { animation: dash 1.6s 3.1s linear forwards; }
+      .letter-m { animation: dash 1s 3.3s linear forwards; }
       .animate {
         stroke-dasharray: 1000 1000;
         stroke-dashoffset: 1000;
