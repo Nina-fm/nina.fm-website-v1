@@ -1,6 +1,11 @@
 <template>
   <div id="audience">
-    <div class="auditor" v-for="(item, index) in listeners" :key="index" :style="item.styles" :title="'Nous sommes actuellement ' + count + ' a écouter Nina.fm !'"></div>
+    <div class="auditor"
+         v-for="(item, index) in listeners"
+         :key="index"
+         :style="item.styles"
+         :title="'Nous sommes actuellement ' + count + ' a écouter Nina.fm !'"
+    ></div>
   </div>
 </template>
 
