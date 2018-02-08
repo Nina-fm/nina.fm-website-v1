@@ -1,29 +1,27 @@
 <template>
-  <div id="logo">
-    <img :src="src" />
-  </div>
+  <div id="logo"></div>
 </template>
 
 <script>
-// let cache = new Map()
+let cache = new Map()
 export default {
   name: 'Logo',
   props: {
     src: {type: String, required: true},
     listeners: {type: Number}
+  },
+  async mounted () {
+    if (!cache.has(this.src)) {
+      try {
+        cache.set(this.src, fetch(this.src).then(r => r.text()))
+      } catch (e) {
+        cache.delete(this.src)
+      }
+    }
+    if (cache.has(this.src)) {
+      this.$el.innerHTML = await cache.get(this.src)
+    }
   }
-  // async mounted () {
-  //   if (!cache.has(this.src)) {
-  //     try {
-  //       cache.set(this.src, fetch(this.src).then(r => r.text()))
-  //     } catch (e) {
-  //       cache.delete(this.src)
-  //     }
-  //   }
-  //   if (cache.has(this.src)) {
-  //     this.$el.innerHTML = await cache.get(this.src)
-  //   }
-  // }
 }
 </script>
 
@@ -47,6 +45,9 @@ export default {
       svg {
         pointer-events: auto;
         width: 200px;
+        @include respond-to(phone) {
+          width: 150px;
+        }
       }
     }
     #app.show-posts & {

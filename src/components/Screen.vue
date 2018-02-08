@@ -18,7 +18,7 @@ export default {
     return {
       background: require('@/assets/images/background.jpg'),
       mask: require('@/assets/images/mask.png'),
-      logo: require('@/assets/images/logo-white.svg'),
+      logo: require('@/assets/images/logo-stroke.svg'),
       credits: '© Photo:Bobin - Montage:120'
     }
   }
