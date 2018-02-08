@@ -82,5 +82,13 @@ export default {
     @include prefix(box-shadow, $brightness);
     @include prefix(border-radius, 50%);
     @include prefix(transition, $animation);
+
+    @include respond-to(phone) {
+      @include prefix(transform, scale(0.6));
+    }
+
+    @include respond-to(tablet) {
+      @include prefix(transform, scale(0.8));
+    }
   }
 </style>
