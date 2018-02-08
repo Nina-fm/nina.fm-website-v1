@@ -4,7 +4,7 @@
     <Player :url="streamUrl" :night="nightMode" :status="playerStatus" :message="playerMessage" @statusChange="toggleStatusClass" @toggle="toggleStatusClass"/>
     <Posts @toggle="toggleStatusClass" status-class="show-posts" :content="posts"/>
     <a id="night-toggle" class="btn" :title="nightModeMsg" @click="toggleNightMode">
-      <i :class="{'nina-icon-brightness_3' : !nightMode, 'nina-icon-brightness_1': nightMode}"></i>
+      <i :class="{'nina-icon-brightness_2' : !nightMode, 'nina-icon-wb_sunny': nightMode}"></i>
     </a>
   </div>
 </template>

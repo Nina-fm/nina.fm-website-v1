@@ -34,6 +34,9 @@
 .nina-icon-brightness_1:before {
   content: "\e3a6";
 }
+.nina-icon-brightness_2:before {
+  content: "\e3a7";
+}
 .nina-icon-brightness_3:before {
   content: "\e3a8";
 }
@@ -42,6 +45,9 @@
 }
 .nina-icon-brightness_low:before {
   content: "\e1ad";
+}
+.nina-icon-brightness_medium:before {
+  content: "\e1ae";
 }
 .nina-icon-cancel:before {
   content: "\e5c9";
@@ -117,4 +123,7 @@
 }
 .nina-icon-volume_up:before {
   content: "\e050";
+}
+.nina-icon-wb_sunny:before {
+  content: "\e430";
 }
