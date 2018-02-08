@@ -50,11 +50,13 @@ export default {
         }
       }
       svg {
+        transition: all 0.2s ease-out;
+
         $stroke-color: #FFF;
         $main-word-stroke-w: 6.4px;
         $sub-word-stroke-w: 2.5px;
         $delay-before: 2s;
-        $anim-out: tothin 3s 7s linear;
+        $anim-out: exit 3s 7s linear forwards infinite;
         .line {
           fill:none;
           stroke:$stroke-color;
@@ -75,9 +77,28 @@ export default {
         .letter-f { animation: dash 1.2s #{$delay-before+2100ms} linear forwards; stroke-width:$sub-word-stroke-w; }
         .letter-f-bar { animation: dash 1.6s #{$delay-before+2100ms} linear forwards; stroke-width:$sub-word-stroke-w; }
         .letter-m { animation: dash 1s #{$delay-before+2200ms} linear forwards; stroke-width:$sub-word-stroke-w; }
+        .letter-a-bar, .letter-i-dot, .sub-word {
+          transition: opacity 0.3s;
+        }
+        #app:not(.muted) &:hover {
+          opacity: 0.6;
+
+          .letter-a-bar, .letter-i-dot, .sub-word {
+            opacity: 0;
+          }
+          .line:not(.sub-word):not(.letter-i-dot):not(.letter-a-bar) {
+            transition: stroke-dasharray 0s;
+            animation-iteration-count: infinite !important;
+            stroke-dasharray: 100 100 !important;
+          }
+        }
+
         @keyframes dash {
           from { stroke-dashoffset: 1000; }
           to { stroke-dashoffset: 0; }
+        }
+        @keyframes exit {
+          to { stroke-width: 0; }
         }
       }
     }
