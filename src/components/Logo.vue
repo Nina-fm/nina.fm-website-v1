@@ -99,7 +99,7 @@ export default {
       }
       #app:not(.muted) &.animated {
         svg {
-          opacity: 1;
+          opacity: 0.3;
 
           .letter-a-bar, .letter-i-dot, .sub-word {
             opacity: 0;
