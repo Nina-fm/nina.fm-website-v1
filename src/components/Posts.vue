@@ -65,7 +65,10 @@ export default {
   height: 15px;
   width: 20px;
   color:$color-info-text;
-  @include prefix(transition, $animation);
+  #app.nightMode & {
+    color: $night-color-info-text;
+  }
+  @include prefix(transition, $animation-nobg);
 
   @include respond-to(small-height) {
     opacity:0;
@@ -79,6 +82,9 @@ export default {
     z-index: 10;
     background: transparent;
     color: $color-info-text;
+  }
+  #app.show-posts.nightMode & {
+    color: $night-color-info-text;
   }
 
   #app.show-details & {
@@ -132,6 +138,10 @@ export default {
     .block {
       background: rgba($color-info-bg, $opacity-info-bg);
       color:$color-info-text;
+      #app.nightMode & {
+        background: rgba($night-color-info-bg, $opacity-info-bg);
+        color: $night-color-info-text;
+      }
       padding: $margin-global;
       margin-bottom: $margin-global/2;
       @include prefix(border-radius, 3px);
@@ -142,11 +152,17 @@ export default {
     }
     h1, h2, h3, h4, h5, h6 {
       color:$color-main-text;
+      #app.nightMode & {
+        color: $night-color-main-text;
+      }
       font-weight: 700;
     }
     #edito {
       background: transparent;
       color:$color-info-text;
+      #app.nightMode & {
+        color: $night-color-info-text;
+      }
       padding: $margin-global;
       margin-bottom: $margin-global/2;
 
@@ -156,6 +172,9 @@ export default {
 
       h1, h2, h3, h4, h5, h6 {
         color:$color-info-text;
+        #app.nightMode & {
+          color: $night-color-info-text;
+        }
         font-family: $font-condensed;
         font-size: 1.6em;
         font-weight: 300;
@@ -166,6 +185,9 @@ export default {
         text-transform: uppercase;
         font-size: 0.5em;
         border-bottom: 1px solid $color-main-text;
+        #app.nightMode & {
+          border-bottom: 1px solid $night-color-main-text;
+        }
       }
       strong {
         letter-spacing: 0;

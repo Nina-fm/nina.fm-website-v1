@@ -1,8 +1,11 @@
 <template>
   <div id="app" :class="status">
-    <Screen :listeners="listeners" />
-    <Player :url="streamUrl" :status="playerStatus" :message="playerMessage" @statusChange="toggleStatusClass" @toggle="toggleStatusClass"/>
+    <Screen :listeners="listeners" :night="nightMode" />
+    <Player :url="streamUrl" :night="nightMode" :status="playerStatus" :message="playerMessage" @statusChange="toggleStatusClass" @toggle="toggleStatusClass"/>
     <Posts @toggle="toggleStatusClass" status-class="show-posts" :content="posts"/>
+    <a id="night-toggle" class="btn" :title="nightModeMsg" @click="toggleNightMode">
+      <i :class="{'nina-icon-brightness_3' : !nightMode, 'nina-icon-brightness_1': nightMode}"></i>
+    </a>
   </div>
 </template>
 
@@ -15,9 +18,11 @@ export default {
   components: { Screen, Player, Posts },
   data () {
     return {
+      nightMode: false,
       status: ['loading'],
       listeners: null,
-      playerMessage: ''
+      playerMessage: '',
+      nightModeMsg: 'Night mode'
     }
   },
   computed: {
@@ -25,7 +30,16 @@ export default {
     playerStatus () { return this.status.indexOf('show-posts') !== -1 },
     posts () { return require(`@/contents/posts.html`) }
   },
+  watch: {
+    nightMode: function (newVal) { this.toggleStatusClass(newVal, 'nightMode') }
+  },
   methods: {
+    updateNightMode: function () {
+      const hours = new Date().getHours()
+      console.log(hours)
+      const isDayTime = hours > 6 && hours < 19
+      this.nightMode = !isDayTime
+    },
     getListeners: function () {
       this.$jsonp(process.env.STREAM_API_OLD_URL, { callbackName: 'parseMusic' }).then(json => {
         let data = json[process.env.STREAM_MOUNT_POINT]
@@ -42,6 +56,9 @@ export default {
         this.status = exists ? this.status : [...this.status, classname]
       }
     },
+    toggleNightMode: function () {
+      this.nightMode = !this.nightMode
+    },
     disableTabindex: function () {
       let links = document.querySelectorAll('a, [id]')
       for (let i = 0, j = links.length; i < j; i++) {
@@ -56,6 +73,10 @@ export default {
   updated: function () {
     this.disableTabindex()
     this.getListeners()
+  },
+  mounted: function () {
+    this.updateNightMode()
+    // this.interval = setInterval(this.updateNightMode, 300000)
   }
 }
 </script>
@@ -86,7 +107,6 @@ export default {
     font-size: $font-size;
     font-family: $font-family;
     line-height: $line-height;
-    color: $color-main-text;
     width: 100%;
     height: 100%;
     min-height: 100%;
@@ -101,6 +121,20 @@ export default {
     top:0;
     bottom:0;
     overflow: hidden;
+    color: $color-main-text;
+  }
+  #app {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    top: 0;
+    color: $color-main-text;
+    background-color: $color-main-bg;
+    &.nightMode {
+      color: $night-color-main-text;
+      background-color: $night-color-main-bg;
+    }
   }
   h1, h2, h3, h4, h5, h6 {
     font-weight: 600;
@@ -151,6 +185,22 @@ export default {
     }
     a {
       color: $color-info-text;
+      #app.nightMode & {
+        color: $night-color-info-text;
+      }
     }
+  }
+  #night-toggle {
+    z-index: 10;
+    position:absolute;
+    bottom: #{$margin-global*1.8};
+    right: #{$margin-global*1.5};
+    height: 15px;
+    width: 20px;
+    color:$color-info-text;
+    #app.nightMode & {
+      color: $night-color-info-text;
+    }
+    @include prefix(transition, $animation);
   }
 </style>

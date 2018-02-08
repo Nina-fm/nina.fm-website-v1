@@ -79,6 +79,7 @@ export default {
     height: 0;
     opacity: 0;
     background: $color-audience;
+    @include prefix(animation, appear 1s ease-in);
     @include prefix(box-shadow, $brightness);
     @include prefix(border-radius, 50%);
     @include prefix(transition, $animation);
@@ -90,5 +91,8 @@ export default {
     @include respond-to(tablet) {
       @include prefix(transform, scale(0.8));
     }
+  }
+  @include keyframes(appear) {
+    from { opacity:0; }
   }
 </style>

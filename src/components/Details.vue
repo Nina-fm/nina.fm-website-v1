@@ -46,7 +46,7 @@ export default {
   @import "~$scss/base.scss";
   #details {
     z-index: 10;
-    transition: $animation;
+    @include prefix(transition, $animation-nobg);
     width:50%;
     height:100%;
     position:absolute;
@@ -55,6 +55,10 @@ export default {
     left: -50%;
     color: $color-info-text;
     background-color:rgba($color-info-bg, $opacity-info-bg);
+    #app.nightMode & {
+      color: $night-color-info-text;
+      background-color:rgba($night-color-info-bg, $opacity-info-bg);
+    }
     @include respond-to(tablet) {
       width:100%;
       left: -100%;
@@ -83,6 +87,10 @@ export default {
   #track-details-type {
     font-family: $font-condensed;
     text-align: right;
+    color: $color-info-text;
+    #app.nightMode & {
+      color: $night-color-info-text;
+    }
     span {
       position: relative;
       display: inline-block;
@@ -98,6 +106,9 @@ export default {
     font-family: $font-condensed;
     overflow: scroll;
     color: $color-info-text;
+    #app.nightMode & {
+      color: $night-color-info-text;
+    }
     ol, ul {
       margin:0;
       padding:0 0 0 0;
@@ -118,20 +129,5 @@ export default {
       margin-bottom: 1em;
       width: 100%;
     }
-  }
-  .vue-progress-path path {
-    stroke-width: 12;
-  }
-
-  .vue-progress-path .progress {
-    stroke: red;
-  }
-
-  .vue-progress-path .background {
-    stroke: #edd;
-  }
-
-  .text_tracks{
-    white-space: pre;
   }
 </style>

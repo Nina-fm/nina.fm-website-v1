@@ -64,7 +64,7 @@ export default {
         $stroke-color: #FFF;
         $main-word-stroke-w: 6.4px;
         $sub-word-stroke-w: 2.5px;
-        $delay-before: 2s;
+        $delay-before: 1.5s;
         $anim-out: exit 3s 7s linear forwards infinite;
         .line {
           fill:none;

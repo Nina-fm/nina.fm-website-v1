@@ -12,15 +12,17 @@ import Logo from './Logo'
 import Audience from './Audience'
 export default {
   name: 'Screen',
-  props: ['listeners'],
+  props: ['listeners', 'night'],
   components: { Logo, Audience },
   data () {
     return {
-      background: require('@/assets/images/background.jpg'),
-      mask: require('@/assets/images/mask.png'),
       logo: require('@/assets/images/logo-stroke.svg'),
       credits: '© Photo:Bobin - Montage:120'
     }
+  },
+  computed: {
+    background: function () { return require('@/assets/images/background' + (this.night ? '-night' : '') + '.jpg') },
+    mask: function () { return require('@/assets/images/mask' + (this.night ? '-night' : '') + '.png') }
   }
 }
 </script>
@@ -34,6 +36,9 @@ export default {
     right: $body-margin;
     bottom: $body-margin;
     background-color: $color-main-bg;
+    #app.nightMode & {
+      background-color: $night-color-main-bg;
+    }
     background-repeat: no-repeat;
     background-position: left center;
     -webkit-background-size: cover;
@@ -74,7 +79,10 @@ export default {
     line-height: 1em;
     padding:0;
     color: $color-main-text;
-    @include prefix(transition, $animation);
+    #app.nightMode & {
+      color: $night-color-main-text;
+    }
+    @include prefix(transition, $animation-nobg);
     @include respond-to(tablet) {
       font-size: 0.3em;
       #app.show-posts &,

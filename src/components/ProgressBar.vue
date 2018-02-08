@@ -19,11 +19,15 @@ export default {
 <style lang="scss" scoped>
   @import "~$scss/base.scss";
   .progress {
-    background: $color-progress-track;
+    background-color: $color-progress-track;
+    #app.nightMode & {
+      background-color: $night-color-progress-track;
+    }
     height: $progress-width;
     position: relative;
     margin-bottom: 1em;
     box-sizing: border-box;
+    @include prefix(transition, $animation-nobg);
 
     &__bar {
       position: absolute;
@@ -31,9 +35,12 @@ export default {
       @include prefix(transform, translateY(-50%));
       height: $progress-width;
       background-color: $color-progress-bar;
+      #app.nightMode & {
+        background-color: $night-color-progress-bar;
+      }
       text-align: center;
       box-sizing: border-box;
-      @include prefix(transition, all 5s linear);
+      @include prefix(transition, #{$animation-nobg, width 5s linear});
     }
   }
 </style>
