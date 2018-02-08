@@ -1,5 +1,5 @@
 <template>
-  <div id="logo"></div>
+  <div id="logo" :class="{animated}" @click="toggleAnimation"></div>
 </template>
 
 <script>
@@ -9,6 +9,16 @@ export default {
   props: {
     src: {type: String, required: true},
     listeners: {type: Number}
+  },
+  data () {
+    return {
+      animated: false
+    }
+  },
+  methods: {
+    toggleAnimation: function (event) {
+      this.animated = !this.animated
+    }
   },
   async mounted () {
     if (!cache.has(this.src)) {
@@ -28,14 +38,13 @@ export default {
 <style lang="scss" scoped>
   @import "~$scss/base.scss";
   #logo {
+    cursor: pointer;
     padding-top: none;
     z-index: 1;
     position: absolute;
     top: 30%;
-    left: 0;
-    width: 100%;
-    text-align: center;
-    @include prefix(transform, translateY(-50%));
+    left: 50%;
+    @include prefix(transform, translate(-50%, -50%));
     @include prefix(transition, $animation);
     @include respond-to(small-height) {
       opacity: 0;
@@ -80,8 +89,17 @@ export default {
         .letter-a-bar, .letter-i-dot, .sub-word {
           transition: opacity 0.3s;
         }
-        #app:not(.muted) &:hover {
-          opacity: 0.6;
+        @keyframes dash {
+          from { stroke-dashoffset: 1000; }
+          to { stroke-dashoffset: 0; }
+        }
+        @keyframes exit {
+          to { stroke-width: 0; }
+        }
+      }
+      #app:not(.muted) &.animated {
+        svg {
+          opacity: 1;
 
           .letter-a-bar, .letter-i-dot, .sub-word {
             opacity: 0;
@@ -92,26 +110,17 @@ export default {
             stroke-dasharray: 100 100 !important;
           }
         }
-
-        @keyframes dash {
-          from { stroke-dashoffset: 1000; }
-          to { stroke-dashoffset: 0; }
-        }
-        @keyframes exit {
-          to { stroke-width: 0; }
-        }
       }
     }
     #app.show-posts & {
-      width: 50% !important;
+      left: 25% !important;
       @include respond-to(tablet) {
         top: 150px !important;
-        width: 100% !important;
+        left: 0 !important;
       }
     }
     #app.show-details & {
-      width: 50% !important;
-      left: 50% !important;
+      left: 75% !important;
     }
     .logo {
       width: 40vw;
