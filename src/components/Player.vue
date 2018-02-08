@@ -5,7 +5,7 @@
         {{legacyMsg}}
       </audio>
       <div id="player-track">
-        <div id="equalizer" :title="controlsMsg" @click="toggleMute"></div>
+        <div id="equalizer" :title="controlsMsg" @click="toggleMute" :style="{ backgroundImage: 'url('+equalizerImg+')' }"></div>
         <div id="track-viewer">
           <div class="slider" :class="{animated: typeText, btn: hasDetails}" @click="toggleDetails">
             <div id="track-text" data-append="trackinfo">
@@ -30,7 +30,7 @@
 import Details from './Details'
 export default {
   name: 'Player',
-  props: ['url', 'message'],
+  props: ['url', 'message', 'night'],
   components: { Details },
   data () {
     return {
@@ -58,7 +58,8 @@ export default {
     },
     typeText () {
       return this.message || (this.type ? 'Une ' + this.type + ' Nina.fm' : '')
-    }
+    },
+    equalizerImg: function () { return require('@/assets/images/equalizer' + (this.night ? '-night' : '') + '.gif') },
   },
   methods: {
     toggleDetails: function (action) {
@@ -188,6 +189,10 @@ export default {
     padding: 15px 40px 0 20px;
     color: $color-main-text;
     background-color: rgba($color-main-bg, 0);
+    #app.nightMode & {
+      color: $night-color-main-text;
+      background-color: rgba($night-color-main-bg, 0);
+    }
     @extend .noSelect;
     overflow: hidden;
     font-size: 1.1em;
@@ -253,7 +258,8 @@ export default {
     z-index: 10;
     width: $equalizer-size;
     height: $equalizer-size;
-    background: url('../assets/images/equalizer.gif') no-repeat center;
+    background-repeat: no-repeat;
+    background-position: center;
     background-size: contain;
     position: absolute;
     top: 50%;
