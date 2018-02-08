@@ -193,8 +193,8 @@ export default {
   #night-toggle {
     z-index: 10;
     position:absolute;
-    bottom: #{$margin-global*1.8};
-    right: #{$margin-global*1.5};
+    bottom: #{$margin-global*2 - 3};
+    right: #{$margin-global*2 - 6};
     height: 15px;
     width: 20px;
     color:$color-info-text;
@@ -202,5 +202,16 @@ export default {
       color: $night-color-info-text;
     }
     @include prefix(transition, $animation);
+    @include respond-to(phone) {
+      bottom: #{$margin-global-sm*2};
+      right: #{$margin-global-sm*2};
+    }
+    i {
+      position: absolute;
+      left:50%;
+      top:50%;
+      @include prefix(transform, translate(-50%, -50%));
+      font-size: 1.2em;
+    }
   }
 </style>
