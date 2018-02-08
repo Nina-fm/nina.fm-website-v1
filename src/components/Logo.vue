@@ -49,6 +49,37 @@ export default {
           width: 150px;
         }
       }
+      svg {
+        $stroke-color: #FFF;
+        $main-word-stroke-w: 6.4px;
+        $sub-word-stroke-w: 2.5px;
+        $delay-before: 2s;
+        $anim-out: tothin 3s 7s linear;
+        .line {
+          fill:none;
+          stroke:$stroke-color;
+          stroke-linecap:round;
+          stroke-linejoin: round;
+          stroke-dasharray: 1000 1000;
+          stroke-dashoffset: 1000;
+          stroke-width: 1px;
+          transition: all 3s ease-out;
+        }
+        .letter-n { animation: dash 1.8s #{$delay-before+0ms} linear forwards; stroke-width:$main-word-stroke-w; }
+        .letter-i { animation: dash 2.2s #{$delay-before+400ms} linear forwards; stroke-width:$main-word-stroke-w; }
+        .letter-i-dot { animation: dash 1s #{$delay-before+600ms} linear forwards; stroke-width:$main-word-stroke-w*1.25; }
+        .letter-n2 { animation: dash 1.8s #{$delay-before+800ms} linear forwards; stroke-width:$main-word-stroke-w; }
+        .letter-a { animation: dash 1.8s #{$delay-before+1200ms} linear forwards; stroke-width:$main-word-stroke-w; }
+        .letter-a-bar { animation: dash 1.5s #{$delay-before+1400ms} linear forwards; stroke-width:$main-word-stroke-w; }
+        .dot-fm { animation: dash 1.8s #{$delay-before+2000ms} linear forwards; stroke-width:$sub-word-stroke-w*1.25; }
+        .letter-f { animation: dash 1.2s #{$delay-before+2100ms} linear forwards; stroke-width:$sub-word-stroke-w; }
+        .letter-f-bar { animation: dash 1.6s #{$delay-before+2100ms} linear forwards; stroke-width:$sub-word-stroke-w; }
+        .letter-m { animation: dash 1s #{$delay-before+2200ms} linear forwards; stroke-width:$sub-word-stroke-w; }
+        @keyframes dash {
+          from { stroke-dashoffset: 1000; }
+          to { stroke-dashoffset: 0; }
+        }
+      }
     }
     #app.show-posts & {
       width: 50% !important;
