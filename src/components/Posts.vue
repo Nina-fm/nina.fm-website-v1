@@ -1,16 +1,16 @@
 <template>
   <div id="posts">
-    <a id="posts-toggle" class="btn" :title="showPostsMsg" @click="togglePosts">
-      <i :class="{'nina-icon-reorder' : !open, 'nina-icon-close': open}"></i>
-    </a>
+    <IconButton id="posts-toggle" :size="16" :title="showPostsMsg" :active="open" @click="togglePosts" icon-active="nina-icon-close" icon-inactive="nina-icon-reorder"/>
     <div id="posts-box" v-html="content"></div>
   </div>
 </template>
 
 <script>
+import IconButton from './IconButton'
 export default {
   name: 'Posts',
   props: ['content'],
+  components: { IconButton },
   data () {
     return {
       open: false,
@@ -58,26 +58,15 @@ export default {
 }
 
 #posts-toggle{
-  z-index: 10;
-  position:absolute;
-  top: #{$margin-global - 6};
-  right: #{$margin-global - 3};
-  height: 15px;
-  width: 20px;
-  color:$color-info-text;
-  #app.nightMode & {
-    color: $night-color-info-text;
-  }
+  top: #{$margin-global + 3};
+  right: #{$margin-global + 5};
   @include prefix(transition, $animation-nobg);
-
   @include respond-to(small-height) {
     opacity:0;
   }
-
   @include respond-to(tablet) {
     z-index: 10;
   }
-
   #app.show-posts & {
     z-index: 10;
     background: transparent;
@@ -86,17 +75,8 @@ export default {
   #app.show-posts.nightMode & {
     color: $night-color-info-text;
   }
-
   #app.show-details & {
     display: none !important;
-  }
-
-  i {
-    position: absolute;
-    left:50%;
-    top:50%;
-    @include prefix(transform, translate(-50%, -50%));
-    font-size: 1.7em;
   }
 }
 

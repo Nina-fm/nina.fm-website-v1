@@ -17,9 +17,7 @@
             <div id="track-type" data-append="tracktype">{{typeText}}</div>
           </div>
         </div>
-        <a id="player-toggle" class="btn" :title="showTrackMsg" @click="toggleDetails" v-if="hasDetails">
-          <i :class="{'nina-icon-add_circle_outline' : !open, 'nina-icon-remove_circle_outline': open}"></i>
-        </a>
+        <IconButton id="player-toggle" :size="10" v-if="hasDetails" :title="showTrackMsg" :active="open" @click="toggleDetails" icon-active="nina-icon-remove_circle_outline" icon-inactive="nina-icon-add_circle_outline"/>
       </div>
     </div>
     <Details :data="details" :defaultText="defaultText" :trackProgress="trackProgress"/>
@@ -28,10 +26,11 @@
 
 <script>
 import Details from './Details'
+import IconButton from './IconButton'
 export default {
   name: 'Player',
   props: ['url', 'message', 'night'],
-  components: { Details },
+  components: { Details, IconButton },
   data () {
     return {
       interval: null,
@@ -84,7 +83,7 @@ export default {
     },
     setTrack: function (title) {
       if (title === this.title) return
-      // title = '120 & Le Chapelier - Kheops'
+      title = '120 & Le Chapelier - Kheops'
       let infos = title.split(/ - (.+)/)
       this.title = title
       this.trackArtist = infos[0]
@@ -244,14 +243,12 @@ export default {
     white-space: nowrap;
   }
   #player-toggle {
-    position: absolute;
     right: 10px;
     top: 50%;
     @include prefix(transform, translateY(-50%));
-    font-size: 1.2em;
-    margin-top: 0.1em;
+    margin-top: 0.25em;
     @include respond-to(tablet) {
-      margin-top: 0;
+      /*margin-top: 0;*/
     }
   }
   #equalizer {
