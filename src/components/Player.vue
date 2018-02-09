@@ -25,6 +25,7 @@
 <script>
 import Details from './Details'
 import IconButton from './IconButton'
+import Events from '../Events.js'
 export default {
   name: 'Player',
   props: ['url', 'message', 'night', 'status'],
@@ -135,6 +136,9 @@ export default {
     this.debugMixtape = params.get('mixtape')
   },
   mounted () {
+    Events.$on('play', () => {
+      this.audio.play();
+    })
     window.addEventListener('keyup', event => {
       switch (event.code) {
         case 'Space': this.toggleMute(); break
