@@ -97,6 +97,7 @@ export default {
           to { stroke-width: 0; }
         }
       }
+      /*#app:not(.muted) &.animated {*/
       #app:not(.muted) &:hover {
         svg {
           opacity: 0.2;

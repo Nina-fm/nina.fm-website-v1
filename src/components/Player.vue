@@ -59,7 +59,7 @@ export default {
     typeText () {
       return this.message || (this.type ? 'Une ' + this.type + ' Nina.fm' : '')
     },
-    equalizerImg: function () { return require('@/assets/images/equalizer' + (this.night ? '-night' : '') + '.gif') },
+    equalizerImg: function () { return require('@/assets/images/equalizer' + (this.night ? '-night' : '') + '.gif') }
   },
   methods: {
     toggleDetails: function (action) {

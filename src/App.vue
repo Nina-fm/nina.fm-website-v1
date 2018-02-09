@@ -3,9 +3,8 @@
     <Screen :listeners="listeners" :night="nightMode" />
     <Player :url="streamUrl" :night="nightMode" :status="playerStatus" :message="playerMessage" @statusChange="toggleStatusClass" @toggle="toggleStatusClass"/>
     <Posts @toggle="toggleStatusClass" status-class="show-posts" :content="posts"/>
-    <a id="night-toggle" class="btn" :title="nightModeMsg" @click="toggleNightMode">
-      <i :class="{'nina-icon-brightness_2' : !nightMode, 'nina-icon-wb_sunny': nightMode}"></i>
-    </a>
+    <IconButton id="night-toggle" :size="11" :title="nightModeMsg" :active="nightMode" @click="toggleNightMode" icon-active="nina-icon-wb_sunny" icon-inactive="nina-icon-brightness_2"/>
+    <IconButton id="fullscreen-toggle" :size="13" :title="fullscreenMsg" :active="fullscreen" @click="toggleFullScreen" icon-active="nina-icon-fullscreen_exit" icon-inactive="nina-icon-fullscreen"/>
   </div>
 </template>
 
@@ -13,16 +12,19 @@
 import Screen from './components/Screen'
 import Player from './components/Player'
 import Posts from './components/Posts'
+import IconButton from './components/IconButton'
 export default {
   name: 'App',
-  components: { Screen, Player, Posts },
+  components: { Screen, Player, Posts, IconButton },
   data () {
     return {
+      fullscreen: false,
       nightMode: false,
       status: ['loading'],
       listeners: null,
       playerMessage: '',
-      nightModeMsg: 'Night mode'
+      nightModeMsg: 'Mode nuit',
+      fullscreenMsg: 'Mode plein écran'
     }
   },
   computed: {
@@ -34,13 +36,12 @@ export default {
     nightMode: function (newVal) { this.toggleStatusClass(newVal, 'nightMode') }
   },
   methods: {
-    updateNightMode: function () {
+    updateNightMode () {
       const hours = new Date().getHours()
-      console.log(hours)
       const isDayTime = hours > 6 && hours < 19
       this.nightMode = !isDayTime
     },
-    getListeners: function () {
+    getListeners () {
       this.$jsonp(process.env.STREAM_API_OLD_URL, { callbackName: 'parseMusic' }).then(json => {
         let data = json[process.env.STREAM_MOUNT_POINT]
         this.listeners = parseInt(data.listeners)
@@ -56,25 +57,31 @@ export default {
         this.status = exists ? this.status : [...this.status, classname]
       }
     },
-    toggleNightMode: function () {
+    toggleNightMode () {
       this.nightMode = !this.nightMode
     },
-    disableTabindex: function () {
+    toggleFullScreen () {
+      this.$fullscreen.toggle(this.$el, {
+        wrap: false,
+        callback: fullscreen => { this.fullscreen = fullscreen }
+      })
+    },
+    disableTabindex () {
       let links = document.querySelectorAll('a, [id]')
       for (let i = 0, j = links.length; i < j; i++) {
         links[i].setAttribute('tabindex', -1)
       }
     }
   },
-  created: function () {
+  created () {
     this.disableTabindex()
     this.getListeners()
   },
-  updated: function () {
+  updated () {
     this.disableTabindex()
     this.getListeners()
   },
-  mounted: function () {
+  mounted () {
     this.updateNightMode()
     // this.interval = setInterval(this.updateNightMode, 300000)
   }
@@ -191,27 +198,19 @@ export default {
     }
   }
   #night-toggle {
-    z-index: 10;
-    position:absolute;
-    bottom: #{$margin-global*2 - 3};
-    right: #{$margin-global*2 - 6};
-    height: 15px;
-    width: 20px;
-    color:$color-info-text;
-    #app.nightMode & {
-      color: $night-color-info-text;
-    }
-    @include prefix(transition, $animation);
+    bottom: #{$margin-global*3.5};
+    right: #{$margin-global*2};
     @include respond-to(phone) {
-      bottom: #{$margin-global-sm*2};
-      right: #{$margin-global-sm*2};
+      bottom: #{$margin-global*2.5 + $margin-global-sm};
+      right: #{$margin-global + $margin-global-sm};
     }
-    i {
-      position: absolute;
-      left:50%;
-      top:50%;
-      @include prefix(transform, translate(-50%, -50%));
-      font-size: 1.2em;
+  }
+  #fullscreen-toggle {
+    bottom: #{$margin-global*2};
+    right: #{$margin-global*2};
+    @include respond-to(phone) {
+      bottom: #{$margin-global + $margin-global-sm};
+      right: #{$margin-global + $margin-global-sm};
     }
   }
 </style>
