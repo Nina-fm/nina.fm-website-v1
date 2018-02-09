@@ -33,6 +33,7 @@ export default {
   components: { Details, IconButton },
   data () {
     return {
+      debugMixtape: false,
       interval: null,
       title: '',
       trackArtist: '',
@@ -83,7 +84,9 @@ export default {
     },
     setTrack: function (title) {
       if (title === this.title) return
-      title = '120 & Le Chapelier - Kheops'
+      if (process.env.DEBUG_MIXTAPE && this.debugMixtape) {
+        title = this.debugMixtape
+      }
       let infos = title.split(/ - (.+)/)
       this.title = title
       this.trackArtist = infos[0]
@@ -132,6 +135,10 @@ export default {
         console.log(error)
       })
     }
+  },
+  created () {
+    let params = (new URL(document.location)).searchParams
+    this.debugMixtape = params.get('mixtape')
   },
   mounted () {
     window.addEventListener('keyup', event => {
