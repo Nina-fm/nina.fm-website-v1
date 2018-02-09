@@ -145,7 +145,6 @@ export default {
         case 'Escape': this.toggleDetails(false); break
       }
     })
-    setTimeout(() => { this.audio.play() }, 3000)
     this.interval = setInterval(() => {
       this.checkStream()
       this.updateStatus()

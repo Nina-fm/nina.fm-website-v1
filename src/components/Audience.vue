@@ -4,7 +4,7 @@
          v-for="(item, index) in listeners"
          :key="index"
          :style="item.styles"
-         :title="'Nous sommes actuellement ' + count + ' a écouter Nina.fm !'"
+         :title="'Nous sommes actuellement ' + count + ' à écouter Nina.fm !'"
     ></div>
   </div>
 </template>
