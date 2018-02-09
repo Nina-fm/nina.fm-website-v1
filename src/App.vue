@@ -3,8 +3,8 @@
     <Screen :listeners="listeners" :night="nightMode" />
     <Player :url="streamUrl" :night="nightMode" :status="playerStatus" :message="playerMessage" @statusChange="toggleStatusClass" @toggle="toggleStatusClass"/>
     <Posts @toggle="toggleStatusClass" status-class="show-posts" :content="posts"/>
-    <IconButton id="night-toggle" :size="11" :title="nightModeMsg" :active="nightMode" @click="toggleNightMode" icon-active="nina-icon-wb_sunny" icon-inactive="nina-icon-brightness_2"/>
-    <IconButton id="fullscreen-toggle" :size="13" :title="fullscreenMsg" :active="fullscreen" @click="toggleFullScreen" icon-active="nina-icon-fullscreen_exit" icon-inactive="nina-icon-fullscreen"/>
+    <IconButton id="night-toggle" :size="11" :infoText="nightModeMsg" :active="nightMode" @click="toggleNightMode" icon-active="nina-icon-wb_sunny" icon-inactive="nina-icon-brightness_2"/>
+    <IconButton id="fullscreen-toggle" :size="13" :infoText="fullscreenMsg" :active="fullscreen" @click="toggleFullScreen" icon-active="nina-icon-fullscreen_exit" icon-inactive="nina-icon-fullscreen"/>
   </div>
 </template>
 
@@ -23,8 +23,8 @@ export default {
       status: ['loading'],
       listeners: null,
       playerMessage: '',
-      nightModeMsg: 'Activer/désactiver le mode nuit',
-      fullscreenMsg: 'Activer/désactiver le mode plein écran'
+      nightModeMsg: 'Mode nuit',
+      fullscreenMsg: 'Plein écran'
     }
   },
   computed: {

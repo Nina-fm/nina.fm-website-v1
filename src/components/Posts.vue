@@ -14,9 +14,11 @@ export default {
   data () {
     return {
       open: false,
-      statusClass: 'show-posts',
-      showPostsMsg: 'Afficher/masquer les infos Nina.fm.'
+      statusClass: 'show-posts'
     }
+  },
+  computed: {
+    showPostsMsg () { return (this.open ? 'Masquer' : 'Afficher') + ' les infos Nina' }
   },
   methods: {
     togglePosts (action) {

@@ -4,11 +4,12 @@ import Vue from 'vue'
 import App from './App'
 import VueJsonp from 'vue-jsonp'
 import axios from 'axios'
-import fullscreen from 'vue-fullscreen'
+import Fullscreen from 'vue-fullscreen'
+
+Vue.use(VueJsonp)
+Vue.use(Fullscreen)
 
 Vue.prototype.$http = axios
-Vue.use(VueJsonp)
-Vue.use(fullscreen)
 Vue.config.productionTip = process.env.NODE_ENV === 'production'
 
 /* eslint-disable no-new */

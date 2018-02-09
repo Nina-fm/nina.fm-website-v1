@@ -15,7 +15,7 @@
             <div id="track-type" data-append="tracktype">{{typeText}}</div>
           </div>
         </div>
-        <IconButton id="player-toggle" :size="10" v-if="hasDetails" :title="showTrackMsg" :active="open" @click="toggleDetails" icon-active="nina-icon-remove_circle_outline" icon-inactive="nina-icon-add_circle_outline"/>
+        <IconButton id="player-toggle" :size="10" v-if="hasDetails" :active="open" @click="toggleDetails" icon-active="nina-icon-remove_circle_outline" icon-inactive="nina-icon-add_circle_outline"/>
       </div>
     </div>
     <Details :data="details" :defaultText="defaultText" :trackProgress="trackProgress"/>
@@ -31,6 +31,7 @@ export default {
   components: { Details, IconButton },
   data () {
     return {
+      muted: false,
       debugMixtape: false,
       interval: null,
       title: '',
@@ -42,8 +43,6 @@ export default {
       open: false,
       statusClass: 'show-details',
       defaultText: 'Recherche des infos...',
-      controlsMsg: 'Activer/désactiver le son, vous pouvez aussi utiliser la barre d\'espace.',
-      showTrackMsg: 'Afficher/masquer le détail de la mixtape.',
       legacyMsg: 'Votre navigateur est un vieux machin dépassé. Il ne supporte pas la musique, ce qui est un peu con quand on veut écouter la radio.'
     }
   },
@@ -51,6 +50,7 @@ export default {
     hasDetails () { return this.type === 'mixtape' },
     audio () { return this.$refs.audio },
     typeText () { return this.message || (this.type ? 'Une ' + this.type + ' Nina.fm' : '') },
+    controlsMsg () { return (this.muted ? 'Activer' : 'Désactiver') + ' le son (vous pouvez aussi utiliser la barre d\'espace)' },
     equalizerImg () {
       return require('@/assets/images/equalizer' + (!this.status ? '-loader' : '') + (this.night ? '-night' : '') + '.gif')
     }
@@ -63,7 +63,7 @@ export default {
       }
     },
     toggleMute (action) {
-      this.audio.muted = typeof action === 'boolean' ? action : !this.audio.muted
+      this.muted = this.audio.muted = typeof action === 'boolean' ? action : !this.audio.muted
       this.$emit('toggle', this.audio.muted, 'muted')
     },
     updateStatus () {

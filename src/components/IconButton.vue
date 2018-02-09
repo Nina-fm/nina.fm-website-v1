@@ -1,5 +1,5 @@
 <template>
-  <button :id="id" class="iconButton" :style="styles" :title="title" @click="handleClick">
+  <button :id="id" class="iconButton" :title="infoText" :style="styles" @click="handleClick">
     <i :class="icon" :style="iconStyles"></i>
   </button>
 </template>
@@ -7,7 +7,7 @@
 <script>
 export default {
   name: 'IconButton',
-  props: ['id', 'active', 'iconActive', 'iconInactive', 'title', 'size'],
+  props: ['id', 'active', 'iconActive', 'iconInactive', 'infoText', 'size'],
   computed: {
     icon () { return this.active ? this.iconActive : this.iconInactive },
     styles () { return {height: this.size, width: this.size} },
