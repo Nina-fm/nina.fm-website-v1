@@ -23,17 +23,17 @@ export default {
       status: ['loading'],
       listeners: null,
       playerMessage: '',
-      nightModeMsg: 'Mode nuit',
-      fullscreenMsg: 'Mode plein écran'
+      nightModeMsg: 'Activer/désactiver le mode nuit',
+      fullscreenMsg: 'Activer/désactiver le mode plein écran'
     }
   },
   computed: {
     streamUrl () { return process.env.STREAM_URL },
-    playerStatus () { return this.status.indexOf('show-posts') !== -1 },
+    playerStatus () { return this.status.indexOf('loading') === -1 },
     posts () { return require(`@/contents/posts.html`) }
   },
   watch: {
-    nightMode: function (newVal) { this.toggleStatusClass(newVal, 'nightMode') }
+    nightMode (newVal) { this.toggleStatusClass(newVal, 'nightMode') }
   },
   methods: {
     updateNightMode () {
@@ -49,7 +49,7 @@ export default {
         console.log(error)
       })
     },
-    toggleStatusClass: function (status, classname) {
+    toggleStatusClass (status, classname) {
       let exists = this.status.indexOf(classname) !== -1
       if (!status) {
         this.status = this.status.filter(item => { return classname !== item })
@@ -83,7 +83,6 @@ export default {
   },
   mounted () {
     this.updateNightMode()
-    // this.interval = setInterval(this.updateNightMode, 300000)
   }
 }
 </script>

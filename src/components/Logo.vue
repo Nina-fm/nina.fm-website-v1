@@ -16,9 +16,7 @@ export default {
     }
   },
   methods: {
-    toggleAnimation: function (event) {
-      this.animated = !this.animated
-    }
+    toggleAnimation (event) { this.animated = !this.animated }
   },
   async mounted () {
     if (!cache.has(this.src)) {

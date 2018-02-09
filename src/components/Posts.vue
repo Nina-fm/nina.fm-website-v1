@@ -15,17 +15,16 @@ export default {
     return {
       open: false,
       statusClass: 'show-posts',
-      showPostsMsg: 'Afficher/masquer les actualités.'
+      showPostsMsg: 'Afficher/masquer les infos Nina.fm.'
     }
   },
   methods: {
-    togglePosts: function (action) {
+    togglePosts (action) {
       this.open = typeof action === 'boolean' ? action : !this.open
       this.$emit('toggle', this.open, this.statusClass)
     }
   },
-  mounted: function () {
-    // this.getPosts()
+  mounted () {
     window.addEventListener('keyup', event => {
       switch (event.code) {
         case 'Escape': this.togglePosts(false); break

@@ -1,9 +1,7 @@
 <template>
   <div id="audio">
     <div id="player">
-      <audio id="audioplayer" ref="audio" :src="url" @canplaythrough="updateStatus" autoplay="autoplay" type="audio/mpeg">
-        {{legacyMsg}}
-      </audio>
+      <audio id="audioplayer" ref="audio" :src="url" @canplaythrough="updateStatus" autoplay="autoplay" type="audio/mpeg">{{legacyMsg}}</audio>
       <div id="player-track">
         <div id="equalizer" :title="controlsMsg" @click="toggleMute" :style="{ backgroundImage: 'url('+equalizerImg+')' }"></div>
         <div id="track-viewer">
@@ -29,7 +27,7 @@ import Details from './Details'
 import IconButton from './IconButton'
 export default {
   name: 'Player',
-  props: ['url', 'message', 'night'],
+  props: ['url', 'message', 'night', 'status'],
   components: { Details, IconButton },
   data () {
     return {
@@ -50,39 +48,35 @@ export default {
     }
   },
   computed: {
-    hasDetails () {
-      return this.type === 'mixtape'
-    },
-    audio () {
-      return this.$refs.audio
-    },
-    typeText () {
-      return this.message || (this.type ? 'Une ' + this.type + ' Nina.fm' : '')
-    },
-    equalizerImg: function () { return require('@/assets/images/equalizer' + (this.night ? '-night' : '') + '.gif') }
+    hasDetails () { return this.type === 'mixtape' },
+    audio () { return this.$refs.audio },
+    typeText () { return this.message || (this.type ? 'Une ' + this.type + ' Nina.fm' : '') },
+    equalizerImg () {
+      return require('@/assets/images/equalizer' + (!this.status ? '-loader' : '') + (this.night ? '-night' : '') + '.gif')
+    }
   },
   methods: {
-    toggleDetails: function (action) {
+    toggleDetails (action) {
       if (this.hasDetails) {
         this.open = typeof action === 'boolean' ? action : !this.open
         this.$emit('toggle', this.open, this.statusClass)
       }
     },
-    toggleMute: function (action) {
+    toggleMute (action) {
       this.audio.muted = typeof action === 'boolean' ? action : !this.audio.muted
       this.$emit('toggle', this.audio.muted, 'muted')
     },
-    updateStatus: function () {
+    updateStatus () {
       this.$emit('statusChange', !this.audio.played, 'loading')
       if (this.audio.played) this.getCurrentTrack()
     },
-    checkStream: function () {
+    checkStream () {
       if (!this.audio.played) {
         this.audio.load()
         this.audio.play()
       }
     },
-    setTrack: function (title) {
+    setTrack (title) {
       if (title === this.title) return
       if (process.env.DEBUG_MIXTAPE && this.debugMixtape) {
         title = this.debugMixtape
@@ -93,7 +87,7 @@ export default {
       this.trackTitle = infos[1]
       this.getTrackDetails()
     },
-    oldGetCurrentTrack: function () {
+    oldGetCurrentTrack () {
       this.$jsonp(process.env.STREAM_API_OLD_URL, { callbackName: 'parseMusic' }).then(json => {
         let data = json[process.env.STREAM_MOUNT_POINT]
         this.setTrack(data.title)
@@ -101,7 +95,7 @@ export default {
         console.log(error)
       })
     },
-    getCurrentTrack: function () {
+    getCurrentTrack () {
       this.$jsonp(process.env.STREAM_API_URL).then(response => {
         if (response.current) {
           this.setTrack(response.current.name)
@@ -119,7 +113,7 @@ export default {
         this.oldGetCurrentTrack()
       })
     },
-    getTrackDetails: function () {
+    getTrackDetails () {
       this.$http({
         type: 'get',
         url: process.env.STREAM_METADATA_URL,
@@ -152,7 +146,7 @@ export default {
       this.updateStatus()
     }, process.env.STREAM_REFRESH_TIME)
   },
-  beforeDestroy: function () {
+  beforeDestroy () {
     clearInterval(this.interval)
   }
 }
@@ -272,9 +266,6 @@ export default {
     cursor: pointer;
     #app.muted & {
       opacity: 0.2;
-    }
-    #app.loading & {
-      background-image: url('../assets/images/loader.gif');
     }
   }
 

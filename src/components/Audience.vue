@@ -24,12 +24,10 @@ export default {
     }
   },
   watch: {
-    count: function (newVal, oldVal) {
-      if (newVal !== oldVal) this.updateListeners()
-    }
+    count () { this.updateListeners() }
   },
   methods: {
-    updateListeners: function () {
+    updateListeners () {
       // Update listener objects
       this.listeners = Array.from(Array(this.count), (_, x) => {
         // Re-use if existent
@@ -40,7 +38,7 @@ export default {
         return this.getRandomStyles(x)
       })
     },
-    getRandomStyles: function () {
+    getRandomStyles () {
       let size = this.getRandom(this.sizes.min, this.sizes.max)
       // Calculate the opacity from the size ratio
       let range = this.sizes.max - this.sizes.min + 1
@@ -57,12 +55,12 @@ export default {
         }
       }
     },
-    getRandom: function (min, max) {
+    getRandom (min, max) {
       // min and max are included in the range
       return Math.floor(Math.random() * ((max + 1) - min) + min)
     }
   },
-  mounted: function () {
+  mounted () {
     this.updateListeners()
   }
 }

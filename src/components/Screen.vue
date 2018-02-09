@@ -21,8 +21,8 @@ export default {
     }
   },
   computed: {
-    background: function () { return require('@/assets/images/background' + (this.night ? '-night' : '') + '.jpg') },
-    mask: function () { return require('@/assets/images/mask' + (this.night ? '-night' : '') + '.png') }
+    background () { return require('@/assets/images/background' + (this.night ? '-night' : '') + '.jpg') },
+    mask () { return require('@/assets/images/mask' + (this.night ? '-night' : '') + '.png') }
   }
 }
 </script>

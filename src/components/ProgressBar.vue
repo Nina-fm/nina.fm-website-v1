@@ -9,9 +9,7 @@ export default {
   name: 'ProgressBar',
   props: ['progress'],
   computed: {
-    progressStyle: function () {
-      return { width: this.progress + '%' }
-    }
+    progressStyle () { return { width: this.progress + '%' } }
   }
 }
 </script>
