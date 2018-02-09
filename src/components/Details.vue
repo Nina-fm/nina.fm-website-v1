@@ -3,7 +3,7 @@
     <div id="track-details">
       <div class="container">
         <div id="track-details-cover" v-if="data.cover">
-          <img :src="data.cover" :alt="data.artist+' - '+data.title">
+          <lightbox :thumbnail="data.cover" :images="[data.cover]" :alternate-text="data.artist+' - '+data.title"></lightbox>
         </div>
         <div id="track-details-type">
           <ProgressBar :progress="progress" />
@@ -45,7 +45,7 @@ export default {
 <style lang="scss" scoped>
   @import "~$scss/base.scss";
   #details {
-    z-index: 10;
+    /*z-index: 10;*/
     @include prefix(transition, $animation-nobg);
     width:50%;
     height:100%;

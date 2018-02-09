@@ -152,6 +152,9 @@ export default {
     margin: 0 0 0.4em 0;
     line-height: 1em;
   }
+  .lightbox {
+    z-index: 1000 !important;
+  }
   .heading {
     font-family: $font-condensed;
     font-weight: 300;
