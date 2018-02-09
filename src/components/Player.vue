@@ -1,7 +1,7 @@
 <template>
   <div id="audio">
     <div id="player">
-      <audio id="audioplayer" ref="audio" :src="url" @canplaythrough="updateStatus" autoplay="autoplay" type="audio/mpeg">{{legacyMsg}}</audio>
+      <audio id="audioplayer" ref="audio" :src="url" @canplaythrough="updateStatus" type="audio/mpeg">{{legacyMsg}}</audio>
       <div id="player-track">
         <div id="equalizer" :title="controlsMsg" @click="toggleMute" :style="{ backgroundImage: 'url('+equalizerImg+')' }"></div>
         <div id="track-viewer">
@@ -141,6 +141,7 @@ export default {
         case 'Escape': this.toggleDetails(false); break
       }
     })
+    setTimeout(() => { this.audio.play() }, 3000)
     this.interval = setInterval(() => {
       this.checkStream()
       this.updateStatus()
