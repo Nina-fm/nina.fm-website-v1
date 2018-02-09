@@ -38,7 +38,7 @@ export default {
 <style lang="scss" scoped>
   @import "~$scss/base.scss";
   #logo {
-    cursor: pointer;
+    /*cursor: pointer;*/
     padding-top: none;
     z-index: 1;
     position: absolute;
@@ -61,7 +61,7 @@ export default {
       svg {
         transition: all 0.2s ease-out;
 
-        $stroke-color: #FFF;
+        $stroke-color: $color-main-bg;
         $main-word-stroke-w: 6.4px;
         $sub-word-stroke-w: 2.5px;
         $delay-before: 1.5s;
@@ -97,9 +97,9 @@ export default {
           to { stroke-width: 0; }
         }
       }
-      #app:not(.muted) &.animated {
+      #app:not(.muted) &:hover {
         svg {
-          opacity: 0.3;
+          opacity: 0.2;
 
           .letter-a-bar, .letter-i-dot, .sub-word {
             opacity: 0;
@@ -121,10 +121,6 @@ export default {
     }
     #app.show-details & {
       left: 75% !important;
-    }
-    .logo {
-      width: 40vw;
-      max-width: 200px;
     }
   }
 </style>
