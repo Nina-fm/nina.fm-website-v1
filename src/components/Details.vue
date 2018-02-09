@@ -3,7 +3,11 @@
     <div id="track-details">
       <div class="container">
         <div id="track-details-cover" v-if="data.cover">
-          <img :src="data.cover" :alt="data.artist+' - '+data.title">
+          <lightbox
+            :thumbnail="data.cover"
+            :images="[data.cover]"
+            alternate-text="data.artist+' - '+data.title"
+          ></lightbox>
         </div>
         <div id="track-details-type">
           <ProgressBar :progress="progress" />
