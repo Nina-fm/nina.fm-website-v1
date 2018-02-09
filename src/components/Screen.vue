@@ -51,7 +51,6 @@ export default {
     }
     #mask {
       pointer-events: none;
-      z-index: 1;
       position: absolute;
       left: -1px;
       top: -1px;
