@@ -67,7 +67,7 @@ export default {
     }
   }
   #credits {
-    z-index: 10;
+    z-index: 0;
     position: absolute;
     bottom: 0;
     left: 2px;
