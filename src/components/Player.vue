@@ -34,7 +34,6 @@ export default {
     return {
       muted: false,
       debugMixtape: false,
-      interval: null,
       title: '',
       trackArtist: '',
       trackTitle: '',
@@ -137,15 +136,20 @@ export default {
     this.debugMixtape = params.get('mixtape')
   },
   mounted () {
+    // Play music event
     Events.$on('play', () => {
       this.audio.play()
     })
+
+    // Handle keys events
     window.addEventListener('keyup', event => {
       switch (event.code) {
         case 'Space': this.toggleMute(); break
         case 'Escape': this.toggleDetails(false); break
       }
     })
+
+    // Check if the stream is alive
     this.interval = setInterval(() => {
       this.checkStream()
       this.updateStatus()
