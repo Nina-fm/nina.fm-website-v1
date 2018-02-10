@@ -37,7 +37,7 @@ export default {
   @import "~$scss/base.scss";
   #logo {
     /*cursor: pointer;*/
-    padding-top: none;
+    padding-top: 0;
     z-index: 1;
     position: absolute;
     top: 30%;
@@ -113,9 +113,10 @@ export default {
     }
     #app.show-posts & {
       left: 25% !important;
+
       @include respond-to(tablet) {
         top: 150px !important;
-        left: 0 !important;
+        left: 50% !important;
       }
     }
     #app.show-details & {
