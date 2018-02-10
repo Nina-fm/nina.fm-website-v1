@@ -1,5 +1,5 @@
 <template>
-  <div id="app" :class="status" v-on:click="play">
+  <div id="app" :class="status" @click="play">
     <Screen :listeners="listeners" :night="nightMode" />
     <Player :url="streamUrl" :night="nightMode" :status="playerStatus" :message="playerMessage" @statusChange="toggleStatusClass" @toggle="toggleStatusClass"/>
     <Posts @toggle="toggleStatusClass" status-class="show-posts" :content="posts"/>
@@ -13,7 +13,7 @@ import Screen from './components/Screen'
 import Player from './components/Player'
 import Posts from './components/Posts'
 import IconButton from './components/IconButton'
-import Events from './Events.js'
+import Events from './Events'
 
 export default {
   name: 'App',
@@ -39,7 +39,9 @@ export default {
   },
   methods: {
     play () {
-      Events.$emit('play')
+      if (Events.isMobileDevice()) {
+        Events.$emit('play')
+      }
     },
     updateNightMode () {
       const hours = new Date().getHours()

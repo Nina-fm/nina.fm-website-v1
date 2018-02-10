@@ -25,7 +25,7 @@
 <script>
 import Details from './Details'
 import IconButton from './IconButton'
-import Events from '../Events.js'
+import Events from '../Events'
 export default {
   name: 'Player',
   props: ['url', 'message', 'night', 'status'],
@@ -48,8 +48,8 @@ export default {
     }
   },
   computed: {
-    hasDetails () { return this.type === 'mixtape' },
     audio () { return this.$refs.audio },
+    hasDetails () { return this.type === 'mixtape' },
     typeText () { return this.message || (this.type ? 'Une ' + this.type + ' Nina.fm' : '') },
     controlsMsg () { return (this.muted ? 'Activer' : 'Désactiver') + ' le son (vous pouvez aussi utiliser la barre d\'espace)' },
     equalizerImg () {
@@ -57,6 +57,7 @@ export default {
     }
   },
   methods: {
+    audioPlayed () { return this.audio.duration > 0 && !this.audio.paused },
     toggleDetails (action) {
       if (this.hasDetails) {
         this.open = typeof action === 'boolean' ? action : !this.open
@@ -68,11 +69,11 @@ export default {
       this.$emit('toggle', this.audio.muted, 'muted')
     },
     updateStatus () {
-      this.$emit('statusChange', !this.audio.played, 'loading')
-      if (this.audio.played) this.getCurrentTrack()
+      this.$emit('statusChange', !this.audioPlayed(), 'loading')
+      if (this.audioPlayed()) this.getCurrentTrack()
     },
     checkStream () {
-      if (!this.audio.played) {
+      if (!this.audioPlayed()) {
         this.audio.load()
         this.audio.play()
       }
@@ -137,7 +138,7 @@ export default {
   },
   mounted () {
     Events.$on('play', () => {
-      this.audio.play();
+      this.audio.play()
     })
     window.addEventListener('keyup', event => {
       switch (event.code) {
