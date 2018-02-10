@@ -77,6 +77,9 @@ export default {
     height: 0;
     opacity: 0;
     background: $color-audience;
+    #app.nightMode & {
+      background: $night-color-audience;
+    }
     @include prefix(animation, appear 1s ease-in);
     @include prefix(box-shadow, $brightness);
     @include prefix(border-radius, 50%);
