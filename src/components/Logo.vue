@@ -38,7 +38,7 @@ export default {
   #logo {
     /*cursor: pointer;*/
     padding-top: 0;
-    z-index: 1;
+    z-index: 0;
     position: absolute;
     top: 30%;
     left: 50%;
