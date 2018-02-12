@@ -195,10 +195,15 @@ export default {
       font-size: 1.2em;
       font-weight: 500;
       display: inline-block;
-      background: rgba($color-info-bg, $opacity-info-bg);
-      color: $color-info-text;
+      background: rgba($color-info-text, $opacity-info-bg);
+      color: $color-info-bg;
+      #app.nightMode & {
+        background: transparent;
+        border: 1px solid $night-color-info-text;
+        color: $night-color-info-text;
+      }
       padding: 0.6em 1.2em;
-      margin: 0 0.25em;
+      margin: 0 0.25em $margin-global / 2;
       text-decoration: none;
       @include prefix(border-radius, 2px);
       @include prefix(transition, $animation);
@@ -206,8 +211,13 @@ export default {
         margin-right: 0.6em;
       }
       &:hover {
-        background: rgba($color-info-bg, 1);
+        background: rgba($color-info-bg, $opacity-info-bg);
         color: $color-info-text;
+        #app.nightMode & {
+          background: $night-color-info-bg;
+          border: 1px solid $night-color-info-bg;
+          color: $night-color-info-text;
+        }
       }
     }
     blockquote {
