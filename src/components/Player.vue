@@ -49,10 +49,14 @@ export default {
   computed: {
     audio () { return this.$refs.audio },
     hasDetails () { return this.type === 'mixtape' },
-    typeText () { return this.message || (this.type ? 'Une ' + this.type + ' Nina.fm' : '') },
-    controlsMsg () { return (this.muted ? 'Activer' : 'Désactiver') + ' le son (vous pouvez aussi utiliser la barre d\'espace)' },
+    controlsMsg () {
+      return (this.muted ? 'Activer' : 'Désactiver') + ' le son (vous pouvez aussi utiliser la barre d\'espace)'
+    },
     equalizerImg () {
       return require('@/assets/images/equalizer' + (!this.status ? '-loader' : '') + (this.night ? '-night' : '') + '.gif')
+    },
+    typeText () {
+      return this.message || (this.type ? 'Une ' + this.type + ' Nina.fm' : null) || 'À l\'écoute sur Nina.fm'
     }
   },
   methods: {
