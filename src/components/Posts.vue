@@ -1,7 +1,15 @@
 <template>
   <div id="posts">
     <IconButton id="posts-toggle" :size="16" :title="showPostsMsg" :active="open" @click="togglePosts" icon-active="nina-icon-close" icon-inactive="nina-icon-reorder"/>
-    <div id="posts-box" v-html="content"></div>
+    <div id="posts-box">
+      <div class="container">
+        <div v-html="content"></div>
+        <div class="footer">
+          <a class="social-btn" href="https://www.facebook.com/nina.webradio/" target="_blank" rel="noopener noreferrer"><i class="nina-icon-facebook2"></i>Nina sur Facebook</a>
+          <a class="social-btn" href="mailto:infos@nina.fm" target="_blank" rel="noopener noreferrer"><i class="nina-icon-paper-plane"></i>Contacter Nina</a>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -20,10 +28,12 @@ export default {
   computed: {
     showPostsMsg () { return (this.open ? 'Masquer' : 'Afficher') + ' les infos Nina' }
   },
+  watch: {
+    open () { this.$emit('toggle', this.open, this.statusClass) }
+  },
   methods: {
     togglePosts (action) {
       this.open = typeof action === 'boolean' ? action : !this.open
-      this.$emit('toggle', this.open, this.statusClass)
     }
   },
   mounted () {
@@ -38,6 +48,7 @@ export default {
 
 <style lang="scss" scoped>
 @import '~$scss/base.scss';
+@import url('https://fonts.googleapis.com/css?family=Caveat:400,700');
 
 #posts {
   pointer-events: none;
@@ -172,6 +183,76 @@ export default {
       }
       strong {
         letter-spacing: 0;
+      }
+    }
+    .footer {
+      padding-top: $margin-global;
+      text-align: center;
+    }
+    .social-btn {
+      box-sizing: border-box;
+      font-family: $font-condensed;
+      font-size: 1.2em;
+      font-weight: 500;
+      display: inline-block;
+      background: rgba($color-info-bg, $opacity-info-bg);
+      color: $color-info-text;
+      padding: 0.6em 1.2em;
+      margin: 0 0.25em;
+      text-decoration: none;
+      @include prefix(border-radius, 2px);
+      @include prefix(transition, $animation);
+      i {
+        margin-right: 0.6em;
+      }
+      &:hover {
+        background: rgba($color-info-bg, 1);
+        color: $color-info-text;
+      }
+    }
+    blockquote {
+      position: relative;
+      padding: 0;
+      margin: 0 0 0 0;
+
+      p {
+        position: relative;
+        z-index: 1;
+        font-family: 'Caveat', cursive;;
+        font-size: 1.5em;
+        font-weight: bold;
+        line-height: 1.2em;
+      }
+
+      &:before {
+        content: "\e900";
+        font-family: 'nina-icons' !important;
+        speak: none;
+        font-style: normal;
+        font-weight: normal;
+        font-variant: normal;
+        text-transform: none;
+        line-height: 1;
+        font-size: 4em;
+        color: $color-progress-track;
+        #app.nightMode & {
+          color: $night-color-progress-track;
+        }
+        z-index: 0;
+        position: absolute;
+        right: 0;
+        top: 0;
+        /* Better Font Rendering =========== */
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+      }
+
+      cite {
+        font-font: $font-family;
+        font-size: 0.8em;
+        font-style: normal;
+        text-align: right;
+        display: block;
       }
     }
   }
