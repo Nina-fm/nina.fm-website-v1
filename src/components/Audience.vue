@@ -4,7 +4,7 @@
          v-for="(item, index) in listeners"
          :key="index"
          :style="item.styles"
-         :title="'Nous sommes actuellement ' + count + ' à écouter Nina.fm !'"
+         :title="'Vous partagez actuellement Nina.fm avec ' + count + ' auditeurs !'"
     ></div>
   </div>
 </template>
@@ -23,13 +23,16 @@ export default {
       listeners: []
     }
   },
+  computed: {
+    countOthers () { return this.count <= 0 ? 0 : this.count - 1 }
+  },
   watch: {
     count () { this.updateListeners() }
   },
   methods: {
     updateListeners () {
       // Update listener objects
-      this.listeners = Array.from(Array(this.count), (_, x) => {
+      this.listeners = Array.from(Array(this.countOthers), (_, x) => {
         // Re-use if existent
         if (this.listeners[x]) {
           return this.listeners[x]
@@ -84,6 +87,10 @@ export default {
     @include prefix(box-shadow, $brightness);
     @include prefix(border-radius, 50%);
     @include prefix(transition, $animation);
+
+    &:hover {
+      @include prefix(transform, scale(2));
+    }
 
     @include respond-to(phone) {
       @include prefix(transform, scale(0.6));
