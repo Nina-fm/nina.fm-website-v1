@@ -127,9 +127,11 @@ export default {
           title: this.trackTitle
         }
       }).then((response) => {
-        this.details = response.data[0]
-        this.type = this.details.type
-        this.details.cover = process.env.STREAM_METADATA_URL + this.details.cover
+        if (response.data.length) {
+          this.details = response.data[0]
+          this.type = this.details.type
+          this.details.cover = process.env.STREAM_METADATA_URL + this.details.cover
+        }
       }, (error) => {
         if (process.env.NODE_ENV === 'development') console.log(error)
       })
