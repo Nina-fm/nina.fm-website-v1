@@ -6,7 +6,7 @@
         <div v-html="content"></div>
         <div class="footer">
           <a class="social-btn" href="https://www.facebook.com/nina.webradio/" target="_blank" rel="noopener noreferrer"><i class="nina-icon-facebook2"></i>Nina sur Facebook</a>
-          <a class="social-btn" href="mailto:infos@nina.fm" target="_blank" rel="noopener noreferrer"><i class="nina-icon-paper-plane"></i>Contacter Nina</a>
+          <a class="social-btn" href="mailto:infos@nina.fm" rel="noopener noreferrer"><i class="nina-icon-paper-plane"></i>Contacter Nina</a>
         </div>
       </div>
     </div>
