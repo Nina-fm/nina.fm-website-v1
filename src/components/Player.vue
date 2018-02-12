@@ -97,7 +97,7 @@ export default {
         let data = json[process.env.STREAM_MOUNT_POINT]
         this.setTrack(data.title)
       }, (error) => {
-        console.log(error)
+        if (process.env.NODE_ENV === 'development') console.log(error)
       })
     },
     getCurrentTrack () {
@@ -114,7 +114,7 @@ export default {
           this.oldGetCurrentTrack()
         }
       }, (error) => {
-        console.error(error)
+        if (process.env.NODE_ENV === 'development') console.log(error)
         this.oldGetCurrentTrack()
       })
     },
@@ -131,7 +131,7 @@ export default {
         this.type = this.details.type
         this.details.cover = process.env.STREAM_METADATA_URL + this.details.cover
       }, (error) => {
-        console.log(error)
+        if (process.env.NODE_ENV === 'development') console.log(error)
       })
     }
   },
