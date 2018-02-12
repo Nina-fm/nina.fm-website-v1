@@ -21,7 +21,7 @@ $night-color-audience:        #FFF !default;
 $night-color-info-bg:         rgba($night-color-main-bg, 0.9) !default;
 $night-color-info-text:       $night-color-main-text !default;
 
-$opacity-info-bg:       1 !default;
+$opacity-info-bg:       0.9 !default;
 
 $animation:             all 0.3s ease-in-out !default;
 $animation-nobg:        all 0.3s ease-in-out, background-color 0s linear, color 0s linear !default;

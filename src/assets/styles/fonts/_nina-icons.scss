@@ -25,6 +25,27 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+.nina-icon-quote:before {
+  content: "\e900";
+}
+.nina-icon-envelope:before {
+  content: "\e028";
+}
+.nina-icon-telescope:before {
+  content: "\e02a";
+}
+.nina-icon-facebook3:before {
+  content: "\e05d";
+}
+.nina-icon-bullhorn:before {
+  content: "\e91a";
+}
+.nina-icon-facebook:before {
+  content: "\ea90";
+}
+.nina-icon-facebook2:before {
+  content: "\ea91";
+}
 .nina-icon-add_circle:before {
   content: "\e147";
 }
@@ -81,6 +102,9 @@
 }
 .nina-icon-highlight_off:before {
   content: "\e888";
+}
+.nina-icon-mail_outline:before {
+  content: "\e0e1";
 }
 .nina-icon-menu:before {
   content: "\e5d2";
