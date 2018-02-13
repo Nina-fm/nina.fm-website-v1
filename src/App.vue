@@ -166,6 +166,9 @@ export default {
   .centered {
     text-align: center;
   }
+  .spaced {
+    letter-spacing: 0.1em !important;
+  }
   .spacer {
     display: inline;
     width:0;

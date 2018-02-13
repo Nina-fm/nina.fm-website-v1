@@ -224,14 +224,23 @@ export default {
       position: relative;
       padding: 0;
       margin: 0 0 0 0;
+      color: $color-info-text;
+      #app.nightMode & {
+        color: $night-color-info-text;
+      }
 
       p {
         position: relative;
         z-index: 1;
-        font-family: 'Caveat', cursive;;
-        font-size: 1.5em;
-        font-weight: bold;
+        font-family: 'Caveat', cursive;
+        font-size: 2vw;
         line-height: 1.2em;
+        @include respond-to(tablet) {
+          font-size: 4vw;
+        }
+        @include respond-to(tablet) {
+          font-size: 5vw;
+        }
       }
 
       &:before {
@@ -263,6 +272,7 @@ export default {
         font-style: normal;
         text-align: right;
         display: block;
+        color: inherit;
       }
     }
   }
