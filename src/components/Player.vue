@@ -103,7 +103,10 @@ export default {
     getCurrentTrack () {
       this.$jsonp(process.env.STREAM_API_URL).then(response => {
         if (response.current) {
-          this.setTrack(response.current.name)
+
+          var parser = new DOMParser;
+          var dom = parser.parseFromString(response.current.name, 'text/html');
+          this.setTrack(dom.body.textContent)
 
           // Scheduler time is one hour ahead of start and end times, probably due to encoding diffences
           var trackElapsed = (new Date(response.schedulerTime) - new Date(response.current.starts) - 3600000)
