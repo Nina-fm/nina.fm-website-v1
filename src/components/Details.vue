@@ -54,10 +54,10 @@ export default {
     bottom: 0;
     left: -50%;
     color: $color-info-text;
-    background-color:rgba($color-info-bg, $opacity-info-bg);
+    background-color:rgba($color-info-bg, $opacity-details-bg);
     #app.nightMode & {
       color: $night-color-info-text;
-      background-color:rgba($night-color-info-bg, $opacity-info-bg);
+      background-color:rgba($night-color-info-bg, $opacity-details-bg);
     }
     @include respond-to(tablet) {
       width:100%;
