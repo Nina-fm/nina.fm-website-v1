@@ -39,9 +39,7 @@ export default {
   },
   methods: {
     play () {
-      if (Events.isMobileDevice()) {
-        Events.$emit('play')
-      }
+      Events.$emit('play')
     },
     updateNightMode () {
       const hours = new Date().getHours()
