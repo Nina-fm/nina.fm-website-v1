@@ -1,7 +1,7 @@
 <template>
   <div id="app" :class="status" @click="play">
     <Screen :listeners="listeners" :night="nightMode" />
-    <Player :url="streamUrl" :night="nightMode" :status="playerStatus" :message="playerMessage" @statusChange="toggleStatusClass" @toggle="toggleStatusClass"/>
+    <Player :url="streamUrl" :night="nightMode" :status="playerStatus" :autoplay="playerAutoplay" :message="playerMessage" @statusChange="toggleStatusClass" @toggle="toggleStatusClass"/>
     <Posts @toggle="toggleStatusClass" status-class="show-posts" :content="posts"/>
     <IconButton id="night-toggle" :size="11" :infoText="nightModeMsg" :active="nightMode" @click="toggleNightMode" icon-active="nina-icon-wb_sunny" icon-inactive="nina-icon-brightness_2"/>
     <IconButton id="fullscreen-toggle" :size="13" :infoText="fullscreenMsg" :active="fullscreen" @click="toggleFullScreen" icon-active="nina-icon-fullscreen_exit" icon-inactive="nina-icon-fullscreen"/>
@@ -31,12 +31,8 @@ export default {
   },
   computed: {
     streamUrl () { return process.env.STREAM_URL },
-    playerStatus () {
-      return {
-        loaded: this.status.indexOf('loading') === -1,
-        autoplay: this.status.indexOf('no-autoplay') === -1
-      }
-    },
+    playerStatus () { return this.status.indexOf('loading') === -1 },
+    playerAutoplay () { return this.status.indexOf('no-autoplay') === -1 },
     posts () { return require(`@/contents/posts.html`) }
   },
   watch: {
@@ -44,8 +40,10 @@ export default {
   },
   methods: {
     play () {
-      Events.$emit('play')
-      this.toggleStatusClass(false, 'no-autoplay')
+      if (this.noAutoplay()) {
+        Events.$emit('play')
+        this.toggleStatusClass(false, 'no-autoplay')
+      }
     },
     updateNightMode () {
       const hours = new Date().getHours()
@@ -166,6 +164,7 @@ export default {
     }
     &.no-autoplay {
       &:after {
+        pointer-events: none;
         content: "\e039";
         font-family: 'nina-icons' !important;
         speak: none;

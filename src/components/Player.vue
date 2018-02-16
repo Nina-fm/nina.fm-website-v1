@@ -1,7 +1,7 @@
 <template>
   <div id="audio">
     <div id="player">
-      <audio id="audioplayer" ref="audio" :src="url" @canplaythrough="updateStatus" autoplay="autoplay" type="audio/mpeg">{{legacyMsg}}</audio>
+      <audio id="audioplayer" ref="audio" :src="streamUrl" @canplaythrough="updateStatus" autoplay="autoplay" type="audio/mpeg">{{legacyMsg}}</audio>
       <div id="player-track">
         <div id="equalizer" :title="controlsMsg" @click="toggleMute" :style="{ backgroundImage: 'url('+equalizerImg+')' }"></div>
         <div id="track-viewer">
@@ -28,7 +28,7 @@ import IconButton from './IconButton'
 import Events from '../Events'
 export default {
   name: 'Player',
-  props: ['url', 'message', 'night', 'status'],
+  props: ['url', 'message', 'night', 'status', 'autoplay'],
   components: { Details, IconButton },
   data () {
     return {
@@ -50,15 +50,16 @@ export default {
   computed: {
     audio () { return this.$refs.audio },
     hasDetails () { return this.type === 'mixtape' },
-    initMsg () { return this.status.autoplay ? this.defaultText : this.waitingText },
+    initMsg () { return this.autoplay ? this.defaultText : this.waitingText },
+    streamUrl () { return this.autoplay ? this.url : '' },
     controlsMsg () {
       return (this.muted ? 'Activer' : 'Désactiver') + ' le son (vous pouvez aussi utiliser la barre d\'espace)'
     },
     equalizerImg () {
-      return require('@/assets/images/equalizer' + (!this.status.loaded ? '-loader' : '') + (this.night ? '-night' : '') + '.gif')
+      return require('@/assets/images/equalizer' + (!this.status ? '-loader' : '') + (this.night ? '-night' : '') + '.gif')
     },
     typeText () {
-      return this.message || (this.type ? 'Une ' + this.type + ' Nina.fm' : null) || (this.status.autoplay ? 'À l\'écoute sur Nina.fm' : false)
+      return this.message || (this.type ? 'Une ' + this.type + ' Nina.fm' : null) || (this.autoplay ? 'À l\'écoute sur Nina.fm' : false)
     }
   },
   methods: {
@@ -76,12 +77,14 @@ export default {
     updateStatus () {
       this.$emit('statusChange', !this.audioPlayed(), 'loading')
       if (this.audioPlayed()) this.getCurrentTrack()
+      setTimeout(this.updateStatus, process.env.STREAM_REFRESH_TIME)
     },
     checkStream () {
-      if (!this.audioPlayed()) {
+      if (this.autoplay && !this.audioPlayed()) {
         this.audio.load()
         this.audio.play()
       }
+      setTimeout(this.checkStream, process.env.STREAM_REFRESH_TIME)
     },
     setTrack (title) {
       if (title === this.title) return
@@ -148,6 +151,7 @@ export default {
   mounted () {
     // Play music event
     Events.$on('play', () => {
+      this.audio.load()
       this.audio.play()
     })
 
@@ -160,10 +164,8 @@ export default {
     })
 
     // Check if the stream is alive
-    this.interval = setInterval(() => {
-      this.checkStream()
-      this.updateStatus()
-    }, process.env.STREAM_REFRESH_TIME)
+    this.checkStream()
+    this.updateStatus()
   },
   beforeDestroy () {
     clearInterval(this.interval)
