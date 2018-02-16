@@ -175,9 +175,6 @@ export default {
         line-height: 1;
         font-size: 50vmin;
         color: $color-main-text;
-        #app.nightMode & {
-          color: $night-color-main-text;
-        }
         opacity: 0.5;
         z-index: 0;
         position: absolute;
@@ -187,6 +184,9 @@ export default {
         /* Better Font Rendering =========== */
         -webkit-font-smoothing: antialiased;
         -moz-osx-font-smoothing: grayscale;
+      }
+      &.nightMode:after {
+        color: $night-color-main-text;
       }
     }
   }
