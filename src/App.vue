@@ -31,7 +31,12 @@ export default {
   },
   computed: {
     streamUrl () { return process.env.STREAM_URL },
-    playerStatus () { return this.status.indexOf('loading') === -1 },
+    playerStatus () {
+      return {
+        loaded: this.status.indexOf('loading') === -1,
+        autoplay: this.status.indexOf('no-autoplay') === -1
+      }
+    },
     posts () { return require(`@/contents/posts.html`) }
   },
   watch: {
@@ -40,6 +45,7 @@ export default {
   methods: {
     play () {
       Events.$emit('play')
+      this.toggleStatusClass(false, 'no-autoplay')
     },
     updateNightMode () {
       const hours = new Date().getHours()
@@ -76,6 +82,15 @@ export default {
       for (let i = 0, j = links.length; i < j; i++) {
         links[i].setAttribute('tabindex', -1)
       }
+    },
+    noAutoplay () {
+      return (this.isSafari() || this.isMobile())
+    },
+    isSafari () {
+      return !!navigator.userAgent.match(/Version\/[\d.]+.*Safari/)
+    },
+    isMobile () {
+      return (typeof window.orientation !== 'undefined') || (navigator.userAgent.indexOf('IEMobile') !== -1)
     }
   },
   created () {
@@ -87,6 +102,9 @@ export default {
     this.getListeners()
   },
   mounted () {
+    if (this.noAutoplay()) {
+      this.status.push('no-autoplay')
+    }
     this.updateNightMode()
   }
 }
@@ -145,6 +163,32 @@ export default {
     &.nightMode {
       color: $night-color-main-text;
       background-color: $night-color-main-bg;
+    }
+    &.no-autoplay {
+      &:after {
+        content: "\e039";
+        font-family: 'nina-icons' !important;
+        speak: none;
+        font-style: normal;
+        font-weight: normal;
+        font-variant: normal;
+        text-transform: none;
+        line-height: 1;
+        font-size: 50vmin;
+        color: $color-main-text;
+        #app.nightMode & {
+          color: $night-color-main-text;
+        }
+        opacity: 0.5;
+        z-index: 0;
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        @include prefix(transform, translate(-50%, -50%));
+        /* Better Font Rendering =========== */
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+      }
     }
   }
   h1, h2, h3, h4, h5, h6 {

@@ -10,7 +10,7 @@
               <span v-if="trackArtist && trackTitle">
                 <strong v-if="trackArtist" v-html="trackArtist"></strong> <span v-html="trackTitle"></span>
               </span>
-              <span v-else>{{defaultText}}</span>
+              <span v-else>{{initMsg}}</span>
             </div>
             <div id="track-type" data-append="tracktype">{{typeText}}</div>
           </div>
@@ -42,6 +42,7 @@ export default {
       details: {},
       open: false,
       statusClass: 'show-details',
+      waitingText: 'Cliquez pour lancer la lecture',
       defaultText: 'Recherche des infos...',
       legacyMsg: 'Votre navigateur est un vieux machin dépassé. Il ne supporte pas la musique, ce qui est un peu con quand on veut écouter la radio.'
     }
@@ -49,14 +50,15 @@ export default {
   computed: {
     audio () { return this.$refs.audio },
     hasDetails () { return this.type === 'mixtape' },
+    initMsg () { return this.status.autoplay ? this.defaultText : this.waitingText },
     controlsMsg () {
       return (this.muted ? 'Activer' : 'Désactiver') + ' le son (vous pouvez aussi utiliser la barre d\'espace)'
     },
     equalizerImg () {
-      return require('@/assets/images/equalizer' + (!this.status ? '-loader' : '') + (this.night ? '-night' : '') + '.gif')
+      return require('@/assets/images/equalizer' + (!this.status.loaded ? '-loader' : '') + (this.night ? '-night' : '') + '.gif')
     },
     typeText () {
-      return this.message || (this.type ? 'Une ' + this.type + ' Nina.fm' : null) || 'À l\'écoute sur Nina.fm'
+      return this.message || (this.type ? 'Une ' + this.type + ' Nina.fm' : null) || (this.status.autoplay ? 'À l\'écoute sur Nina.fm' : false)
     }
   },
   methods: {
