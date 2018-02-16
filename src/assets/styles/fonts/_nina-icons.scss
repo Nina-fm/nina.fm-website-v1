@@ -25,35 +25,44 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
-.nina-icon-paper-plane:before {
+.nina-icon-facebook:before {
+  content: "\e900";
+}
+.nina-icon-social:before {
+  content: "\e900";
+}
+.nina-icon-telescope:before {
+  content: "\e901";
+}
+.nina-icon-astronomy:before {
   content: "\e901";
 }
 .nina-icon-quote:before {
-  content: "\e900";
+  content: "\e902";
 }
-.nina-icon-envelope:before {
-  content: "\e028";
-}
-.nina-icon-telescope:before {
-  content: "\e02a";
-}
-.nina-icon-facebook3:before {
-  content: "\e05d";
-}
-.nina-icon-bullhorn:before {
-  content: "\e91a";
-}
-.nina-icon-facebook:before {
-  content: "\ea90";
+.nina-icon-facebook-official:before {
+  content: "\e903";
 }
 .nina-icon-facebook2:before {
-  content: "\ea91";
+  content: "\e904";
+}
+.nina-icon-facebook-f:before {
+  content: "\e904";
+}
+.nina-icon-paper-plane:before {
+  content: "\e905";
+}
+.nina-icon-send:before {
+  content: "\e905";
 }
 .nina-icon-add_circle:before {
   content: "\e147";
 }
 .nina-icon-add_circle_outline:before {
   content: "\e3ba";
+}
+.nina-icon-album:before {
+  content: "\e019";
 }
 .nina-icon-brightness_1:before {
   content: "\e3a6";
@@ -69,12 +78,6 @@
 }
 .nina-icon-brightness_low:before {
   content: "\e1ad";
-}
-.nina-icon-brightness_medium:before {
-  content: "\e1ae";
-}
-.nina-icon-cancel:before {
-  content: "\e5c9";
 }
 .nina-icon-navigate_before:before {
   content: "\e408";
@@ -118,6 +121,9 @@
 .nina-icon-pause_circle_outline:before {
   content: "\e036";
 }
+.nina-icon-play_arrow:before {
+  content: "\e037";
+}
 .nina-icon-play_circle_filled:before {
   content: "\e038";
 }
@@ -159,4 +165,7 @@
 }
 .nina-icon-wb_sunny:before {
   content: "\e430";
+}
+.nina-icon-bullhorn:before {
+  content: "\e91a";
 }
