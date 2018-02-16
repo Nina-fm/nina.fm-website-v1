@@ -5,7 +5,7 @@
       <div class="container">
         <div v-html="content"></div>
         <div class="footer">
-          <a class="social-btn" href="https://www.facebook.com/nina.webradio/" target="_blank" rel="noopener noreferrer"><i class="nina-icon-facebook2"></i>Nina sur Facebook</a>
+          <a class="social-btn" href="https://www.facebook.com/nina.webradio/" target="_blank" rel="noopener noreferrer"><i class="nina-icon-facebook-f"></i>Nina sur Facebook</a>
           <a class="social-btn" href="mailto:infos@nina.fm" rel="noopener noreferrer"><i class="nina-icon-paper-plane"></i>Contacter Nina</a>
         </div>
       </div>
@@ -208,6 +208,9 @@ export default {
       @include prefix(border-radius, 2px);
       @include prefix(transition, $animation);
       i {
+        position: relative;
+        line-height: 1.1em;
+        top: 0.1em;
         margin-right: 0.6em;
       }
       &:hover {
@@ -244,7 +247,7 @@ export default {
       }
 
       &:before {
-        content: "\e900";
+        content: "\e902";
         font-family: 'nina-icons' !important;
         speak: none;
         font-style: normal;
