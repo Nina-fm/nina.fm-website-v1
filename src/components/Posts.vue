@@ -225,7 +225,7 @@ export default {
     }
     blockquote {
       position: relative;
-      padding: 0;
+      padding: 0 $margin-global;
       margin: 0 0 0 0;
       color: $color-info-text;
       #app.nightMode & {
