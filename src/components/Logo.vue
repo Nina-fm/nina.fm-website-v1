@@ -1,5 +1,5 @@
 <template>
-  <div id="logo" :class="{animated}" @click="toggleAnimation"></div>
+  <div id="logo" :class="{init, animated}" @click="toggleAnimation" @mouseover="init = false"></div>
 </template>
 
 <script>
@@ -12,7 +12,8 @@ export default {
   },
   data () {
     return {
-      animated: false
+      animated: false,
+      init: true
     }
   },
   methods: {
@@ -35,8 +36,18 @@ export default {
 
 <style lang="scss" scoped>
   @import "~$scss/base.scss";
+  @keyframes dash {
+    from { stroke-dashoffset: 1000; }
+    to { stroke-dashoffset: 0; }
+  }
+  @keyframes dash2 {
+    from { stroke-dashoffset: 1000; }
+    to { stroke-dashoffset: 0; }
+  }
+  @keyframes exit {
+    to { stroke-width: 0; }
+  }
   #logo {
-    /*cursor: pointer;*/
     padding-top: 0;
     z-index: 0;
     position: absolute;
@@ -51,63 +62,99 @@ export default {
       img,
       svg {
         pointer-events: auto;
+        transition: all 0.2s ease-out;
         width: 200px;
         @include respond-to(phone) {
           width: 150px;
         }
       }
-      svg {
-        transition: all 0.2s ease-out;
-
-        $stroke-color: $color-main-bg;
-        $main-word-stroke-w: 6.4px;
-        $sub-word-stroke-w: 2.5px;
-        $delay-before: 1.5s;
-        $anim-out: exit 3s 7s linear forwards infinite;
-        .line {
-          fill:none;
-          stroke:$stroke-color;
-          stroke-linecap:round;
-          stroke-linejoin: round;
-          stroke-dasharray: 1000 1000;
-          stroke-dashoffset: 1000;
-          stroke-width: 1px;
-          transition: all 3s ease-out;
-        }
-        .letter-n { animation: dash 1.8s #{$delay-before+0ms} linear forwards; stroke-width:$main-word-stroke-w; }
-        .letter-i { animation: dash 2.2s #{$delay-before+400ms} linear forwards; stroke-width:$main-word-stroke-w; }
-        .letter-i-dot { animation: dash 1s #{$delay-before+600ms} linear forwards; stroke-width:$main-word-stroke-w*1.25; }
-        .letter-n2 { animation: dash 1.8s #{$delay-before+800ms} linear forwards; stroke-width:$main-word-stroke-w; }
-        .letter-a { animation: dash 1.8s #{$delay-before+1200ms} linear forwards; stroke-width:$main-word-stroke-w; }
-        .letter-a-bar { animation: dash 1.5s #{$delay-before+1400ms} linear forwards; stroke-width:$main-word-stroke-w; }
-        .dot-fm { animation: dash 1.8s #{$delay-before+2000ms} linear forwards; stroke-width:$sub-word-stroke-w*1.25; }
-        .letter-f { animation: dash 1.2s #{$delay-before+2100ms} linear forwards; stroke-width:$sub-word-stroke-w; }
-        .letter-f-bar { animation: dash 1.6s #{$delay-before+2100ms} linear forwards; stroke-width:$sub-word-stroke-w; }
-        .letter-m { animation: dash 1s #{$delay-before+2200ms} linear forwards; stroke-width:$sub-word-stroke-w; }
-        .letter-a-bar, .letter-i-dot, .sub-word {
-          transition: opacity 0.3s;
-        }
-        @keyframes dash {
-          from { stroke-dashoffset: 1000; }
-          to { stroke-dashoffset: 0; }
-        }
-        @keyframes exit {
-          to { stroke-width: 0; }
-        }
+      $stroke-color: $color-main-bg;
+      $main-word-stroke-w: 6.4px;
+      $sub-word-stroke-w: 2.5px;
+      $delay-before: 1.5s;
+      $anim-out: exit 3s 7s linear infinite forwards;
+      .line {
+        fill:none;
+        stroke:$stroke-color;
+        stroke-linecap:round;
+        stroke-linejoin: round;
+        stroke-dasharray: 1000 1000;
+        stroke-dashoffset: 0;
+        stroke-width: 1px;
+        transition: all 3s ease-out, stroke-dasharray 0s, stroke-dashoffset 0s;
       }
-      /*#app:not(.muted) &.animated {*/
-      #app:not(.muted) &:hover {
+      &.init .line {
+        stroke-dashoffset: 1000;
+        @include prefix(animation, dash 1s 0s linear 1 forwards);
+      }
+      .letter-n {
+        @include prefix(animation-duration, 1.8s !important);
+        @include prefix(animation-delay, #{$delay-before+0ms} !important);
+        stroke-width:$main-word-stroke-w;
+      }
+      .letter-i {
+        @include prefix(animation-duration, 2.2s !important);
+        @include prefix(animation-delay, #{$delay-before+400ms} !important);
+        stroke-width:$main-word-stroke-w;
+      }
+      .letter-i-dot {
+        @include prefix(animation-duration, 1s !important);
+        @include prefix(animation-delay, #{$delay-before+600ms} !important);
+        stroke-width:$main-word-stroke-w*1.25;
+      }
+      .letter-n2 {
+        @include prefix(animation-duration, 1.8s !important);
+        @include prefix(animation-delay, #{$delay-before+800ms} !important);
+        stroke-width:$main-word-stroke-w;
+      }
+      .letter-a {
+        @include prefix(animation-duration, 1.8s !important);
+        @include prefix(animation-delay, #{$delay-before+1200ms} !important);
+        stroke-width:$main-word-stroke-w;
+      }
+      .letter-a-bar {
+        @include prefix(animation-duration, 1.5s !important);
+        @include prefix(animation-delay, #{$delay-before+1400ms} !important);
+        stroke-width:$main-word-stroke-w;
+      }
+      .dot-fm {
+        @include prefix(animation-duration, 1.8s !important);
+        @include prefix(animation-delay, #{$delay-before+2000ms} !important);
+        stroke-width:$sub-word-stroke-w*1.25;
+      }
+      .letter-f {
+        @include prefix(animation-duration, 1.2s !important);
+        @include prefix(animation-delay, #{$delay-before+2100ms} !important);
+        stroke-width:$sub-word-stroke-w;
+      }
+      .letter-f-bar {
+        @include prefix(animation-duration, 1.6s !important);
+        @include prefix(animation-delay, #{$delay-before+2100ms} !important);
+        stroke-width:$sub-word-stroke-w;
+      }
+      .letter-m {
+        @include prefix(animation-duration, 1s !important);
+        @include prefix(animation-delay, #{$delay-before+2200ms} !important);
+        stroke-width:$sub-word-stroke-w;
+      }
+      .letter-a-bar, .letter-i-dot, .sub-word {
+        transition: opacity 0.3s;
+      }
+      &:hover {
         svg {
           opacity: 0.2;
-
-          .letter-a-bar, .letter-i-dot, .sub-word {
-            opacity: 0;
-          }
-          .line:not(.sub-word):not(.letter-i-dot):not(.letter-a-bar) {
-            transition: stroke-dasharray 0s;
-            animation-iteration-count: infinite !important;
-            stroke-dasharray: 100 100 !important;
-          }
+        }
+      }
+      #app:not(.loading):not(.muted) &:hover {
+        .letter-a-bar, .letter-i-dot, .sub-word {
+          opacity: 0;
+        }
+        .letter-n, .letter-i, .letter-n2, .letter-a {
+          transition: stroke-dasharray 0s;
+          stroke-dashoffset: 0;
+          @include prefix(animation, dash2 5s 0s linear infinite forwards);
+          @include prefix(animation-delay, 0s !important);
+          stroke-dasharray: 100 100 !important;
         }
       }
     }
