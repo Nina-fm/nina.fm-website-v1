@@ -66,7 +66,13 @@ export default {
     }
   },
   methods: {
-    audioPlayed () { return this.audio.duration > 0 && !this.audio.paused },
+    audioPlayed () {
+      return this.audio &&
+        this.audio.currentTime > 0 &&
+        !this.audio.paused &&
+        !this.audio.ended &&
+        this.audio.readyState > 2
+    },
     toggleDetails (action) {
       if (this.hasDetails) {
         this.open = typeof action === 'boolean' ? action : !this.open
