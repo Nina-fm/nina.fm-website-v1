@@ -20,6 +20,7 @@ export default {
   components: { Screen, Player, Posts, IconButton },
   data () {
     return {
+      initialized: false,
       fullscreen: false,
       nightMode: false,
       status: ['loading'],
@@ -40,7 +41,8 @@ export default {
   },
   methods: {
     play () {
-      if (this.noAutoplay()) {
+      if (!this.initialized && this.noAutoplay()) {
+        this.initialized = true
         Events.$emit('play')
         this.toggleStatusClass(false, 'no-autoplay')
       }
