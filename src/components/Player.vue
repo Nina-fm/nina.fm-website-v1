@@ -44,14 +44,15 @@ export default {
       statusClass: 'show-details',
       waitingText: 'Cliquez pour lancer la lecture',
       defaultText: 'Recherche des infos...',
-      legacyMsg: 'Votre navigateur est un vieux machin dépassé. Il ne supporte pas la musique, ce qui est un peu con quand on veut écouter la radio.'
+      legacyMsg: 'Votre navigateur est un vieux machin dépassé. Il ne supporte pas la musique, ce qui est un peu con quand on veut écouter la radio.',
+      blankSound: 'data:audio/wav;base64,UklGRiQAAABXQVZFZm10IBAAAAABAAEAVFYAAFRWAAABAAgAZGF0YQAAAAA='
     }
   },
   computed: {
     audio () { return this.$refs.audio },
     hasDetails () { return this.type === 'mixtape' },
     initMsg () { return this.autoplay ? this.defaultText : this.waitingText },
-    streamUrl () { return this.autoplay ? this.url : '' },
+    streamUrl () { return this.autoplay ? this.url : this.blankSound },
     controlsMsg () {
       return (this.muted ? 'Activer' : 'Désactiver') + ' le son (vous pouvez aussi utiliser la barre d\'espace)'
     },
@@ -81,6 +82,8 @@ export default {
     },
     checkStream () {
       if (this.autoplay && !this.audioPlayed()) {
+        this.autoplay = false
+        this.autoplay = true
         this.audio.load()
         this.audio.play()
       }
