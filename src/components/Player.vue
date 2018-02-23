@@ -108,6 +108,7 @@ export default {
     getCurrentTrack () {
       this.$jsonp(process.env.STREAM_API_URL).then(response => {
         if (response.current) {
+
           var parser = new DOMParser()
           var dom = parser.parseFromString(response.current.name, 'text/html')
           this.setTrack(dom.body.textContent)
@@ -153,6 +154,7 @@ export default {
     Events.$on('play', () => {
       this.audio.load()
       this.audio.play()
+      Events.off('play');
     })
 
     // Handle keys events
