@@ -32,7 +32,6 @@ export default {
   components: { Details, IconButton },
   data () {
     return {
-      active: true,
       muted: false,
       debugMixtape: false,
       title: '',
@@ -50,7 +49,7 @@ export default {
     }
   },
   computed: {
-    shouldPlay () { return this.active && this.autoplay },
+    shouldPlay () { return this.autoplay },
     audio () { return this.$refs.audio },
     hasDetails () { return this.type === 'mixtape' },
     initMsg () { return this.shouldPlay ? this.defaultText : this.waitingText },
