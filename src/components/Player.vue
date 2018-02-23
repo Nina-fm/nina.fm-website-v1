@@ -32,6 +32,7 @@ export default {
   components: { Details, IconButton },
   data () {
     return {
+      active: true,
       muted: false,
       debugMixtape: false,
       title: '',
@@ -49,10 +50,11 @@ export default {
     }
   },
   computed: {
+    shouldPlay () { return this.active && this.autoplay },
     audio () { return this.$refs.audio },
     hasDetails () { return this.type === 'mixtape' },
-    initMsg () { return this.autoplay ? this.defaultText : this.waitingText },
-    streamUrl () { return this.autoplay ? this.url : this.blankSound },
+    initMsg () { return this.shouldPlay ? this.defaultText : this.waitingText },
+    streamUrl () { return this.shouldPlay ? this.url : this.blankSound },
     controlsMsg () {
       return (this.muted ? 'Activer' : 'Désactiver') + ' le son (vous pouvez aussi utiliser la barre d\'espace)'
     },
@@ -60,7 +62,7 @@ export default {
       return require('@/assets/images/equalizer' + (!this.status ? '-loader' : '') + (this.night ? '-night' : '') + '.gif')
     },
     typeText () {
-      return this.message || (this.type ? 'Une ' + this.type + ' Nina.fm' : null) || (this.autoplay ? 'À l\'écoute sur Nina.fm' : false)
+      return this.message || (this.type ? 'Une ' + this.type + ' Nina.fm' : null) || (this.shouldPlay ? 'À l\'écoute sur Nina.fm' : false)
     }
   },
   methods: {
@@ -81,9 +83,9 @@ export default {
       setTimeout(this.updateStatus, process.env.STREAM_REFRESH_TIME)
     },
     checkStream () {
-      if (this.autoplay && !this.audioPlayed()) {
-        this.autoplay = false
-        this.autoplay = true
+      if (this.shouldPlay && !this.audioPlayed()) {
+        this.active = false
+        this.active = true
         this.audio.load()
         this.audio.play()
       }
@@ -111,7 +113,6 @@ export default {
     getCurrentTrack () {
       this.$jsonp(process.env.STREAM_API_URL).then(response => {
         if (response.current) {
-
           var parser = new DOMParser()
           var dom = parser.parseFromString(response.current.name, 'text/html')
           this.setTrack(dom.body.textContent)
@@ -157,7 +158,7 @@ export default {
     Events.$on('play', () => {
       this.audio.load()
       this.audio.play()
-      Events.off('play');
+      Events.off('play')
     })
 
     // Handle keys events
