@@ -11,7 +11,7 @@
         </div>
         <div id="track-details-text">
           <div data-append="tracklist">
-            <div v-if="tags.includes('use_text_tracks')" class="text_tracks">{{tracksText}}</div>
+            <div v-if="tags.includes('use_text_tracks')" class="text-tracks">{{tracksText}}</div>
             <div v-else>
               <ol class="tracklist">
                 <li v-for="track in data.tracks" :key="track.id">
@@ -129,5 +129,8 @@ export default {
       margin-bottom: 1em;
       width: 100%;
     }
+  }
+  .text-tracks {
+    white-space: pre-line;
   }
 </style>
