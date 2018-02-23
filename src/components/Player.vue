@@ -84,8 +84,6 @@ export default {
     },
     checkStream () {
       if (this.shouldPlay && !this.audioPlayed()) {
-        this.active = false
-        this.active = true
         this.audio.load()
         this.audio.play()
       }
@@ -150,8 +148,11 @@ export default {
     }
   },
   created () {
-    let params = (new URL(document.location)).searchParams
-    this.debugMixtape = params.get('mixtape')
+    const params = (new URL(document.location)).searchParams
+    const mixtape = params.get('mixtape')
+    if (mixtape) {
+      this.debugMixtape = mixtape
+    }
   },
   mounted () {
     // Play music event
@@ -172,9 +173,6 @@ export default {
     // Check if the stream is alive
     this.checkStream()
     this.updateStatus()
-  },
-  beforeDestroy () {
-    clearInterval(this.interval)
   }
 }
 </script>
