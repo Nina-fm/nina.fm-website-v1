@@ -1,7 +1,7 @@
 <template>
   <div id="audio">
     <div id="player">
-      <audio id="audioplayer" ref="audio" :src="streamUrl" @canplaythrough="updateStatus" autoplay="autoplay" type="audio/mpeg">{{legacyMsg}}</audio>
+      <audio id="audioplayer" ref="audio" :src="streamUrl" autoplay="autoplay" type="audio/mpeg">{{legacyMsg}}</audio>
       <div id="player-track">
         <div id="equalizer" :title="controlsMsg" @click="toggleMute" :style="{ backgroundImage: 'url('+equalizerImg+')' }"></div>
         <div id="track-viewer">
