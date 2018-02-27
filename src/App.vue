@@ -3,8 +3,8 @@
     <Screen :listeners="listeners" :night="nightMode" />
     <Player :url="streamUrl" :night="nightMode" :status="playerStatus" :autoplay="playerAutoplay" :message="playerMessage" @statusChange="toggleStatusClass" @toggle="toggleStatusClass"/>
     <Posts @toggle="toggleStatusClass" status-class="show-posts" :content="posts"/>
-    <IconButton id="night-toggle" :size="11" :infoText="nightModeMsg" :active="nightMode" @click="toggleNightMode" icon-active="nina-icon-wb_sunny" icon-inactive="nina-icon-brightness_2"/>
-    <IconButton id="fullscreen-toggle" :size="13" :infoText="fullscreenMsg" :active="fullscreen" @click="toggleFullScreen" icon-active="nina-icon-fullscreen_exit" icon-inactive="nina-icon-fullscreen"/>
+    <IconButton id="night-toggle" :size="11" :infoText="nightModeMsg" :circle="true" :active="nightMode" @click="toggleNightMode" icon-active="nina-icon-wb_sunny" icon-inactive="nina-icon-brightness_2"/>
+    <IconButton id="fullscreen-toggle" :size="13" :infoText="fullscreenMsg" :circle="true" :active="fullscreen" @click="toggleFullScreen" icon-active="nina-icon-fullscreen_exit" icon-inactive="nina-icon-fullscreen"/>
   </div>
 </template>
 
@@ -253,19 +253,19 @@ export default {
     }
   }
   #night-toggle {
-    bottom: #{$margin-global*3.5};
-    right: #{$margin-global*2};
+    bottom: #{$margin-global*3.7};
+    right: #{$margin-global*1.5};
     @include respond-to(phone) {
       bottom: #{$margin-global*2.5 + $margin-global-sm};
-      right: #{$margin-global + $margin-global-sm};
+      right: #{$margin-global-sm*2};
     }
   }
   #fullscreen-toggle {
-    bottom: #{$margin-global*2};
-    right: #{$margin-global*2};
+    bottom: #{$margin-global*1.7};
+    right: #{$margin-global*1.5};
     @include respond-to(phone) {
-      bottom: #{$margin-global + $margin-global-sm};
-      right: #{$margin-global + $margin-global-sm};
+      bottom: #{$margin-global-sm*2};
+      right: #{$margin-global-sm*2};
     }
   }
 </style>
