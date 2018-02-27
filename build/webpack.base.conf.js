@@ -3,6 +3,7 @@ const path = require('path')
 const utils = require('./utils')
 const config = require('../config')
 const vueLoaderConfig = require('./vue-loader.conf')
+const WebpackPwaManifest = require('webpack-pwa-manifest')
 
 function resolve (dir) {
   return path.join(__dirname, '..', dir)
@@ -102,5 +103,48 @@ module.exports = {
     net: 'empty',
     tls: 'empty',
     child_process: 'empty'
-  }
+  },
+  plugins: [
+    // Create the PWA manifest json file
+    new WebpackPwaManifest({
+      name: 'Nina.fm',
+      short_name: 'Nina',
+      description: 'Projet radiophonique longue portée.',
+      background_color: '#444444',
+      display: "standalone",
+      inject: true,
+      fingerprints: true,
+      ios: {
+        'apple-mobile-web-app-title': 'Nina.fm',
+        'apple-mobile-web-app-status-bar-style': 'black'
+      },
+      icons: [
+        {
+          src: path.resolve('src/assets/icon-small.png'),
+          sizes: [120, 152, 167, 180, 1024],
+          destination: path.join('icons', 'ios'),
+          ios: true
+        },
+        {
+          src: path.resolve('src/assets/icon-large.png'),
+          size: 1024,
+          destination: path.join('icons', 'ios'),
+          ios: 'startup'
+        },
+        {
+          src: path.resolve('src/assets/icon-small.png'),
+          sizes: [36, 48, 72, 96, 144, 192, 512],
+          destination: path.join('icons', 'android')
+        },
+        {
+          src: path.resolve('src/assets/icon-small.png'),
+          sizes: [96, 128, 192, 256, 384, 512] // multiple sizes
+        },
+        {
+          src: path.resolve('src/assets/icon-large.png'),
+          size: '1024x1024' // you can also use the specifications pattern
+        }
+      ]
+    })
+  ]
 }
