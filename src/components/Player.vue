@@ -156,7 +156,7 @@ export default {
       this.audio.load()
       // Wait for the audio is ready to play
       // for play and run the check timeout
-      this.audio.oncanplaythrough = () => {
+      this.audio.oncanplay = () => {
         this.audio.play()
         setTimeout(this.checkStream, process.env.STREAM_REFRESH_TIME)
       }
