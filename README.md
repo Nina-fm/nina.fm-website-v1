@@ -1,6 +1,6 @@
-# nina-vue
+# Nina.fm
 
-> A Vue.js project
+> The official www.nina.fm website, built with Vue.js
 
 
 ## Build Setup
