@@ -38,8 +38,6 @@ export default {
     },
     // Meta tags
     meta: [
-      {he: 'x-ua-compatible', content: 'ie=edge'},
-      {name: 'viewport', content: 'width=device-width, initial-scale=1.0, user-scalable=no'},
       {name: 'application-name', content: 'Nina.fm'},
       {name: 'description', content: 'Webradio artisanale et associative, nina.fm diffuse des pépites musicales en continu, sans publicité, jusqu\'aux confins du cosmos. Faîtes une pause, écoutez!', id: 'desc'}, // id to replace intead of create element
       // Facebook / Open Graph
