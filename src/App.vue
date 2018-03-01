@@ -30,6 +30,39 @@ export default {
       fullscreenMsg: 'Plein écran'
     }
   },
+  head: {
+    title: {
+      inner: 'Nina.fm',
+      separator: '-',
+      complement: 'H24 Musical - ø Pub'
+    },
+    // Meta tags
+    meta: [
+      {he: 'x-ua-compatible', content: 'ie=edge'},
+      {name: 'viewport', content: 'width=device-width, initial-scale=1.0, user-scalable=no'},
+      {name: 'application-name', content: 'Nina.fm'},
+      {name: 'description', content: 'Webradio artisanale et associative, nina.fm diffuse des pépites musicales en continu, sans publicité, jusqu\'aux confins du cosmos. Faîtes une pause, écoutez!', id: 'desc'}, // id to replace intead of create element
+      // Facebook / Open Graph
+      {property: 'fb:app_id', content: '1290268801073013'},
+      {property: 'og:title', content: 'Nina.fm'},
+      {property: 'og:description', content: 'Webradio artisanale - H24 Musical - ø Pub'},
+      {property: 'og:image', content: require(`@/assets/images/screenshot${this.nightMode ? '-night' : ''}.png`)},
+      {property: 'og:url', content: 'http://www.nina.fm/'},
+      {property: 'og:type', content: 'website'},
+      // iOS
+      {name: 'apple-mobile-web-app-title', content: 'Nina.fm'},
+      {name: 'apple-mobile-web-app-capable', content: 'yes'},
+      {name: 'apple-mobile-web-app-status-bar-style', content: 'black'},
+      {name: 'apple-touch-icon', content: require('@/assets/icon-small.png')},
+      {name: 'apple-touch-startup-image', content: require('@/assets/icon-large.png')},
+      // Android
+      {name: 'theme-color', content: '#FFFFFF'},
+      {name: 'mobile-web-app-capable', content: 'yes'}
+    ],
+    link: [
+      { rel: 'icon', href: require('@/assets/favicon.png'), sizes: '16x16', type: 'image/png' }
+    ]
+  },
   computed: {
     streamUrl () { return process.env.STREAM_URL },
     playerStatus () { return this.status.indexOf('loading') === -1 },
