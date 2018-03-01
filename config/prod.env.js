@@ -7,5 +7,5 @@ module.exports = {
   STREAM_API_OLD_URL: '"http://flux.nina.fm/json.xsl"',
   STREAM_MOUNT_POINT: '"/nina.mp3"',
   STREAM_METADATA_URL: '"http://metadata.nina.fm/"',
-  STREAM_REFRESH_TIME: '10000'
+  STREAM_REFRESH_TIME: '5000'
 }
