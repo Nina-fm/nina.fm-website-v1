@@ -5,7 +5,6 @@
     <Posts @toggle="toggleStatusClass" status-class="show-posts" :content="posts"/>
     <IconButton id="night-toggle" :size="11" :infoText="nightModeMsg" :circle="true" :active="nightMode" @click="toggleNightMode" icon-active="nina-icon-wb_sunny" icon-inactive="nina-icon-brightness_2"/>
     <IconButton id="fullscreen-toggle" :size="13" :infoText="fullscreenMsg" :circle="true" :active="fullscreen" @click="toggleFullScreen" icon-active="nina-icon-fullscreen_exit" icon-inactive="nina-icon-fullscreen"/>
-    <div :v-show="false"><img :src="previewImage"></div>
   </div>
 </template>
 
@@ -28,8 +27,7 @@ export default {
       listeners: null,
       playerMessage: '',
       nightModeMsg: 'Mode nuit',
-      fullscreenMsg: 'Plein écran',
-      previewImage: require('@/assets/images/screenshot.png')
+      fullscreenMsg: 'Plein écran'
     }
   },
   computed: {
