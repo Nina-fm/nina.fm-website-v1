@@ -6,7 +6,9 @@ import VueJsonp from 'vue-jsonp'
 import axios from 'axios'
 import Fullscreen from 'vue-fullscreen'
 import Lightbox from 'vue-pure-lightbox'
+import VueHead from 'vue-head'
 
+Vue.use(VueHead)
 Vue.use(Lightbox)
 Vue.use(VueJsonp)
 Vue.use(Fullscreen)
