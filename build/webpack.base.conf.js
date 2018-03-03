@@ -110,13 +110,13 @@ module.exports = {
       name: 'Nina.fm',
       short_name: 'Nina',
       description: 'Projet radiophonique longue portée.',
-      background_color: '#444444',
+      background_color: '#FFFFFF',
       display: "standalone",
       inject: true,
       fingerprints: true,
       ios: {
         'apple-mobile-web-app-title': 'Nina.fm',
-        'apple-mobile-web-app-status-bar-style': 'black'
+        'apple-mobile-web-app-status-bar-style': 'black-translucent'
       },
       icons: [
         {

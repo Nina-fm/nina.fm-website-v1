@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "vue": "^2.5.2",
+    "vue-head": "^2.0.12",
     "vue-pure-lightbox": "^2.1.4"
   },
   "devDependencies": {

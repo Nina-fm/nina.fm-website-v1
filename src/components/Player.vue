@@ -89,10 +89,10 @@ export default {
     },
     checkStream () {
       if (this.shouldPlay && !this.audioPlayed()) {
-        this.audio.load()
-        this.audio.play()
+        this.initAudioPlay()
+      } else {
+        setTimeout(this.checkStream, process.env.STREAM_REFRESH_TIME)
       }
-      setTimeout(this.checkStream, process.env.STREAM_REFRESH_TIME)
     },
     setTrack (title) {
       if (title === this.title) return
@@ -150,6 +150,16 @@ export default {
       }, (error) => {
         if (process.env.NODE_ENV === 'development') console.log(error)
       })
+    },
+    initAudioPlay () {
+      // Reset the audio stream loading
+      this.audio.load()
+      // Wait for the audio is ready to play
+      // for play and run the check timeout
+      this.audio.oncanplay = () => {
+        this.audio.play()
+        setTimeout(this.checkStream, process.env.STREAM_REFRESH_TIME)
+      }
     }
   },
   created () {
@@ -162,8 +172,7 @@ export default {
   mounted () {
     // Play music event
     Events.$on('play', () => {
-      this.audio.load()
-      this.audio.play()
+      this.initAudioPlay()
       Events.off('play')
     })
 
@@ -175,8 +184,7 @@ export default {
       }
     })
 
-    // Check if the stream is alive
-    this.checkStream()
+    this.initAudioPlay()
     this.updateStatus()
   }
 }
