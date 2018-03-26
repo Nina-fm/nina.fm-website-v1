@@ -120,8 +120,7 @@ export default {
           var dom = parser.parseFromString(response.current.name, 'text/html')
           this.setTrack(dom.body.textContent)
 
-          // Scheduler time is one hour ahead of start and end times, probably due to encoding diffences
-          var trackElapsed = (new Date(response.schedulerTime) - new Date(response.current.starts) - 3600000)
+          var trackElapsed = (new Date(response.schedulerTime) - new Date(response.current.starts) - response.timezoneOffset * 1000)
           var trackLength = (new Date(response.current.ends) - new Date(response.current.starts))
 
           this.trackProgress = trackElapsed / trackLength * 100
