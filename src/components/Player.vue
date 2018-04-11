@@ -99,6 +99,11 @@ export default {
       if (process.env.DEBUG_MIXTAPE && this.debugMixtape) {
         title = this.debugMixtape
       }
+      //Remove hidden infos from title
+      if(/(.*?) €€ /.exec(title)){
+        title = title.replace(/(.*?) €€ /, '')
+      }
+
       let infos = title.split(/ - (.+)/)
       this.title = title
       this.trackArtist = infos[0]
