@@ -106,8 +106,8 @@ export default {
 
       let infos = title.split(/ - (.+)/)
       this.title = title
-      this.trackArtist = infos[0]
-      this.trackTitle = infos[1]
+      this.trackArtist = infos[0].normalize()
+      this.trackTitle = infos[1].normalize()
       this.getTrackDetails()
     },
     oldGetCurrentTrack () {
