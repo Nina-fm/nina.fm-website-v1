@@ -18,6 +18,7 @@ import Posts from './components/Posts'
 import IconButton from './components/IconButton'
 import Events from './Events'
 import axios from 'axios'
+import isReachable from 'is-reachable'
 
 export default {
   name: 'App',
@@ -101,17 +102,14 @@ export default {
     testStream () {
       // Set the stream url and test it
       this.streamUrl = process.env.STREAM_URL
-      axios.get(this.streamUrl)
-        .then(() => {
-          this.streamUrl = process.env.STREAM_URL
-          this.maintenance = false
-        })
-        .catch(() => {
-          // If an error occured, clear the stream url to hide the player
-          // and set the maintenance message to on
-          this.streamUrl = null
-          this.maintenance = true
-        })
+      isReachable(this.streamUrl).then(() => {
+        this.maintenance = false
+      }).catch(() => {
+        // If an error occured, clear the stream url to hide the player
+        // and set the maintenance message to on
+        this.streamUrl = null
+        this.maintenance = true
+      })
     }
   },
   created () {
