@@ -1,11 +1,11 @@
 <template>
   <div id="app" :class="status" @click="play">
     <Screen :listeners="listeners" :night="nightMode" />
-    <Player :url="streamUrl" :night="nightMode" :status="playerStatus" :autoplay="playerAutoplay" :message="playerMessage" @statusChange="toggleStatusClass" @toggle="toggleStatusClass"/>
+    <Player v-if="streamUrl" :url="streamUrl" :night="nightMode" :status="playerStatus" :autoplay="playerAutoplay" :message="playerMessage" @statusChange="toggleStatusClass" @toggle="toggleStatusClass"/>
     <Posts @toggle="toggleStatusClass" status-class="show-posts" :content="posts"/>
     <IconButton id="night-toggle" :size="11" :infoText="nightModeMsg" :circle="true" :active="nightMode" @click="toggleNightMode" icon-active="nina-icon-wb_sunny" icon-inactive="nina-icon-brightness_2"/>
     <IconButton id="fullscreen-toggle" :size="13" :infoText="fullscreenMsg" :circle="true" :active="fullscreen" @click="toggleFullScreen" icon-active="nina-icon-fullscreen_exit" icon-inactive="nina-icon-fullscreen"/>
-    <div class="maintenance-overlay" v-if="maintenanceOn">
+    <div class="maintenance-overlay" v-if="maintenance">
       <div class="content" v-html="maintenanceContent"></div>
     </div>
   </div>
@@ -17,6 +17,7 @@ import Player from './components/Player'
 import Posts from './components/Posts'
 import IconButton from './components/IconButton'
 import Events from './Events'
+import axios from 'axios'
 
 export default {
   name: 'App',
@@ -30,13 +31,13 @@ export default {
       listeners: null,
       playerMessage: '',
       nightModeMsg: 'Mode nuit',
-      fullscreenMsg: 'Plein écran'
+      fullscreenMsg: 'Plein écran',
+      streamUrl: null,
+      maintenance: false
     }
   },
   computed: {
-    maintenanceOn () { return process.env.MAINTENANCE },
     maintenanceContent () { return require(`@/contents/maintenance.html`) },
-    streamUrl () { return process.env.STREAM_URL },
     playerStatus () { return this.status.indexOf('loading') === -1 },
     playerAutoplay () { return this.status.indexOf('no-autoplay') === -1 },
     posts () { return require(`@/contents/posts.html`) }
@@ -96,9 +97,22 @@ export default {
     },
     isMobile () {
       return (typeof window.orientation !== 'undefined') || (navigator.userAgent.indexOf('IEMobile') !== -1)
+    },
+    testStream () {
+      // Set the stream url and test it
+      this.streamUrl = process.env.STREAM_URL
+      axios.get(this.streamUrl)
+        .then(null)
+        .catch(() => {
+          // If an error occured, clear the stream url to hide the player
+          // and set the maintenance message to on
+          this.streamUrl = null
+          this.maintenance = true
+        })
     }
   },
   created () {
+    this.testStream()
     this.disableTabindex()
     this.getListeners()
   },
