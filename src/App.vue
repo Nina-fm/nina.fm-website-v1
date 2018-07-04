@@ -102,7 +102,10 @@ export default {
       // Set the stream url and test it
       this.streamUrl = process.env.STREAM_URL
       axios.get(this.streamUrl)
-        .then(null)
+        .then(() => {
+          this.streamUrl = process.env.STREAM_URL
+          this.maintenance = false
+        })
         .catch(() => {
           // If an error occured, clear the stream url to hide the player
           // and set the maintenance message to on
