@@ -224,7 +224,7 @@ export default {
     .content {
       font-size: 1.3em;
       line-height: 1.3em;
-      width: 500px;
+      width: 450px;
       position: absolute;
       top: 50%;
       left: 50%;
