@@ -4,5 +4,6 @@ const prodEnv = require('./prod.env')
 
 module.exports = merge(prodEnv, {
   NODE_ENV: '"development"',
-  DEBUG_MIXTAPE: 'true'
+  DEBUG_MIXTAPE: 'true',
+  STREAM_URL: '"http://flux.nina.fm/ninafm.mp3"',
 })
