@@ -1,7 +1,7 @@
 'use strict'
 module.exports = {
   NODE_ENV: '"production"',
-  MAINTENANCE: 'false',
+  MAINTENANCE: 'true',
   DEBUG_MIXTAPE: 'false',
   STREAM_URL: '"http://flux.nina.fm/nina.mp3  "',
   STREAM_API_URL: '"https://prog.nina.fm/api/live-info"',
