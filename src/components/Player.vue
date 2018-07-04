@@ -99,8 +99,8 @@ export default {
       if (process.env.DEBUG_MIXTAPE && this.debugMixtape) {
         title = this.debugMixtape
       }
-      //Remove hidden infos from title
-      if(/(.*?) €€ /.exec(title)){
+      // Remove hidden infos from title
+      if (/(.*?) €€ /.exec(title)) {
         title = title.replace(/(.*?) €€ /, '')
       }
 
