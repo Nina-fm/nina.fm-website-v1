@@ -99,10 +99,15 @@ export default {
       if (process.env.DEBUG_MIXTAPE && this.debugMixtape) {
         title = this.debugMixtape
       }
+      // Remove hidden infos from title
+      if (/(.*?) €€ /.exec(title)) {
+        title = title.replace(/(.*?) €€ /, '')
+      }
+
       let infos = title.split(/ - (.+)/)
       this.title = title
-      this.trackArtist = infos[0]
-      this.trackTitle = infos[1]
+      this.trackArtist = infos[0].normalize()
+      this.trackTitle = infos[1].normalize()
       this.getTrackDetails()
     },
     oldGetCurrentTrack () {
@@ -120,8 +125,7 @@ export default {
           var dom = parser.parseFromString(response.current.name, 'text/html')
           this.setTrack(dom.body.textContent)
 
-          // Scheduler time is one hour ahead of start and end times, probably due to encoding diffences
-          var trackElapsed = (new Date(response.schedulerTime) - new Date(response.current.starts) - 3600000)
+          var trackElapsed = (new Date(response.schedulerTime) - new Date(response.current.starts) - response.timezoneOffset * 1000)
           var trackLength = (new Date(response.current.ends) - new Date(response.current.starts))
 
           this.trackProgress = trackElapsed / trackLength * 100

@@ -1,10 +1,13 @@
 <template>
   <div id="app" :class="status" @click="play">
     <Screen :listeners="listeners" :night="nightMode" />
-    <Player :url="streamUrl" :night="nightMode" :status="playerStatus" :autoplay="playerAutoplay" :message="playerMessage" @statusChange="toggleStatusClass" @toggle="toggleStatusClass"/>
-    <Posts @toggle="toggleStatusClass" status-class="show-posts" :content="posts"/>
-    <IconButton id="night-toggle" :size="11" :infoText="nightModeMsg" :circle="true" :active="nightMode" @click="toggleNightMode" icon-active="nina-icon-wb_sunny" icon-inactive="nina-icon-brightness_2"/>
-    <IconButton id="fullscreen-toggle" :size="13" :infoText="fullscreenMsg" :circle="true" :active="fullscreen" @click="toggleFullScreen" icon-active="nina-icon-fullscreen_exit" icon-inactive="nina-icon-fullscreen"/>
+    <Player v-if="!maintenanceOn" :url="streamUrl" :night="nightMode" :status="playerStatus" :autoplay="playerAutoplay" :message="playerMessage" @statusChange="toggleStatusClass" @toggle="toggleStatusClass"/>
+    <Posts v-if="!maintenanceOn" @toggle="toggleStatusClass" status-class="show-posts" :content="posts"/>
+    <IconButton v-if="!maintenanceOn" id="night-toggle" :size="11" :infoText="nightModeMsg" :circle="true" :active="nightMode" @click="toggleNightMode" icon-active="nina-icon-wb_sunny" icon-inactive="nina-icon-brightness_2"/>
+    <IconButton v-if="!maintenanceOn" id="fullscreen-toggle" :size="13" :infoText="fullscreenMsg" :circle="true" :active="fullscreen" @click="toggleFullScreen" icon-active="nina-icon-fullscreen_exit" icon-inactive="nina-icon-fullscreen"/>
+    <div class="maintenance-overlay" v-if="maintenanceOn">
+      <div class="content" v-html="maintenanceContent"></div>
+    </div>
   </div>
 </template>
 
@@ -31,6 +34,8 @@ export default {
     }
   },
   computed: {
+    maintenanceOn () { return process.env.MAINTENANCE },
+    maintenanceContent () { return require(`@/contents/maintenance.html`) },
     streamUrl () { return process.env.STREAM_URL },
     playerStatus () { return this.status.indexOf('loading') === -1 },
     playerAutoplay () { return this.status.indexOf('no-autoplay') === -1 },
@@ -190,6 +195,26 @@ export default {
       &.nightMode:after {
         color: $night-color-main-text;
       }
+    }
+  }
+  .maintenance-overlay {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(#000000, 0.9);
+    color: white;
+
+    .content {
+      font-size: 1.3em;
+      line-height: 1.3em;
+      width: 500px;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      text-align: center;
     }
   }
   h1, h2, h3, h4, h5, h6 {
