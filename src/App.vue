@@ -1,10 +1,10 @@
 <template>
   <div id="app" :class="status" @click="play">
     <Screen :listeners="listeners" :night="nightMode" />
-    <Player v-if="!maintenanceOn" :url="streamUrl" :night="nightMode" :status="playerStatus" :autoplay="playerAutoplay" :message="playerMessage" @statusChange="toggleStatusClass" @toggle="toggleStatusClass"/>
-    <Posts v-if="!maintenanceOn" @toggle="toggleStatusClass" status-class="show-posts" :content="posts"/>
-    <IconButton v-if="!maintenanceOn" id="night-toggle" :size="11" :infoText="nightModeMsg" :circle="true" :active="nightMode" @click="toggleNightMode" icon-active="nina-icon-wb_sunny" icon-inactive="nina-icon-brightness_2"/>
-    <IconButton v-if="!maintenanceOn" id="fullscreen-toggle" :size="13" :infoText="fullscreenMsg" :circle="true" :active="fullscreen" @click="toggleFullScreen" icon-active="nina-icon-fullscreen_exit" icon-inactive="nina-icon-fullscreen"/>
+    <Player :url="streamUrl" :night="nightMode" :status="playerStatus" :autoplay="playerAutoplay" :message="playerMessage" @statusChange="toggleStatusClass" @toggle="toggleStatusClass"/>
+    <Posts @toggle="toggleStatusClass" status-class="show-posts" :content="posts"/>
+    <IconButton id="night-toggle" :size="11" :infoText="nightModeMsg" :circle="true" :active="nightMode" @click="toggleNightMode" icon-active="nina-icon-wb_sunny" icon-inactive="nina-icon-brightness_2"/>
+    <IconButton id="fullscreen-toggle" :size="13" :infoText="fullscreenMsg" :circle="true" :active="fullscreen" @click="toggleFullScreen" icon-active="nina-icon-fullscreen_exit" icon-inactive="nina-icon-fullscreen"/>
     <div class="maintenance-overlay" v-if="maintenanceOn">
       <div class="content" v-html="maintenanceContent"></div>
     </div>
