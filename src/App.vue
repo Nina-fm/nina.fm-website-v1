@@ -198,6 +198,7 @@ export default {
     }
   }
   .maintenance-overlay {
+    z-index: 1000000;
     position: absolute;
     top: 0;
     bottom: 0;
