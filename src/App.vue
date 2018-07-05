@@ -17,7 +17,6 @@ import Player from './components/Player'
 import Posts from './components/Posts'
 import IconButton from './components/IconButton'
 import Events from './Events'
-import urlExists from 'url-exists'
 
 export default {
   name: 'App',
@@ -101,11 +100,7 @@ export default {
     testStream () {
       // Set the stream url and test it
       this.streamUrl = process.env.STREAM_URL
-      urlExists(this.streamUrl, (err, exists) => {
-        console.log('err => ', err)
-        console.log('exists =>', exists)
-        this.maintenance = !exists
-      })
+      this.maintenance = process.env.MAINTENANCE
     }
   },
   created () {
