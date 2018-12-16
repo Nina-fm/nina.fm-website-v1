@@ -152,8 +152,8 @@ export default {
           this.details.cover = process.env.STREAM_METADATA_URL + this.details.cover
         } else {
           this.$emit('toggle', this.close, this.statusClass)
-          this.type = '';
-          this.details = [];
+          this.type = ''
+          this.details = []
         }
       }, (error) => {
         if (process.env.NODE_ENV === 'development') console.log(error)
