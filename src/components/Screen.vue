@@ -8,6 +8,8 @@
       <img :src="mask" v-show="!night">
       <img :src="maskNight" v-show="night">
     </div>
+    <div id="test">test
+    </div>
     <div id="credits">{{credits}}</div>
   </div>
 </template>
@@ -75,6 +77,12 @@ export default {
         max-height: 100%;
       }
     }
+  }
+  #test {
+    position: fixed; /* Sit on top of the page content */
+    top: 50%;
+    left: 50%;
+    z-index: 2; /* Specify a stack order in case you're using a different order for other elements */
   }
   #credits {
     z-index: 0;
