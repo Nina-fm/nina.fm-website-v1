@@ -25,8 +25,8 @@ export default {
       logo: require('@/assets/images/logo-stroke.svg'),
       mask: require('@/assets/images/mask.png'),
       maskNight: require('@/assets/images/mask-night.png'),
-      background: require('@/assets/images/background.jpg'),
-      backgroundNight: require('@/assets/images/background-night.jpg'),
+      background: require('@/assets/images/animated-background.gif'),
+      backgroundNight: require('@/assets/images/animated-background-night.gif'),
       credits: '© Photo:Bobin - Montage:120'
     }
   }
