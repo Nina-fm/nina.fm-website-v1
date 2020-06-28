@@ -122,6 +122,11 @@ export default {
       )
     }
   },
+  watch: {
+    muted(value) {
+      this.$emit('muteChange', value)
+    }
+  },
   created() {
     const params = new URL(document.location).searchParams
     const mixtape = params.get('mixtape')

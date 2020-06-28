@@ -1,13 +1,19 @@
 <template>
   <div id="screen">
     <div
-      v-show="!night"
-      :style="{ backgroundImage: 'url(' + background + ')' }"
+      v-if="!night"
+      :style="{
+        backgroundImage: `url(${muted ? background : animatedBackground})`
+      }"
       class="background"
     ></div>
     <div
-      v-show="night"
-      :style="{ backgroundImage: 'url(' + backgroundNight + ')' }"
+      v-else
+      :style="{
+        backgroundImage: `url(${
+          muted ? backgroundNight : animatedBackgroundNight
+        })`
+      }"
       class="background"
     ></div>
     <Audience :count="listeners" />
@@ -29,15 +35,18 @@ export default {
   components: { Logo, Audience },
   props: {
     listeners: { type: Number, default: 0 },
-    night: { type: Boolean, default: false }
+    night: { type: Boolean, default: false },
+    muted: { type: Boolean, default: true }
   },
   data() {
     return {
       logo: require('@/assets/images/logo-stroke.svg'),
       mask: require('@/assets/images/mask.png'),
       maskNight: require('@/assets/images/mask-night.png'),
-      background: require('@/assets/images/animated-background.gif'),
-      backgroundNight: require('@/assets/images/animated-background-night.gif'),
+      background: require('@/assets/images/background.jpg'),
+      backgroundNight: require('@/assets/images/background-night.jpg'),
+      animatedBackground: require('@/assets/images/animated-background.gif'),
+      animatedBackgroundNight: require('@/assets/images/animated-background-night.gif'),
       credits: '© Photo:Bobin - Montage:120'
     }
   }

@@ -1,6 +1,6 @@
 <template>
   <div id="app" :class="status" @click="play">
-    <Screen :listeners="listeners" :night="nightMode" />
+    <Screen :listeners="listeners" :night="nightMode" :muted="muted" />
     <Player
       v-if="streamUrl"
       :url="streamUrl"
@@ -9,6 +9,7 @@
       :autoplay="playerAutoplay"
       :message="playerMessage"
       @statusChange="toggleStatusClass"
+      @muteChange="setMuteValue"
       @toggle="toggleStatusClass"
     />
     <Posts
@@ -60,6 +61,7 @@ export default {
       status: ['loading'],
       listeners: null,
       playerMessage: '',
+      muted: false,
       nightModeMsg: 'Mode nuit',
       fullscreenMsg: 'Plein écran',
       streamUrl: null,
@@ -108,6 +110,9 @@ export default {
         this.toggleStatusClass(false, 'no-autoplay')
       }
     },
+    setMuteValue(value) {
+      this.muted = value
+    },
     updateNightMode() {
       const hours = new Date().getHours()
       const isDayTime = hours > 6 && hours < 19
@@ -116,15 +121,10 @@ export default {
     getListeners() {
       this.$jsonp(process.env.STREAM_API_OLD_URL, {
         callbackName: 'parseMusic'
-      }).then(
-        (json) => {
-          let data = json[process.env.STREAM_MOUNT_POINT]
-          this.listeners = parseInt(data.listeners)
-        },
-        (error) => {
-          if (process.env.NODE_ENV !== 'production') console.log(error)
-        }
-      )
+      }).then((json) => {
+        let data = json[process.env.STREAM_MOUNT_POINT]
+        this.listeners = parseInt(data.listeners)
+      })
     },
     toggleStatusClass(status, classname) {
       let exists = this.status.indexOf(classname) !== -1
