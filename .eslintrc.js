@@ -3,27 +3,35 @@
 module.exports = {
   root: true,
   parserOptions: {
-    parser: 'babel-eslint'
+    parser: 'babel-eslint',
   },
   env: {
+    node: true,
     browser: true,
+    es6: true,
   },
   extends: [
-    // https://github.com/vuejs/eslint-plugin-vue#priority-a-essential-error-prevention
-    // consider switching to `plugin:vue/strongly-recommended` or `plugin:vue/recommended` for stricter rules.
-    'plugin:vue/essential', 
-    // https://github.com/standard/standard/blob/master/docs/RULES-en.md
-    'standard'
+    // 'airbnb-base',
+    'plugin:vue/recommended',
+    // 'eslint:recommended',
+    'prettier/vue',
+    'plugin:prettier/recommended',
   ],
   // required to lint *.vue files
-  plugins: [
-    'vue'
-  ],
+  plugins: ['vue'],
   // add your custom rules here
   rules: {
+    'prettier/prettier': 2,
+    'import/no-unresolved': 0,
+    'no-debugger': process.env.NODE_ENV === 'production' ? 2 : 0,
+    'no-console': 0,
+    'no-shadow': 0, // allows to declare vars with same name in different scope
+    'no-param-reassign': 0, // allows to change params value, makes stores a LOT simpler
     // allow async-await
-    'generator-star-spacing': 'off',
+    // 'generator-star-spacing': 'off',
+    // 'vue/component-name-in-template-casing': ['error', 'PascalCase'],
+    // 'no-console': process.env.NODE_ENV === 'production' ? 'error' : 'off',
     // allow debugger during development
-    'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off'
-  }
+    // 'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off',
+  },
 }
