@@ -1,19 +1,23 @@
 <template>
   <div id="screen">
     <div
-      v-if="!night"
-      :style="{
-        backgroundImage: `url(${muted ? background : animatedBackground})`
-      }"
+      v-show="!night && !muted"
+      :style="{ backgroundImage: `url(${animatedBackground})` }"
       class="background"
     ></div>
     <div
-      v-else
-      :style="{
-        backgroundImage: `url(${
-          muted ? backgroundNight : animatedBackgroundNight
-        })`
-      }"
+      v-show="!night && muted"
+      :style="{ backgroundImage: `url(${background})` }"
+      class="background"
+    ></div>
+    <div
+      v-show="night && !muted"
+      :style="{ backgroundImage: `url(${animatedBackgroundNight})` }"
+      class="background"
+    ></div>
+    <div
+      v-show="night && muted"
+      :style="{ backgroundImage: `url(${backgroundNight})` }"
       class="background"
     ></div>
     <Audience :count="listeners" />
