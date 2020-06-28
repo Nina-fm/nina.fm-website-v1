@@ -1,14 +1,22 @@
 <template>
   <div id="screen">
-    <div class="background" v-show="!night" :style="{ backgroundImage: 'url('+background+')' }"></div>
-    <div class="background" v-show="night" :style="{ backgroundImage: 'url('+backgroundNight+')' }"></div>
+    <div
+      v-show="!night"
+      :style="{ backgroundImage: 'url(' + background + ')' }"
+      class="background"
+    ></div>
+    <div
+      v-show="night"
+      :style="{ backgroundImage: 'url(' + backgroundNight + ')' }"
+      class="background"
+    ></div>
     <Audience :count="listeners" />
     <Logo :src="logo" />
     <div id="mask">
-      <img :src="mask" v-show="!night">
-      <img :src="maskNight" v-show="night">
+      <img v-show="!night" :src="mask" />
+      <img v-show="night" :src="maskNight" />
     </div>
-    <div id="credits">{{credits}}</div>
+    <div id="credits">{{ credits }}</div>
   </div>
 </template>
 
@@ -18,9 +26,12 @@ import Audience from './Audience'
 
 export default {
   name: 'Screen',
-  props: ['listeners', 'night'],
   components: { Logo, Audience },
-  data () {
+  props: {
+    listeners: { type: Number, default: 0 },
+    night: { type: Boolean, default: false }
+  },
+  data() {
     return {
       logo: require('@/assets/images/logo-stroke.svg'),
       mask: require('@/assets/images/mask.png'),
@@ -34,71 +45,70 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-  @import "~$scss/base.scss";
-  #screen {
-    position: absolute;
-    left: $body-margin;
-    top: $body-margin;
-    right: $body-margin;
-    bottom: $body-margin;
-    @include respond-to(phone) {
-      left: $body-margin-sm;
-      top: $body-margin-sm;
-      right: $body-margin-sm;
-      bottom: $body-margin-sm;
-    }
-    .background {
-      position: absolute;
-      left: 0;
-      top: 0;
-      right: 0;
-      bottom: 0;
-      background-color: transparent;
-      background-repeat: no-repeat;
-      background-position: left center;
-      -webkit-background-size: cover;
-      background-size: cover;
-    }
-    #mask {
-      pointer-events: none;
-      position: absolute;
-      left: -1px;
-      top: -1px;
-      right: -1px;
-      bottom: -1px;
-      overflow: hidden;
-      img {
-        position: absolute;
-        bottom:0;
-        left:0;
-        max-width: 100%;
-        max-height: 100%;
-      }
-    }
+@import '~$scss/base.scss';
+#screen {
+  position: absolute;
+  left: $body-margin;
+  top: $body-margin;
+  right: $body-margin;
+  bottom: $body-margin;
+  @include respond-to(phone) {
+    left: $body-margin-sm;
+    top: $body-margin-sm;
+    right: $body-margin-sm;
+    bottom: $body-margin-sm;
   }
-  #credits {
-    z-index: 0;
+  .background {
     position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
     bottom: 0;
-    left: 2px;
-    font-size: 0.5em;
-    font-weight: 500;
-    letter-spacing: 0.11em;
-    text-transform: uppercase;
-    line-height: 1em;
-    padding:0;
-    color: $color-main-text;
-    #app.nightMode & {
-      color: $night-color-main-text;
-    }
-    @include prefix(transition, $animation-nobg);
-    @include respond-to(tablet) {
-      font-size: 0.3em;
-      #app.show-posts &,
-      #app.show-details &{
-        opacity: 0;
-      }
+    background-color: transparent;
+    background-repeat: no-repeat;
+    background-position: left center;
+    -webkit-background-size: cover;
+    background-size: cover;
+  }
+  #mask {
+    pointer-events: none;
+    position: absolute;
+    left: -1px;
+    top: -1px;
+    right: -1px;
+    bottom: -1px;
+    overflow: hidden;
+    img {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      max-width: 100%;
+      max-height: 100%;
     }
   }
-
+}
+#credits {
+  z-index: 0;
+  position: absolute;
+  bottom: 0;
+  left: 2px;
+  font-size: 0.5em;
+  font-weight: 500;
+  letter-spacing: 0.11em;
+  text-transform: uppercase;
+  line-height: 1em;
+  padding: 0;
+  color: $color-main-text;
+  #app.nightMode & {
+    color: $night-color-main-text;
+  }
+  @include prefix(transition, $animation-nobg);
+  @include respond-to(tablet) {
+    font-size: 0.3em;
+    #app.show-posts &,
+    #app.show-details & {
+      opacity: 0;
+    }
+  }
+}
 </style>

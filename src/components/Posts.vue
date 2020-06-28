@@ -1,12 +1,33 @@
 <template>
   <div id="posts">
-    <IconButton id="posts-toggle" :size="16" :title="showPostsMsg" :active="open" @click="togglePosts" icon-active="nina-icon-close" icon-inactive="nina-icon-reorder"/>
+    <IconButton
+      id="posts-toggle"
+      :size="16"
+      :title="showPostsMsg"
+      :active="open"
+      icon-active="nina-icon-close"
+      icon-inactive="nina-icon-reorder"
+      @click="togglePosts"
+    />
     <div id="posts-box">
       <div class="container">
         <div v-html="content"></div>
         <div class="footer">
-          <a class="social-btn" href="https://www.facebook.com/nina.webradio/" target="_blank" rel="noopener noreferrer"><i class="nina-icon-facebook-f"></i>Nina sur Facebook</a>
-          <a class="social-btn" href="mailto:infos@nina.fm" rel="noopener noreferrer"><i class="nina-icon-paper-plane"></i>Contacter Nina</a>
+          <a
+            class="social-btn"
+            href="https://www.facebook.com/nina.webradio/"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <i class="nina-icon-facebook-f"></i>Nina sur Facebook
+          </a>
+          <a
+            class="social-btn"
+            href="mailto:infos@nina.fm"
+            rel="noopener noreferrer"
+          >
+            <i class="nina-icon-paper-plane"></i>Contacter Nina
+          </a>
         </div>
       </div>
     </div>
@@ -17,31 +38,39 @@
 import IconButton from './IconButton'
 export default {
   name: 'Posts',
-  props: ['content'],
   components: { IconButton },
-  data () {
+  props: {
+    content: { type: String, default: null }
+  },
+  data() {
     return {
       open: false,
-      statusClass: 'show-posts'
+      statusClas: 'show-posts'
     }
   },
   computed: {
-    showPostsMsg () { return (this.open ? 'Masquer' : 'Afficher') + ' les infos Nina' }
-  },
-  watch: {
-    open () { this.$emit('toggle', this.open, this.statusClass) }
-  },
-  methods: {
-    togglePosts (action) {
-      this.open = typeof action === 'boolean' ? action : !this.open
+    showPostsMsg() {
+      return (this.open ? 'Masquer' : 'Afficher') + ' les inos Nina'
     }
   },
-  mounted () {
-    window.addEventListener('keyup', event => {
+  watch: {
+    open() {
+      this.$emit('toggle', this.open, this.stausClass)
+    }
+  },
+  mounted() {
+    window.addEventListener('keyup', (event) => {
       switch (event.code) {
-        case 'Escape': this.togglePosts(false); break
+        case 'Escape':
+          this.togglePosts(false)
+          break
       }
     })
+  },
+  methods: {
+    togglePosts(action) {
+      this.open = typeof action === 'boolean' ? action : !this.open
+    }
   }
 }
 </script>
@@ -69,12 +98,12 @@ export default {
   }
 }
 
-#posts-toggle{
+#posts-toggle {
   top: #{$margin-global + 3};
   right: #{$margin-global + 5};
   @include prefix(transition, $animation-nobg);
   @include respond-to(small-height) {
-    opacity:0;
+    opacity: 0;
   }
   @include respond-to(tablet) {
     z-index: 10;
@@ -94,9 +123,9 @@ export default {
 
 #posts-box {
   @include prefix(transition, $animation);
-  width:50%;
+  width: 50%;
   z-index: 5;
-  position:absolute;
+  position: absolute;
   top: 0;
   bottom: 0;
   left: 100%;
@@ -129,7 +158,7 @@ export default {
   /deep/ {
     .block {
       background: rgba($color-info-bg, $opacity-info-bg);
-      color:$color-info-text;
+      color: $color-info-text;
       #app.nightMode & {
         background: rgba($night-color-info-bg, $opacity-info-bg);
         color: $night-color-info-text;
@@ -142,8 +171,13 @@ export default {
         margin-bottom: 0;
       }
     }
-    h1, h2, h3, h4, h5, h6 {
-      color:$color-main-text;
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+      color: $color-main-text;
       #app.nightMode & {
         color: $night-color-main-text;
       }
@@ -151,7 +185,7 @@ export default {
     }
     #edito {
       background: transparent;
-      color:$color-info-text;
+      color: $color-info-text;
       #app.nightMode & {
         color: $night-color-info-text;
       }
@@ -159,11 +193,16 @@ export default {
       margin-bottom: $margin-global/2;
 
       &:first-child {
-        padding-top:0 !important;
+        padding-top: 0 !important;
       }
 
-      h1, h2, h3, h4, h5, h6 {
-        color:$color-info-text;
+      h1,
+      h2,
+      h3,
+      h4,
+      h5,
+      h6 {
+        color: $color-info-text;
         #app.nightMode & {
           color: $night-color-info-text;
         }
@@ -247,7 +286,7 @@ export default {
       }
 
       &:before {
-        content: "\e902";
+        content: '\e902';
         font-family: 'nina-icons' !important;
         speak: none;
         font-style: normal;
@@ -280,5 +319,4 @@ export default {
     }
   }
 }
-
 </style>
