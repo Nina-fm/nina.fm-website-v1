@@ -50,7 +50,7 @@ export default {
   data() {
     return {
       open: false,
-      statusClas: 'show-posts'
+      statusClass: 'show-posts'
     }
   },
   computed: {
@@ -60,7 +60,7 @@ export default {
   },
   watch: {
     open() {
-      this.$emit('toggle', this.open, this.stausClass)
+      this.$emit('toggle', this.open, this.statusClass)
     }
   },
   mounted() {
