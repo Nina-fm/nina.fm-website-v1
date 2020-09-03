@@ -44,6 +44,7 @@
 </template>
 
 <script>
+import _ from 'lodash'
 import Screen from './components/Screen'
 import Player from './components/Player'
 import Posts from './components/Posts'
@@ -127,14 +128,11 @@ export default {
       })
     },
     toggleStatusClass(status, classname) {
-      let exists = this.status.indexOf(classname) !== -1
-      if (!status) {
-        this.status = this.status.filter((item) => {
-          return classname !== item
-        })
-      } else {
-        this.status = exists ? this.status : [...this.status, classname]
-      }
+      this.status = _.uniq(
+        status
+          ? _.concat(this.status, classname)
+          : _.filter(this.status, (item) => item !== classname)
+      )
     },
     toggleNightMode() {
       this.nightMode = !this.nightMode
