@@ -4,6 +4,7 @@
     :class="{ iconButton: true, circle: circle }"
     :title="infoText"
     :style="styles"
+    @keydown.space="(event) => event.preventDefault()"
     @click="handleClick"
   >
     <i :class="icon" :style="iconStyles"></i>
