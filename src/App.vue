@@ -18,6 +18,16 @@
       @toggle="toggleStatusClass"
     />
     <IconButton
+      id="rainbow-toggle"
+      :size="11"
+      :info-text="rainbowModeMsg"
+      :circle="true"
+      :active="rainbowMode"
+      icon-active="nina-icon-invert_colors_on"
+      icon-inactive="nina-icon-camera"
+      @click="toggleRainbowMode"
+    />
+    <IconButton
       id="night-toggle"
       :size="11"
       :info-text="nightModeMsg"
@@ -40,6 +50,7 @@
     <div v-if="maintenance" class="maintenance-overlay">
       <div class="content" v-html="maintenanceContent"></div>
     </div>
+    <div v-rainbow="rainbow" v-if="rainbowMode" class="rainbow"></div>
   </div>
 </template>
 
@@ -59,14 +70,23 @@ export default {
       initialized: false,
       fullscreen: false,
       nightMode: false,
+      rainbowMode: false,
       status: ['loading'],
       listeners: null,
       playerMessage: '',
       muted: false,
+      rainbowModeMsg: 'Mode rainbow',
       nightModeMsg: 'Mode nuit',
       fullscreenMsg: 'Plein écran',
       streamUrl: null,
-      maintenance: false
+      maintenance: false,
+      rainbow: {
+        colors: ['red', 'yellow', 'green', 'blue'],
+        interval: 15000,
+        transition: {
+          duration: 10000
+        }
+      }
     }
   },
   computed: {
@@ -86,6 +106,9 @@ export default {
   watch: {
     nightMode(newVal) {
       this.toggleStatusClass(newVal, 'nightMode')
+    },
+    rainbowMode(newVal) {
+      this.toggleStatusClass(newVal, 'rainbowMode')
     }
   },
   created() {
@@ -133,6 +156,9 @@ export default {
           ? _.concat(this.status, classname)
           : _.filter(this.status, (item) => item !== classname)
       )
+    },
+    toggleRainbowMode() {
+      this.rainbowMode = !this.rainbowMode
     },
     toggleNightMode() {
       this.nightMode = !this.nightMode
@@ -223,6 +249,19 @@ body {
   top: 0;
   color: $color-main-text;
   background-color: $color-main-bg;
+  .rainbow {
+    content: '';
+    background: transparent;
+    z-index: 1000000000;
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    mix-blend-mode: difference;
+    opacity: 1;
+    pointer-events: none;
+  }
   &.nightMode {
     color: $night-color-main-text;
     background-color: $night-color-main-bg;
@@ -339,6 +378,14 @@ p:last-child {
     #app.nightMode & {
       color: $night-color-info-text;
     }
+  }
+}
+#rainbow-toggle {
+  bottom: #{$margin-global * 5.7};
+  right: #{$margin-global * 1.5};
+  @include respond-to(phone) {
+    bottom: #{$margin-global * 3 + $margin-global-sm};
+    right: #{$margin-global-sm * 2};
   }
 }
 #night-toggle {

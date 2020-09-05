@@ -149,6 +149,9 @@ export default {
   }
 }
 #track-details-cover {
+  z-index: 10000000000;
+  position: relative;
+
   img {
     margin: auto;
     margin-bottom: 1em;
