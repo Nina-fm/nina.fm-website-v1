@@ -64,7 +64,6 @@ const directives = (Vue) => {
       el.style.transition = transition
 
       const animate = () => {
-        console.log('animate')
         if (random) {
           var num = Math.round(Math.random() * colors.length)
           el.style.backgroundColor = colors[num]
