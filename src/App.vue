@@ -50,7 +50,7 @@
     <div v-if="maintenance" class="maintenance-overlay">
       <div class="content" v-html="maintenanceContent"></div>
     </div>
-    <div v-rainbow="rainbow" v-if="rainbowMode" class="rainbow"></div>
+    <rainbow :active="rainbowMode" :params="rainbow" class="rainbow"></rainbow>
   </div>
 </template>
 
@@ -60,11 +60,12 @@ import Screen from './components/Screen'
 import Player from './components/Player'
 import Posts from './components/Posts'
 import IconButton from './components/IconButton'
+import Rainbow from './components/Rainbow'
 import Events from './Events'
 
 export default {
   name: 'App',
-  components: { Screen, Player, Posts, IconButton },
+  components: { Screen, Player, Posts, IconButton, Rainbow },
   data() {
     return {
       initialized: false,
@@ -82,7 +83,7 @@ export default {
       maintenance: false,
       rainbow: {
         colors: ['red', 'yellow', 'green', 'blue'],
-        interval: 15000,
+        interval: 10000,
         transition: {
           duration: 10000
         }

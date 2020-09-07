@@ -7,13 +7,11 @@ import axios from 'axios'
 import Fullscreen from 'vue-fullscreen'
 import Lightbox from 'vue-pure-lightbox'
 import VueHead from 'vue-head'
-import Rainbow from './plugins/vue-rainbow'
 
 Vue.use(VueHead)
 Vue.use(Lightbox)
 Vue.use(VueJsonp)
 Vue.use(Fullscreen)
-Vue.use(Rainbow)
 
 Vue.prototype.$http = axios
 Vue.config.productionTip = process.env.NODE_ENV === 'production'
