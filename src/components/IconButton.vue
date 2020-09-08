@@ -7,7 +7,7 @@
     @keydown.space="(event) => event.preventDefault()"
     @click="handleClick"
   >
-    <i :class="icon" :style="iconStyles"></i>
+    <i :class="iconClasses" :style="iconStyles"></i>
   </button>
 </template>
 
@@ -26,16 +26,20 @@ export default {
     circle: { type: Boolean, default: false }
   },
   computed: {
-    icon() {
-      return {
-        [this.iconActive]: this.iconActive,
-        [this.iconInactive]: this.iconInactive,
-        [this.iconActiveAnimated]: this.iconActiveAnimated,
-        [this.iconInactiveAnimated]: this.iconInactiveAnimated,
-        animated:
-          (this.active && this.iconActiveAnimated) ||
-          (!this.active && this.iconInactiveAnimated)
+    iconClasses() {
+      const classes = []
+      if (this.active) {
+        classes.push(this.iconActiveAnimated || this.iconActive)
+      } else {
+        classes.push(this.iconInactiveAnimated || this.iconInactive)
       }
+      if (
+        (this.active && this.iconActiveAnimated) ||
+        (!this.active && this.iconInactiveAnimated)
+      ) {
+        classes.push('animated')
+      }
+      return classes
     },
     styles() {
       return { height: this.size, width: this.size }
