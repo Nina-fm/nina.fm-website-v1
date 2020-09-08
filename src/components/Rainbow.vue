@@ -61,7 +61,8 @@ export default {
       if (this.params.random) {
         this.current = Math.round(Math.random() * this.count)
       } else {
-        this.current = this.current - 1 === 0 ? this.count : this.current - 1
+        this.current =
+          this.current - 1 === -1 ? this.count - 1 : this.current - 1
       }
     }
   }
