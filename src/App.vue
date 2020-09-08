@@ -82,7 +82,15 @@ export default {
       streamUrl: null,
       maintenance: false,
       rainbow: {
-        colors: ['red', 'yellow', 'green', 'blue'],
+        colors: [
+          'red',
+          'yellow',
+          'green',
+          'aqua',
+          'blue',
+          'dodgerblue',
+          'fuchsia'
+        ],
         interval: 10000,
         transition: {
           duration: 10000
