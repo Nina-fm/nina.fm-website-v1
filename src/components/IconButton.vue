@@ -19,13 +19,23 @@ export default {
     active: { type: Boolean, default: false },
     iconActive: { type: String, default: null },
     iconInactive: { type: String, default: null },
+    iconActiveAnimated: { type: String, default: null },
+    iconInactiveAnimated: { type: String, default: null },
     infoText: { type: String, default: null },
     size: { type: Number, default: null },
     circle: { type: Boolean, default: false }
   },
   computed: {
     icon() {
-      return this.active ? this.iconActive : this.iconInactive
+      return {
+        [this.iconActive]: this.iconActive,
+        [this.iconInactive]: this.iconInactive,
+        [this.iconActiveAnimated]: this.iconActiveAnimated,
+        [this.iconInactiveAnimated]: this.iconInactiveAnimated,
+        animated:
+          (this.active && this.iconActiveAnimated) ||
+          (!this.active && this.iconInactiveAnimated)
+      }
     },
     styles() {
       return { height: this.size, width: this.size }
@@ -44,6 +54,14 @@ export default {
 
 <style lang="scss" scoped>
 @import '~$scss/base.scss';
+@keyframes spin {
+  from {
+    @include prefix(transform, translate(-50%, -50%) rotate(0deg));
+  }
+  to {
+    @include prefix(transform, translate(-50%, -50%) rotate(360deg));
+  }
+}
 .iconButton {
   cursor: pointer;
   background: transparent;
@@ -66,6 +84,13 @@ export default {
     top: 50%;
     @include prefix(transform, translate(-50%, -50%));
     font-size: 1em;
+
+    &.animated {
+      animation-name: spin;
+      animation-duration: 1000ms;
+      animation-iteration-count: infinite;
+      animation-timing-function: linear;
+    }
   }
   &.circle {
     @include prefix(border-radius, 50%);

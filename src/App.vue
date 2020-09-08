@@ -23,8 +23,8 @@
       :info-text="rainbowModeMsg"
       :circle="true"
       :active="rainbowMode"
-      icon-active="nina-icon-camera"
-      icon-inactive="nina-icon-colours"
+      icon-active="nina-icon-noun_spiral"
+      icon-inactive-animated="nina-icon-noun_spiral"
       @click="toggleRainbowMode"
     />
     <IconButton
