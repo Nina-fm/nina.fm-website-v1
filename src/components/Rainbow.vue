@@ -1,5 +1,5 @@
 <template>
-  <div :style="{ opacity: active ? 1 : 0 }" class="rainbow">
+  <div :class="{ rainbow: true, active }">
     <div :style="styles" class="rainbow-content"></div>
   </div>
 </template>
@@ -8,18 +8,20 @@
 export default {
   name: 'Rainbow',
   props: {
-    params: { type: Object, default: () => ({}) },
+    colors: { type: Array, default: () => [] },
     active: { type: Boolean, default: false }
   },
   data() {
     return {
-      colors: null,
       current: null,
-      count: null,
-      intervalID: null
+      cycle: null,
+      interval: 10500
     }
   },
   computed: {
+    count() {
+      return this.colors.length
+    },
     styles() {
       return {
         backgroundColor: this.colors[this.current]
@@ -28,13 +30,11 @@ export default {
   },
   watch: {
     active(value) {
-      if (!value) this.reset()
-      else this.start()
+      this.reset()
+      if (value) this.start()
     }
   },
   created() {
-    this.colors = this.params.colors
-    this.count = this.params.colors.length
     this.reset()
   },
   beforeDestroy() {
@@ -42,22 +42,19 @@ export default {
   },
   methods: {
     start() {
-      this.reset()
-      this.animate()
-      this.intervalID = setInterval(() => {
+      setTimeout(() => {
         this.animate()
-      }, this.params.interval)
+        this.cycle = setInterval(() => {
+          this.animate()
+        }, this.interval)
+      }, 100)
     },
     reset() {
-      this.intervalID = null
+      clearInterval(this.cycle)
       this.current = 0
     },
     animate() {
-      if (this.params.random) {
-        this.current = Math.round(Math.random() * this.count)
-      } else {
-        this.current = this.current + 1 === this.count ? 0 : this.current + 1
-      }
+      this.current = this.current + 1 === this.count ? 0 : this.current + 1
     }
   }
 }
@@ -72,10 +69,14 @@ export default {
   top: 0;
   bottom: 0;
   right: 0;
-  opacity: 1;
+  opacity: 0;
   transition: opacity 0.3s ease-in-out;
   pointer-events: none;
   mix-blend-mode: difference;
+
+  &.active {
+    opacity: 1;
+  }
 
   .rainbow-content {
     z-index: 1000000000;

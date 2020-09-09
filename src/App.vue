@@ -50,7 +50,7 @@
     <div v-if="maintenance" class="maintenance-overlay">
       <div class="content" v-html="maintenanceContent"></div>
     </div>
-    <rainbow :active="rainbowMode" :params="rainbow" class="rainbow"></rainbow>
+    <rainbow :active="rainbowMode" :colors="rainbow" class="rainbow"></rainbow>
   </div>
 </template>
 
@@ -81,18 +81,15 @@ export default {
       fullscreenMsg: 'Plein écran',
       streamUrl: null,
       maintenance: false,
-      rainbow: {
-        colors: [
-          'red',
-          'yellow',
-          'green',
-          'aqua',
-          'blue',
-          'dodgerblue',
-          'fuchsia'
-        ],
-        interval: 10500
-      }
+      rainbow: [
+        'red',
+        'yellow',
+        'green',
+        'aqua',
+        'blue',
+        'dodgerblue',
+        'fuchsia'
+      ]
     }
   },
   computed: {
@@ -152,9 +149,7 @@ export default {
     },
     updateRainbowMode() {
       const mode = _.get(localStorage, 'rainbowMode', null)
-      setTimeout(() => {
-        this.rainbowMode = mode == 'true'
-      }, 100)
+      this.rainbowMode = mode == 'true'
     },
     getListeners() {
       this.$jsonp(process.env.STREAM_API_OLD_URL, {
