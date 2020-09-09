@@ -91,10 +91,7 @@ export default {
           'dodgerblue',
           'fuchsia'
         ],
-        interval: 10000,
-        transition: {
-          duration: 10000
-        }
+        interval: 10500
       }
     }
   },
@@ -113,11 +110,12 @@ export default {
     }
   },
   watch: {
-    nightMode(newVal) {
-      this.toggleStatusClass(newVal, 'nightMode')
+    nightMode(value) {
+      this.toggleStatusClass(value, 'nightMode')
     },
-    rainbowMode(newVal) {
-      this.toggleStatusClass(newVal, 'rainbowMode')
+    rainbowMode(value) {
+      this.toggleStatusClass(value, 'rainbowMode')
+      localStorage.rainbowMode = value
     }
   },
   created() {
@@ -134,6 +132,7 @@ export default {
       this.status.push('no-autoplay')
     }
     this.updateNightMode()
+    this.updateRainbowMode()
   },
   methods: {
     play() {
@@ -150,6 +149,12 @@ export default {
       const hours = new Date().getHours()
       const isDayTime = hours > 6 && hours < 19
       this.nightMode = !isDayTime
+    },
+    updateRainbowMode() {
+      const mode = _.get(localStorage, 'rainbowMode', null)
+      setTimeout(() => {
+        this.rainbowMode = mode == 'true'
+      }, 100)
     },
     getListeners() {
       this.$jsonp(process.env.STREAM_API_OLD_URL, {
@@ -258,19 +263,6 @@ body {
   top: 0;
   color: $color-main-text;
   background-color: $color-main-bg;
-  .rainbow {
-    content: '';
-    background: transparent;
-    z-index: 1000000000;
-    position: absolute;
-    left: 0;
-    top: 0;
-    bottom: 0;
-    right: 0;
-    mix-blend-mode: difference;
-    opacity: 1;
-    pointer-events: none;
-  }
   &.nightMode {
     color: $night-color-main-text;
     background-color: $night-color-main-bg;

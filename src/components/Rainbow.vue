@@ -1,5 +1,7 @@
 <template>
-  <div :style="styles" class="rainbow"></div>
+  <div :style="{ opacity: active ? 1 : 0 }" class="rainbow">
+    <div :style="styles" class="rainbow-content"></div>
+  </div>
 </template>
 
 <script>
@@ -18,16 +20,8 @@ export default {
     }
   },
   computed: {
-    transition() {
-      const { duration, delay } = this.params.transition
-      return `background-color ${duration || 1000}ms linear ${
-        delay ? delay + 'ms' : ''
-      }`
-    },
     styles() {
       return {
-        opacity: this.active ? 1 : 0,
-        transition: `opacity 0.3s ease-in-out, ${this.transition}`,
         backgroundColor: this.colors[this.current]
       }
     }
@@ -39,15 +33,16 @@ export default {
     }
   },
   created() {
-    this.colors = _.reverse(this.params.colors)
+    this.colors = this.params.colors
     this.count = this.params.colors.length
-    this.current = this.count - 1
+    this.reset()
   },
   beforeDestroy() {
     this.reset()
   },
   methods: {
     start() {
+      this.reset()
       this.animate()
       this.intervalID = setInterval(() => {
         this.animate()
@@ -55,16 +50,43 @@ export default {
     },
     reset() {
       this.intervalID = null
-      this.current = this.count - 1
+      this.current = 0
     },
     animate() {
       if (this.params.random) {
         this.current = Math.round(Math.random() * this.count)
       } else {
-        this.current =
-          this.current - 1 === -1 ? this.count - 1 : this.current - 1
+        this.current = this.current + 1 === this.count ? 0 : this.current + 1
       }
     }
   }
 }
 </script>
+
+<style lang="scss" scoped>
+.rainbow {
+  background: transparent;
+  z-index: 1000000000;
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  opacity: 1;
+  transition: opacity 0.3s ease-in-out;
+  pointer-events: none;
+  mix-blend-mode: difference;
+
+  .rainbow-content {
+    z-index: 1000000000;
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    pointer-events: none;
+    background-color: transparent;
+    transition: background-color 10s linear;
+  }
+}
+</style>
