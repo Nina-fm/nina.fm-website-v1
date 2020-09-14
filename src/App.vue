@@ -338,12 +338,10 @@ h6 {
 }
 .spacer {
   display: inline;
-  width: 0;
   margin: 0 0 0 #{$margin-global - 6};
 }
 .spacer-half {
   display: inline;
-  width: 0;
   margin: 0 0 0 1em;
 }
 p {
@@ -380,7 +378,7 @@ p:last-child {
   bottom: #{$margin-global * 5.7};
   right: #{$margin-global * 1.5};
   @include respond-to(phone) {
-    bottom: #{$margin-global * 3 + $margin-global-sm};
+    bottom: #{$margin-global * 4.5 + $margin-global-sm};
     right: #{$margin-global-sm * 2};
   }
 }
