@@ -18,6 +18,16 @@
       @toggle="toggleStatusClass"
     />
     <IconButton
+      id="rainbow-toggle"
+      :size="11"
+      :info-text="rainbowModeMsg"
+      :circle="true"
+      :active="rainbowMode"
+      icon-active="nina-icon-noun_spiral"
+      icon-inactive-animated="nina-icon-noun_spiral"
+      @click="toggleRainbowMode"
+    />
+    <IconButton
       id="night-toggle"
       :size="11"
       :info-text="nightModeMsg"
@@ -40,6 +50,7 @@
     <div v-if="maintenance" class="maintenance-overlay">
       <div class="content" v-html="maintenanceContent"></div>
     </div>
+    <rainbow :active="rainbowMode" :colors="rainbow" class="rainbow"></rainbow>
   </div>
 </template>
 
@@ -49,24 +60,36 @@ import Screen from './components/Screen'
 import Player from './components/Player'
 import Posts from './components/Posts'
 import IconButton from './components/IconButton'
+import Rainbow from './components/Rainbow'
 import Events from './Events'
 
 export default {
   name: 'App',
-  components: { Screen, Player, Posts, IconButton },
+  components: { Screen, Player, Posts, IconButton, Rainbow },
   data() {
     return {
       initialized: false,
       fullscreen: false,
       nightMode: false,
+      rainbowMode: false,
       status: ['loading'],
       listeners: null,
       playerMessage: '',
       muted: false,
+      rainbowModeMsg: 'Mode rainbow',
       nightModeMsg: 'Mode nuit',
       fullscreenMsg: 'Plein écran',
       streamUrl: null,
-      maintenance: false
+      maintenance: false,
+      rainbow: [
+        'red',
+        'yellow',
+        'green',
+        'aqua',
+        'blue',
+        'dodgerblue',
+        'fuchsia'
+      ]
     }
   },
   computed: {
@@ -84,8 +107,12 @@ export default {
     }
   },
   watch: {
-    nightMode(newVal) {
-      this.toggleStatusClass(newVal, 'nightMode')
+    nightMode(value) {
+      this.toggleStatusClass(value, 'nightMode')
+    },
+    rainbowMode(value) {
+      this.toggleStatusClass(value, 'rainbowMode')
+      localStorage.rainbowMode = value
     }
   },
   created() {
@@ -102,6 +129,7 @@ export default {
       this.status.push('no-autoplay')
     }
     this.updateNightMode()
+    this.updateRainbowMode()
   },
   methods: {
     play() {
@@ -119,6 +147,10 @@ export default {
       const isDayTime = hours > 6 && hours < 19
       this.nightMode = !isDayTime
     },
+    updateRainbowMode() {
+      const mode = _.get(localStorage, 'rainbowMode', null)
+      this.rainbowMode = mode == 'true'
+    },
     getListeners() {
       this.$jsonp(process.env.STREAM_API_OLD_URL, {
         callbackName: 'parseMusic'
@@ -133,6 +165,9 @@ export default {
           ? _.concat(this.status, classname)
           : _.filter(this.status, (item) => item !== classname)
       )
+    },
+    toggleRainbowMode() {
+      this.rainbowMode = !this.rainbowMode
     },
     toggleNightMode() {
       this.nightMode = !this.nightMode
@@ -303,12 +338,10 @@ h6 {
 }
 .spacer {
   display: inline;
-  width: 0;
   margin: 0 0 0 #{$margin-global - 6};
 }
 .spacer-half {
   display: inline;
-  width: 0;
   margin: 0 0 0 1em;
 }
 p {
@@ -339,6 +372,14 @@ p:last-child {
     #app.nightMode & {
       color: $night-color-info-text;
     }
+  }
+}
+#rainbow-toggle {
+  bottom: #{$margin-global * 5.7};
+  right: #{$margin-global * 1.5};
+  @include respond-to(phone) {
+    bottom: #{$margin-global * 4.5 + $margin-global-sm};
+    right: #{$margin-global-sm * 2};
   }
 }
 #night-toggle {
