@@ -246,30 +246,33 @@ export default {
       )
     },
     getTrackDetails() {
-      this.$http({
-        type: 'get',
-        url: process.env.STREAM_METADATA_URL,
-        params: {
-          artist: this.trackArtist,
-          title: this.trackTitle
-        }
-      }).then(
-        (response) => {
-          if (response.data.length) {
-            this.details = response.data[0]
-            this.type = this.details.type
-            this.details.cover =
-              process.env.STREAM_METADATA_URL + this.details.cover
-          } else {
-            this.$emit('toggle', this.close, this.statusClass)
-            this.type = ''
-            this.details = []
+      this.$http
+        .get(process.env.STREAM_METADATA_URL, {
+          params: {
+            authors: this.trackArtist,
+            name: this.trackTitle
+          },
+          headers: {
+            Authorization: `Bearer ${process.env.STREAM_METADATA_TOKEN}`
           }
-        },
-        (error) => {
-          if (process.env.NODE_ENV === 'development') console.log(error)
-        }
-      )
+        })
+        .then(
+          (response) => {
+            console.log({ response })
+            if (response.data.id) {
+              this.details = response.data
+              this.type = 'mixtape'
+              this.details.cover = this.details.cover_url
+            } else {
+              this.$emit('toggle', this.close, this.statusClass)
+              this.type = ''
+              this.details = {}
+            }
+          },
+          (error) => {
+            if (process.env.NODE_ENV === 'development') console.log(error)
+          }
+        )
     },
     initAudioPlay() {
       // Reset the audio stream loading

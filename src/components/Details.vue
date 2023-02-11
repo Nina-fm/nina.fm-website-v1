@@ -2,10 +2,10 @@
   <div id="details">
     <div id="track-details">
       <div class="container">
-        <div v-if="data.cover" id="track-details-cover">
+        <div v-if="data.cover_url" id="track-details-cover">
           <lightbox
-            :thumbnail="data.cover"
-            :images="[data.cover]"
+            :thumbnail="data.cover_url"
+            :images="[data.cover_url]"
             :alternate-text="data.artist + ' - ' + data.title"
           ></lightbox>
         </div>
